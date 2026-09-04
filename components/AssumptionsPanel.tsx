@@ -1,0 +1,119 @@
+"use client";
+
+import { Field, inputClass } from "./Field";
+import type { CalculatorInputs } from "@/lib/pension/types";
+
+type Props = {
+  values: CalculatorInputs;
+  onChange: <K extends keyof CalculatorInputs>(
+    key: K,
+    value: CalculatorInputs[K],
+  ) => void;
+};
+
+export function AssumptionsPanel({ values, onChange }: Props) {
+  return (
+    <section
+      className="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5"
+      aria-labelledby="assumptions-heading"
+    >
+      <h2
+        id="assumptions-heading"
+        className="text-base font-semibold text-slate-900"
+      >
+        Antagelser (redigerbare)
+      </h2>
+      <p className="mt-1 text-xs text-slate-500">
+        Endringer oppdaterer prognosen med én gang. Scenarioene justerer i tillegg
+        avkastning og vekst automatisk.
+      </p>
+
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <Field id="assumptions-wage" label="Lønnsvekst %">
+          <input
+            id="assumptions-wage"
+            type="number"
+            step={0.1}
+            className={inputClass}
+            value={Number((values.wageGrowth * 100).toFixed(1))}
+            onChange={(e) =>
+              onChange("wageGrowth", Number(e.target.value) / 100)
+            }
+          />
+        </Field>
+        <Field id="assumptions-g" label="G-vekst %">
+          <input
+            id="assumptions-g"
+            type="number"
+            step={0.1}
+            className={inputClass}
+            value={Number((values.gGrowth * 100).toFixed(1))}
+            onChange={(e) => onChange("gGrowth", Number(e.target.value) / 100)}
+          />
+        </Field>
+        <Field id="assumptions-inflation" label="Inflasjon %">
+          <input
+            id="assumptions-inflation"
+            type="number"
+            step={0.1}
+            className={inputClass}
+            value={Number((values.inflation * 100).toFixed(1))}
+            onChange={(e) =>
+              onChange("inflation", Number(e.target.value) / 100)
+            }
+          />
+        </Field>
+        <Field id="assumptions-tp-ret" label="Avkastning TP %">
+          <input
+            id="assumptions-tp-ret"
+            type="number"
+            step={0.1}
+            className={inputClass}
+            value={Number((values.tpReturn * 100).toFixed(1))}
+            onChange={(e) =>
+              onChange("tpReturn", Number(e.target.value) / 100)
+            }
+          />
+        </Field>
+        <Field id="assumptions-save-ret" label="Avkastning sparing %">
+          <input
+            id="assumptions-save-ret"
+            type="number"
+            step={0.1}
+            className={inputClass}
+            value={Number((values.savingReturn * 100).toFixed(1))}
+            onChange={(e) =>
+              onChange("savingReturn", Number(e.target.value) / 100)
+            }
+          />
+        </Field>
+        <Field id="assumptions-tp-years" label="TP utbetalingsår">
+          <input
+            id="assumptions-tp-years"
+            type="number"
+            min={5}
+            max={25}
+            className={inputClass}
+            value={values.tpPayoutYears}
+            onChange={(e) =>
+              onChange("tpPayoutYears", Number(e.target.value))
+            }
+          />
+        </Field>
+        <Field id="assumptions-save-years" label="Sparing utbetalingsår">
+          <input
+            id="assumptions-save-years"
+            type="number"
+            min={5}
+            max={30}
+            className={inputClass}
+            value={values.savingPayoutYears}
+            onChange={(e) =>
+              onChange("savingPayoutYears", Number(e.target.value))
+            }
+          />
+        </Field>
+      </div>
+    </section>
+  );
+}
