@@ -130,6 +130,22 @@ export function InputsPanel({
           </div>
         </Field>
 
+        <Field
+          id="tpBalance"
+          label="Eksisterende tjenestepensjon"
+          hint="Saldo du har spart opp til nå (fra pensjonskapitalbevis / Norsk Pensjon)"
+        >
+          <input
+            id="tpBalance"
+            type="number"
+            min={0}
+            step={10000}
+            className={inputClass}
+            value={values.tpBalance}
+            onChange={(e) => onChange("tpBalance", Number(e.target.value))}
+          />
+        </Field>
+
         <Field id="afpType" label="AFP" hint="Forenklet anslag — ikke offisielle regler">
           <select
             id="afpType"
@@ -183,18 +199,6 @@ export function InputsPanel({
                 <option value="enslig">Enslig</option>
                 <option value="gift">Gift / samboer</option>
               </select>
-            </Field>
-
-            <Field id="tpBalance" label="Eksisterende TP-saldo (kr)">
-              <input
-                id="tpBalance"
-                type="number"
-                min={0}
-                step={10000}
-                className={inputClass}
-                value={values.tpBalance}
-                onChange={(e) => onChange("tpBalance", Number(e.target.value))}
-              />
             </Field>
 
             <Field id="tpReturn" label="Forventet avkastning TP (%)">
