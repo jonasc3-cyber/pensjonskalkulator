@@ -2,6 +2,7 @@
 
 import { Field, inputClass, selectClass } from "./Field";
 import { CurrencyInput } from "./CurrencyInput";
+import { SectionDivider } from "./SectionDivider";
 import { SavingsAccounts } from "./SavingsAccounts";
 import { TpAccounts } from "./TpAccounts";
 import type { CalculatorInputs } from "@/lib/pension/types";
@@ -173,6 +174,8 @@ export function InputsPanel({
             Vis grovt nettoanslag (ca. 78 % av brutto)
           </label>
         </Field>
+
+        <SectionDivider src="/divider-savings.webp" />
 
         <TpAccounts
           accounts={values.tpAccounts}
