@@ -24,22 +24,22 @@ export function InputsPanel({
 
   return (
     <section
-      className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6"
+      className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
       aria-labelledby="inputs-heading"
     >
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 id="inputs-heading" className="text-lg font-semibold text-slate-900">
+          <h2 id="inputs-heading" className="text-lg font-semibold text-primary">
             Dine opplysninger
           </h2>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-muted-foreground">
             Alt beregnes lokalt i nettleseren. Ingenting sendes til server.
           </p>
         </div>
         <button
           type="button"
           onClick={onToggleAdvanced}
-          className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary-soft"
           aria-pressed={advanced}
         >
           {advanced ? "Skjul avansert" : "Avansert"}
@@ -81,7 +81,7 @@ export function InputsPanel({
             type="range"
             min={62}
             max={75}
-            className="w-full accent-teal-700"
+            className="w-full accent-primary"
             value={values.retirementAge}
             onChange={(e) => onChange("retirementAge", Number(e.target.value))}
           />
@@ -105,7 +105,7 @@ export function InputsPanel({
                 onChange("wageGrowth", Number(e.target.value) / 100)
               }
             />
-            <span className="text-sm text-slate-500">%</span>
+            <span className="text-sm text-muted-foreground">%</span>
           </div>
         </Field>
 
@@ -125,7 +125,7 @@ export function InputsPanel({
               value={Number((values.tpRate * 100).toFixed(1))}
               onChange={(e) => onChange("tpRate", Number(e.target.value) / 100)}
             />
-            <span className="text-sm text-slate-500">%</span>
+            <span className="text-sm text-muted-foreground">%</span>
           </div>
         </Field>
 
@@ -161,7 +161,7 @@ export function InputsPanel({
             <input
               id="showNet"
               type="checkbox"
-              className="h-4 w-4 rounded border-slate-300 accent-teal-700"
+              className="h-4 w-4 rounded border-border accent-primary"
               checked={values.showNet}
               onChange={(e) => onChange("showNet", e.target.checked)}
             />
@@ -171,8 +171,8 @@ export function InputsPanel({
       </div>
 
       {advanced ? (
-        <div className="mt-6 space-y-4 border-t border-slate-100 pt-5">
-          <h3 className="text-sm font-semibold text-slate-800">Avansert</h3>
+        <div className="mt-6 space-y-4 border-t border-border pt-5">
+          <h3 className="text-sm font-semibold text-primary">Avansert</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <Field id="sivilstatus" label="Sivilstatus (garantipensjon)">
               <select

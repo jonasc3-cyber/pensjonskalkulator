@@ -1,13 +1,44 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
+  /* Trust / bank palette */
+  --background: #f3f5f8;
   --foreground: #0f172a;
+  --primary: #0b2a4a;
+  --primary-mid: #1e4a73;
+  --primary-foreground: #f8fafc;
+  --primary-soft: #e8eef4;
+  --accent: #4f7a68;
+  --accent-foreground: #ffffff;
+  --accent-soft: #eaf1ed;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --card: #ffffff;
+  --border: #d8dee6;
+  --info-bg: #f7f3eb;
+  --info-border: #e5d9c3;
+  --info-text: #5a4a32;
+  --ring: #0b2a4a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-mid: var(--primary-mid);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-info-bg: var(--info-bg);
+  --color-info-border: var(--info-border);
+  --color-info-text: var(--info-text);
+  --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -20,4 +51,8 @@ body {
 
 input[type="range"] {
   height: 0.5rem;
+}
+
+:focus-visible {
+  outline-color: var(--primary);
 }

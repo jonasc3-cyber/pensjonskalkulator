@@ -14,16 +14,16 @@ type Props = {
 export function AssumptionsPanel({ values, onChange }: Props) {
   return (
     <section
-      className="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5"
+      className="rounded-2xl border border-border bg-muted/70 p-4 sm:p-5"
       aria-labelledby="assumptions-heading"
     >
       <h2
         id="assumptions-heading"
-        className="text-base font-semibold text-slate-900"
+        className="text-base font-semibold text-primary"
       >
         Antagelser (redigerbare)
       </h2>
-      <p className="mt-1 text-xs text-slate-500">
+      <p className="mt-1 text-xs text-muted-foreground">
         Endringer oppdaterer prognosen med én gang. Scenarioene justerer i tillegg
         avkastning og vekst automatisk.
       </p>
