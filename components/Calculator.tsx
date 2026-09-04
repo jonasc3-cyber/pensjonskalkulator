@@ -18,7 +18,7 @@ import { GoalSeekPanel } from "./GoalSeekPanel";
 import { CohortWarning } from "./CohortWarning";
 import { StickyMiniResult } from "./StickyMiniResult";
 
-const PERSIST_DEBOUNCE_MS = 400;
+const PERSIST_DEBOUNCE_MS = 250;
 
 export function Calculator() {
   const [values, setValues] = useState<CalculatorInputs>(() => defaultInputs());
@@ -27,6 +27,10 @@ export function Calculator() {
   /** Vises til bruker endrer noe (eller har lagret/delt tilstand). */
   const [isExampleData, setIsExampleData] = useState(true);
   const skipNextPersist = useRef(false);
+  const valuesRef = useRef(values);
+  const isExampleDataRef = useRef(isExampleData);
+  valuesRef.current = values;
+  isExampleDataRef.current = isExampleData;
 
   // Klient-only hydrate: URL > localStorage > defaults (unngår SSR-mismatch)
   useEffect(() => {
@@ -52,12 +56,34 @@ export function Calculator() {
       skipNextPersist.current = false;
       return;
     }
+    if (isExampleData) return;
     const timer = window.setTimeout(() => {
       saveInputsToLocalStorage(values);
       writeInputsToUrl(values);
     }, PERSIST_DEBOUNCE_MS);
     return () => window.clearTimeout(timer);
-  }, [values, hydrated]);
+  }, [values, hydrated, isExampleData]);
+
+  // Flush immediately on leave so hard reload mid-debounce cannot drop edits
+  useEffect(() => {
+    if (!hydrated) return;
+    const flush = () => {
+      if (isExampleDataRef.current) return;
+      saveInputsToLocalStorage(valuesRef.current);
+      writeInputsToUrl(valuesRef.current);
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") flush();
+    };
+    window.addEventListener("pagehide", flush);
+    window.addEventListener("beforeunload", flush);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      window.removeEventListener("pagehide", flush);
+      window.removeEventListener("beforeunload", flush);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [hydrated]);
 
   const result = useMemo(() => calculatePension(values), [values]);
 
