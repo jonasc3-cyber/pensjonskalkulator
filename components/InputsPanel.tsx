@@ -7,6 +7,7 @@ import { TpAccounts } from "./TpAccounts";
 import type { CalculatorInputs } from "@/lib/pension/types";
 import { CURRENT_YEAR } from "@/lib/constants";
 import { CohortWarning } from "./CohortWarning";
+import { SectionDivider } from "./SectionDivider";
 
 type Props = {
   values: CalculatorInputs;
@@ -173,6 +174,11 @@ export function InputsPanel({
             Vis grovt nettoanslag (ca. 78 % av brutto)
           </label>
         </Field>
+
+        <SectionDivider
+          src="/divider-savings.webp"
+          className="sm:col-span-2"
+        />
 
         <TpAccounts
           accounts={values.tpAccounts}

@@ -17,6 +17,7 @@ import { ResultsPanel } from "./ResultsPanel";
 import { GoalSeekPanel } from "./GoalSeekPanel";
 import { CohortWarning } from "./CohortWarning";
 import { StickyMiniResult } from "./StickyMiniResult";
+import { SectionDivider } from "./SectionDivider";
 
 const PERSIST_DEBOUNCE_MS = 250;
 
@@ -116,6 +117,7 @@ export function Calculator() {
       />
       <AssumptionsPanel values={values} onChange={onChange} />
       <CohortWarning birthYear={values.birthYear} alert={false} />
+      <SectionDivider src="/divider-home.webp" />
       <ResultsPanel result={result} showNet={values.showNet} />
       <GoalSeekPanel values={values} result={result} />
       <StickyMiniResult baseMonthly={result.scenarios.base.totalMonthly} />

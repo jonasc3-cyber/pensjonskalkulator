@@ -36,7 +36,7 @@ function OmCard({
   );
 }
 
-function SubHeading({ children }: { children: React.ReactNode }) {
+function SubHeading({ children }: { children: ReactNode }) {
   return (
     <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
       {children}
