@@ -10,6 +10,7 @@ import {
   TP_PROVIDERS,
 } from "@/lib/pension/tp";
 import type { TpAccount, TpKind } from "@/lib/pension/types";
+import { EmptyAccountsState } from "./EmptyAccountsState";
 
 const KINDS: TpKind[] = ["innskudd", "ytelse", "hybrid", "offentlig", "annet"];
 
@@ -88,9 +89,13 @@ export function TpAccounts({ accounts, onChange }: Props) {
       </div>
 
       {accounts.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-border bg-muted/40 px-4 py-6 text-center text-sm text-muted-foreground">
-          Ingen tjenestepensjon ennå. Trykk under for å legge til.
-        </p>
+        <EmptyAccountsState
+          illustration="tp"
+          title="Ingen tjenestepensjon ennå"
+          description="Legg til ordningen din for å få med innskudd og saldo i estimatet."
+          ctaLabel="Legg til"
+          onAdd={addAccount}
+        />
       ) : (
         <ul className="space-y-3" aria-label="Tjenestepensjonskontoer">
           {accounts.map((account, index) => {
@@ -347,16 +352,18 @@ export function TpAccounts({ accounts, onChange }: Props) {
         </ul>
       )}
 
-      <button
-        type="button"
-        onClick={addAccount}
-        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border-2 border-primary/40 bg-primary-soft px-4 py-3 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-primary/60 hover:bg-primary-soft/80"
-      >
-        <span aria-hidden className="text-lg leading-none">
-          +
-        </span>
-        Legg til tjenestepensjon
-      </button>
+      {accounts.length > 0 ? (
+        <button
+          type="button"
+          onClick={addAccount}
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border-2 border-primary/40 bg-primary-soft px-4 py-3 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-primary/60 hover:bg-primary-soft/80"
+        >
+          <span aria-hidden className="text-lg leading-none">
+            +
+          </span>
+          Legg til tjenestepensjon
+        </button>
+      ) : null}
     </div>
   );
 }

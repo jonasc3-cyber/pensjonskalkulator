@@ -9,6 +9,7 @@ import {
   SAVING_PROVIDERS,
 } from "@/lib/pension/saving";
 import type { SavingAccount, SavingKind } from "@/lib/pension/types";
+import { EmptyAccountsState } from "./EmptyAccountsState";
 
 const KINDS: SavingKind[] = ["ips", "ask", "fond", "bank", "annet"];
 
@@ -86,9 +87,13 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
       ) : null}
 
       {accounts.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-border bg-muted/40 px-4 py-6 text-center text-sm text-muted-foreground">
-          Ingen sparekontoer ennå. Trykk under for å legge til.
-        </p>
+        <EmptyAccountsState
+          illustration="saving"
+          title="Ingen sparekontoer ennå"
+          description="Legg til IPS, ASK, fond eller bank for å få med egen sparing i estimatet."
+          ctaLabel="Legg til"
+          onAdd={addAccount}
+        />
       ) : (
         <ul className="space-y-3" aria-label="Sparekontoer">
           {accounts.map((account, index) => {
@@ -307,16 +312,18 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
         </ul>
       )}
 
-      <button
-        type="button"
-        onClick={addAccount}
-        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border-2 border-primary/40 bg-primary-soft px-4 py-3 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-primary/60 hover:bg-primary-soft/80"
-      >
-        <span aria-hidden className="text-lg leading-none">
-          +
-        </span>
-        Legg til sparing
-      </button>
+      {accounts.length > 0 ? (
+        <button
+          type="button"
+          onClick={addAccount}
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border-2 border-primary/40 bg-primary-soft px-4 py-3 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-primary/60 hover:bg-primary-soft/80"
+        >
+          <span aria-hidden className="text-lg leading-none">
+            +
+          </span>
+          Legg til sparing
+        </button>
+      ) : null}
     </div>
   );
 }
