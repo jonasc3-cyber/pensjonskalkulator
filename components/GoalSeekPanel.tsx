@@ -49,6 +49,8 @@ export function GoalSeekPanel({ values, result }: Props) {
   const unit = values.showNet ? "netto (anslag)" : "brutto";
   const showExtreme = targetMonthly > 200_000;
   const atRetirement = result.yearsToRetirement === 0;
+  const selectedGoalAccount = values.savings.find((a) => a.id === accountId);
+  const goalAccountIsIps = selectedGoalAccount?.kind === "ips";
 
   return (
     <section
@@ -119,6 +121,18 @@ export function GoalSeekPanel({ values, result }: Props) {
           </select>
         </Field>
       </div>
+
+      {goalAccountIsIps ? (
+        <p
+          className="mt-3 rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs leading-relaxed text-info-text"
+          role="note"
+          data-testid="goal-ips-tax-disclaimer"
+        >
+          <strong className="font-semibold text-primary">IPS-skattefordel er ikke med:</strong>{" "}
+          Ca. 22&nbsp;% inntektsfradrag / preferansebehandling for IPS er{" "}
+          <em>ikke</em> inkludert i dette spareanslaget.
+        </p>
+      ) : null}
 
       {targetMonthly <= 0 ? (
         <p className="mt-4 rounded-lg border border-dashed border-border bg-muted/40 px-3 py-3 text-sm text-muted-foreground">
@@ -289,8 +303,8 @@ export function GoalSeekPanel({ values, result }: Props) {
       ) : null}
 
       <p className="mt-5 text-xs text-muted-foreground">
-        Forenklet modell med samme begrensninger som prognosen (ikke skatt/IPS-fradrag,
-        ikke offisiell rådgivning). Les mer om metoden på{" "}
+        Forenklet modell med samme begrensninger som prognosen (skatt og IPS-fradrag
+        ca. 22&nbsp;% er ikke inkludert; ikke offisiell rådgivning). Les mer om metoden på{" "}
         <Link href="/om" className="font-medium text-primary underline-offset-2 hover:underline">
           Om kalkulatoren
         </Link>

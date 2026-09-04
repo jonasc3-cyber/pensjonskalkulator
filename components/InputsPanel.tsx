@@ -6,22 +6,28 @@ import { SavingsAccounts } from "./SavingsAccounts";
 import { TpAccounts } from "./TpAccounts";
 import type { CalculatorInputs } from "@/lib/pension/types";
 import { CURRENT_YEAR } from "@/lib/constants";
+import { CohortWarning } from "./CohortWarning";
 
 type Props = {
   values: CalculatorInputs;
   advanced: boolean;
+  /** True while defaults are shown and brukeren ikke har endret noe. */
+  isExampleData?: boolean;
   onChange: <K extends keyof CalculatorInputs>(
     key: K,
     value: CalculatorInputs[K],
   ) => void;
   onToggleAdvanced: () => void;
+  onReset?: () => void;
 };
 
 export function InputsPanel({
   values,
   advanced,
+  isExampleData = false,
   onChange,
   onToggleAdvanced,
+  onReset,
 }: Props) {
   const age = CURRENT_YEAR - values.birthYear;
 
@@ -32,21 +38,47 @@ export function InputsPanel({
     >
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 id="inputs-heading" className="text-lg font-semibold text-primary">
-            Dine opplysninger
-          </h2>
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 id="inputs-heading" className="text-lg font-semibold text-primary">
+              Dine opplysninger
+            </h2>
+            {isExampleData ? (
+              <span
+                className="inline-flex items-center rounded-full border border-amber-300/80 bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-amber-900"
+                data-testid="eksempeldata-badge"
+                title="Forhåndsutfylte tall for å vise hvordan kalkulatoren fungerer. Endre feltene til dine egne verdier."
+              >
+                Eksempeldata
+              </span>
+            ) : null}
+          </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Alt beregnes lokalt i nettleseren. Ingenting sendes til server.
+            Alt beregnes lokalt i nettleseren. Tall lagres kun i din nettleser /
+            i lenken du selv deler — ingenting sendes til server.
+            {isExampleData
+              ? " Tallene under er eksempeldata — bytt dem til dine egne."
+              : ""}
           </p>
         </div>
-        <button
-          type="button"
-          onClick={onToggleAdvanced}
-          className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary-soft"
-          aria-pressed={advanced}
-        >
-          {advanced ? "Skjul avansert" : "Avansert"}
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          {onReset ? (
+            <button
+              type="button"
+              onClick={onReset}
+              className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-muted"
+            >
+              Nullstill
+            </button>
+          ) : null}
+          <button
+            type="button"
+            onClick={onToggleAdvanced}
+            className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary-soft"
+            aria-pressed={advanced}
+          >
+            {advanced ? "Skjul avansert" : "Avansert"}
+          </button>
+        </div>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
@@ -71,6 +103,10 @@ export function InputsPanel({
             onChange={(v) => onChange("annualSalary", v)}
           />
         </Field>
+
+        <div className="sm:col-span-2">
+          <CohortWarning birthYear={values.birthYear} />
+        </div>
 
         <Field
           id="retirementAge"

@@ -75,6 +75,17 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
         </p>
       </div>
 
+      {accounts.some((a) => a.kind === "ips") ? (
+        <p
+          className="rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs leading-relaxed text-info-text"
+          role="note"
+        >
+          Minst én konto er IPS. Estimatet viser kun saldo/avkastning — den
+          omtrentlige 22&nbsp;% IPS-skattefordelen (fradrag) er ikke inkludert.
+        </p>
+      ) : null}
+
+
       {accounts.length === 0 ? (
         <p className="rounded-xl border border-dashed border-border bg-muted/40 px-4 py-6 text-center text-sm text-muted-foreground">
           Ingen sparekontoer ennå. Trykk under for å legge til.
@@ -161,7 +172,7 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                     <Field
                       id={`saving-provider-${account.id}`}
                       label="Hvor ligger den?"
-                      hint="Velg leverandør eller skriv egen under «Annet»"
+                      hint="Påvirker ikke beregningen — valgfritt for egen oversikt"
                     >
                       <div className="space-y-2">
                         <select
@@ -270,6 +281,19 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                     </div>
                   </Field>
                 </div>
+
+                {account.kind === "ips" ? (
+                  <p
+                    className="mt-3 rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs leading-relaxed text-info-text sm:col-span-2"
+                    role="note"
+                    data-testid="ips-tax-disclaimer"
+                  >
+                    <strong className="font-semibold text-primary">IPS-skattefordel er ikke med:</strong>{" "}
+                    Ca. 22&nbsp;% inntektsfradrag / preferansebehandling for IPS er{" "}
+                    <em>ikke</em> inkludert i estimatet.
+                  </p>
+                ) : null}
+
               </li>
             );
           })}

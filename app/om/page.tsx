@@ -46,7 +46,16 @@ export default function OmPage() {
         <p className="text-slate-600 leading-relaxed">
           Alle tall du skriver inn brukes kun til beregning i nettleseren din. Vi
           har ingen innlogging, ingen database for dine data, og ingen
-          serverlagring av lønn eller alder. Lukker du fanen, er tallene borte.
+          serverlagring av lønn eller alder. Data sendes aldri til en server.
+        </p>
+        <p className="text-slate-600 leading-relaxed">
+          For at du ikke skal miste alt når du lukker fanen, lagres inndata{" "}
+          <strong>lokalt</strong> i nettleserens localStorage. URL-en kan også
+          inneholde en komprimert kopi av inndataene (query-parameter), slik at
+          du kan bokmerke eller dele en lenke — da følger tallene med i lenken
+          du selv velger å sende. Bruk «Nullstill» i kalkulatoren for å tømme
+          lokal lagring og fjerne tilstanden fra URL-en. Behandle delte lenker
+          som personlige opplysninger.
         </p>
       </section>
 
@@ -79,8 +88,18 @@ export default function OmPage() {
         <h2 className="text-lg font-semibold text-primary">Folketrygd (ny modell)</h2>
         <ul className="list-disc space-y-2 pl-5 text-slate-600 leading-relaxed">
           <li>
-            Gjelder forenklet for personer født 1963 eller senere (ny
-            opptjeningsmodell).
+            Gjelder forenklet for personer født <strong>1963 eller senere</strong>{" "}
+            (ny opptjeningsmodell). For eldre kohorter viser kalkulatoren en
+            tydelig advarsel: estimatene kan være feil eller misvisende — bruk{" "}
+            <a
+              className="underline underline-offset-2 hover:text-primary"
+              href="https://www.nav.no/dinpensjon"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Din pensjon hos NAV
+            </a>
+            .
           </li>
           <li>
             Hvert år: <strong>18,1 %</strong> av inntekt opp til{" "}
@@ -196,6 +215,13 @@ export default function OmPage() {
             <strong>Egen sparing:</strong> fremtidig verdi av månedlig sparing +
             saldo per konto, deretter annuitet.
           </li>
+          <li>
+            <strong>IPS:</strong> saldo og avkastning fremskrives som øvrig
+            sparing. Den omtrentlige <strong>22&nbsp;% skattefordelen</strong>{" "}
+            (inntektsfradrag / preferansebehandling) er{" "}
+            <em>ikke</em> inkludert i estimatet — dette står også som advarsel
+            ved IPS-konto og i «Spar for mål».
+          </li>
         </ul>
       </section>
 
@@ -247,7 +273,13 @@ export default function OmPage() {
         <h2 className="text-lg font-semibold text-primary">Kjente forenklinger</h2>
         <ul className="list-disc space-y-2 pl-5 text-slate-600 leading-relaxed">
           <li>Ikke full kohort × uttaksalder-matrise fra NAV for alle aldre.</li>
-          <li>Ikke gammel opptjeningsmodell (før 1963) i detalj.</li>
+          <li>
+            Ikke gammel opptjeningsmodell (før 1963) i detalj — kohort-advarsel
+            vises i kalkulatoren når fødselsår &lt; 1963.
+          </li>
+          <li>
+            IPS-skattefradrag (ca. 22&nbsp;%) og øvrig skatt er ikke modellert.
+          </li>
           <li>Ikke BankID, Altinn eller Norsk Pensjon-API.</li>
           <li>
             Ikke full AFP-regelverk eller offentlig tjenestepensjon

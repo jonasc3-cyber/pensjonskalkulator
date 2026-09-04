@@ -6,3 +6,4 @@ export * from "./afp";
 export * from "./saving";
 export * from "./calculate";
 export * from "./goalSeek";
+export * from "./persistence";

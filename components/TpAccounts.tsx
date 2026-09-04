@@ -177,7 +177,7 @@ export function TpAccounts({ accounts, onChange }: Props) {
                   <Field
                     id={`tp-provider-${account.id}`}
                     label="Hvor ligger den?"
-                    hint="Velg leverandør eller skriv egen under «Annet»"
+                    hint="Påvirker ikke beregningen — valgfritt for egen oversikt"
                   >
                     <div className="space-y-2">
                       <select
