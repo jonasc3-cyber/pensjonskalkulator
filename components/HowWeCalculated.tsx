@@ -6,7 +6,7 @@ export function HowWeCalculated({ points }: { points: string[] }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="rounded-xl border border-border bg-card shadow-sm">
+    <div className="rounded-2xl border border-border bg-card shadow-sm">
       <button
         type="button"
         className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm font-semibold text-primary"

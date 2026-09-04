@@ -1,6 +1,7 @@
 "use client";
 
 import { Field, inputClass, selectClass } from "./Field";
+import { CurrencyInput } from "./CurrencyInput";
 import {
   createSavingAccount,
   defaultReturnForKind,
@@ -213,17 +214,13 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                     id={`saving-balance-${account.id}`}
                     label="Eksisterende saldo (kr)"
                   >
-                    <input
+                    <CurrencyInput
                       id={`saving-balance-${account.id}`}
-                      type="number"
+                      value={account.balance}
                       min={0}
                       step={10000}
-                      className={inputClass}
-                      value={account.balance}
-                      onChange={(e) =>
-                        updateAccount(account.id, {
-                          balance: Number(e.target.value),
-                        })
+                      onChange={(v) =>
+                        updateAccount(account.id, { balance: v })
                       }
                     />
                   </Field>
@@ -232,17 +229,13 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                     id={`saving-monthly-${account.id}`}
                     label="Månedlig sparing (kr)"
                   >
-                    <input
+                    <CurrencyInput
                       id={`saving-monthly-${account.id}`}
-                      type="number"
+                      value={account.monthly}
                       min={0}
                       step={500}
-                      className={inputClass}
-                      value={account.monthly}
-                      onChange={(e) =>
-                        updateAccount(account.id, {
-                          monthly: Number(e.target.value),
-                        })
+                      onChange={(v) =>
+                        updateAccount(account.id, { monthly: v })
                       }
                     />
                   </Field>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Field, inputClass, selectClass } from "./Field";
+import { CurrencyInput } from "./CurrencyInput";
 import {
   createTpAccount,
   defaultReturnForTpKind,
@@ -229,17 +230,13 @@ export function TpAccounts({ accounts, onChange }: Props) {
                     label="Eksisterende saldo (kr)"
                     hint="Fra pensjonskapitalbevis / Norsk Pensjon"
                   >
-                    <input
+                    <CurrencyInput
                       id={`tp-balance-${account.id}`}
-                      type="number"
+                      value={account.balance}
                       min={0}
                       step={10000}
-                      className={inputClass}
-                      value={account.balance}
-                      onChange={(e) =>
-                        updateAccount(account.id, {
-                          balance: Number(e.target.value),
-                        })
+                      onChange={(v) =>
+                        updateAccount(account.id, { balance: v })
                       }
                     />
                   </Field>
@@ -302,16 +299,14 @@ export function TpAccounts({ accounts, onChange }: Props) {
                       label="Årlig pensjonsanslag (kr)"
                       hint="Forenkling for ytelse/offentlig — brukes direkte som årlig utbetaling hvis satt"
                     >
-                      <input
+                      <CurrencyInput
                         id={`tp-estimate-${account.id}`}
-                        type="number"
+                        value={account.yearlyPensionEstimate ?? 0}
                         min={0}
                         step={5000}
-                        className={inputClass}
-                        value={account.yearlyPensionEstimate ?? 0}
-                        onChange={(e) =>
+                        onChange={(v) =>
                           updateAccount(account.id, {
-                            yearlyPensionEstimate: Number(e.target.value),
+                            yearlyPensionEstimate: v,
                           })
                         }
                       />

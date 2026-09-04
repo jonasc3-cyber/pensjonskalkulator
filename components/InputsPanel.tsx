@@ -1,6 +1,7 @@
 "use client";
 
 import { Field, inputClass, selectClass } from "./Field";
+import { CurrencyInput } from "./CurrencyInput";
 import { SavingsAccounts } from "./SavingsAccounts";
 import { TpAccounts } from "./TpAccounts";
 import type { CalculatorInputs } from "@/lib/pension/types";
@@ -62,14 +63,12 @@ export function InputsPanel({
         </Field>
 
         <Field id="annualSalary" label="Årslønn brutto (kr)">
-          <input
+          <CurrencyInput
             id="annualSalary"
-            type="number"
+            value={values.annualSalary}
             min={0}
             step={10000}
-            className={inputClass}
-            value={values.annualSalary}
-            onChange={(e) => onChange("annualSalary", Number(e.target.value))}
+            onChange={(v) => onChange("annualSalary", v)}
           />
         </Field>
 
@@ -159,23 +158,15 @@ export function InputsPanel({
               label="Pensjonsbeholdning (folketrygd)"
               hint="Fra NAV / Din pensjon — lar stå tom for estimat"
             >
-              <input
+              <CurrencyInput
                 id="folketrygdBalance"
-                type="number"
+                value={values.folketrygdBalance}
                 min={0}
                 step={10000}
-                className={inputClass}
-                value={
-                  values.folketrygdBalance > 0 ? values.folketrygdBalance : ""
-                }
+                allowEmpty
+                emptyValue={0}
                 placeholder="Estimeres automatisk"
-                onChange={(e) => {
-                  const raw = e.target.value;
-                  onChange(
-                    "folketrygdBalance",
-                    raw === "" ? 0 : Math.max(0, Number(raw)),
-                  );
-                }}
+                onChange={(v) => onChange("folketrygdBalance", v)}
               />
             </Field>
 

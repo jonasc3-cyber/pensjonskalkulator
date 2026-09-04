@@ -49,7 +49,8 @@ export function ResultsPanel({
 
   return (
     <section
-      className="space-y-5"
+      id="results"
+      className="scroll-mt-4 space-y-5"
       aria-labelledby="results-heading"
       aria-live="polite"
     >

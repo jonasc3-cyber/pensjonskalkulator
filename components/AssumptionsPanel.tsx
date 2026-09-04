@@ -13,7 +13,7 @@ type Props = {
 
 export function AssumptionsPanel({ values, onChange }: Props) {
   return (
-    <details className="group rounded-2xl border border-border bg-muted/70 open:bg-muted/80">
+    <details className="group rounded-2xl border border-border bg-muted/70 shadow-sm open:bg-muted/80">
       <summary className="cursor-pointer list-none rounded-2xl px-4 py-3.5 marker:content-none sm:px-5 sm:py-4 [&::-webkit-details-marker]:hidden">
         <div className="flex items-center justify-between gap-3">
           <div>
