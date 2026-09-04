@@ -117,14 +117,27 @@ export function TpAccounts({ accounts, onChange }: Props) {
                   <button
                     type="button"
                     onClick={() => removeAccount(account.id)}
-                    className="shrink-0 rounded-lg border border-border bg-card px-2.5 py-1 text-xs font-medium text-slate-700 shadow-sm transition-colors hover:bg-red-50 hover:text-red-800"
+                    className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-card text-slate-500 shadow-sm transition-colors hover:bg-red-50 hover:text-red-700"
                     aria-label={`Fjern tjenestepensjon ${index + 1}`}
+                    title="Slett"
                   >
-                    Slett
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="h-4 w-4"
+                      aria-hidden
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193v-.443A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
                   </button>
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <Field id={`tp-kind-${account.id}`} label="Type">
                     <select
                       id={`tp-kind-${account.id}`}
@@ -335,7 +348,7 @@ export function TpAccounts({ accounts, onChange }: Props) {
       <button
         type="button"
         onClick={addAccount}
-        className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-primary/30 bg-primary-soft/50 px-4 py-3 text-sm font-semibold text-primary transition-colors hover:border-primary/50 hover:bg-primary-soft"
+        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border-2 border-primary/40 bg-primary-soft px-4 py-3 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-primary/60 hover:bg-primary-soft/80"
       >
         <span aria-hidden className="text-lg leading-none">
           +

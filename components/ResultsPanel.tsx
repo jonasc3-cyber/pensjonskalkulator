@@ -19,6 +19,34 @@ export function ResultsPanel({
   const breakdown = base.savingBreakdown ?? [];
   const tpBreakdown = base.tpBreakdown ?? [];
 
+  const scenarios = [
+    {
+      label: "Pessimistisk",
+      s: low,
+      order: "order-2 sm:order-1",
+      card: "border-slate-200 bg-slate-50/80",
+      amount: "text-xl font-semibold text-slate-600 sm:text-2xl",
+      hero: false,
+    },
+    {
+      label: "Basis",
+      s: base,
+      order: "order-1 sm:order-2",
+      card:
+        "border-2 border-primary bg-primary-soft shadow-sm ring-1 ring-primary/10 [border-left-color:var(--accent)] [border-left-width:5px]",
+      amount: "text-3xl font-bold text-primary sm:text-4xl",
+      hero: true,
+    },
+    {
+      label: "Optimistisk",
+      s: high,
+      order: "order-3 sm:order-3",
+      card: "border-accent/25 bg-accent-soft/70",
+      amount: "text-xl font-semibold text-accent sm:text-2xl",
+      hero: false,
+    },
+  ] as const;
+
   return (
     <section
       className="space-y-5"
@@ -35,58 +63,57 @@ export function ResultsPanel({
           {result.yearsToRetirement} år til uttak · tre scenarioer
         </p>
 
+        <p className="mt-4 text-base text-slate-700 sm:text-lg">
+          Du kan forvente ca.{" "}
+          <strong className="tabular-nums text-primary">
+            {formatRange(low.totalMonthly, high.totalMonthly)}
+          </strong>{" "}
+          per måned
+        </p>
+
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          {(
-            [
-              [
-                "Pessimistisk",
-                low,
-                "border-slate-200 bg-slate-50",
-                "text-slate-700",
-              ],
-              [
-                "Basis",
-                base,
-                "border-primary/25 bg-primary-soft",
-                "text-primary",
-              ],
-              [
-                "Optimistisk",
-                high,
-                "border-accent/30 bg-accent-soft",
-                "text-accent",
-              ],
-            ] as const
-          ).map(([label, s, cls, amountCls]) => (
-            <div key={label} className={`rounded-xl border p-4 ${cls}`}>
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {label}
-              </p>
-              <p
-                className={`mt-2 text-2xl font-semibold tabular-nums ${amountCls}`}
-              >
+          {scenarios.map(({ label, s, order, card, amount, hero }) => (
+            <div
+              key={label}
+              className={`rounded-xl border p-4 ${card} ${order}`}
+            >
+              <div className="flex items-center gap-2">
+                <p
+                  className={`text-xs font-medium uppercase tracking-wide ${
+                    hero ? "text-primary" : "text-muted-foreground"
+                  }`}
+                >
+                  {label}
+                </p>
+                {hero ? (
+                  <span className="rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-accent-foreground">
+                    Hovedanslag
+                  </span>
+                ) : null}
+              </div>
+              <p className={`mt-2 tabular-nums ${amount}`}>
                 {formatNOK(s.totalMonthly)}
               </p>
               <p className="text-xs text-muted-foreground">per måned</p>
-              <p className="mt-2 text-sm tabular-nums text-slate-700">
+              <p
+                className={`mt-2 tabular-nums text-slate-700 ${
+                  hero ? "text-sm" : "text-xs"
+                }`}
+              >
                 {formatNOK(s.totalYearly)} / år
               </p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Erstatningsgrad av forventet sluttlønn{" "}
-                {formatPercent(s.replacementRate)}
-              </p>
+              {hero ? (
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Erstatningsgrad av forventet sluttlønn{" "}
+                  {formatPercent(s.replacementRate)}
+                </p>
+              ) : null}
             </div>
           ))}
         </div>
 
-        <p className="mt-4 text-sm text-slate-600">
-          Månedlig intervall:{" "}
-          <strong className="tabular-nums text-primary">
-            {formatRange(low.totalMonthly, high.totalMonthly)}
-          </strong>
-        </p>
         {base.garantipensjonApplied ? (
-          <p className="mt-2 rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs text-info-text">
+          <p className="mt-4 rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs text-info-text">
             Garantipensjonsgulv er brukt i minst ett scenario (forenklet sats).
           </p>
         ) : null}
@@ -96,7 +123,10 @@ export function ResultsPanel({
         <h3 className="text-base font-semibold text-primary">
           Fordeling (basis-scenario, årlig)
         </h3>
-        <dl className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ul
+          className="mt-3 flex flex-wrap gap-2"
+          aria-label="Fordeling etter kilde"
+        >
           {(
             [
               ["Folketrygd", base.folketrygd.yearly, palette.chart.folketrygd],
@@ -105,29 +135,25 @@ export function ResultsPanel({
               ["Egen sparing", base.saving.yearly, palette.chart.sparing],
             ] as const
           ).map(([label, value, color]) => (
-            <div
+            <li
               key={label}
-              className="rounded-xl border border-border bg-muted/60 p-3"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1.5 text-sm"
             >
-              <div className="flex items-center gap-2">
-                <span
-                  className="h-2.5 w-2.5 rounded-full"
-                  style={{ backgroundColor: color }}
-                  aria-hidden
-                />
-                <dt className="text-xs font-medium text-muted-foreground">
-                  {label}
-                </dt>
-              </div>
-              <dd className="mt-1 text-lg font-semibold tabular-nums text-primary">
+              <span
+                className="h-2 w-2 shrink-0 rounded-full"
+                style={{ backgroundColor: color }}
+                aria-hidden
+              />
+              <span className="text-muted-foreground">{label}</span>
+              <span className="font-medium tabular-nums text-primary">
                 {formatNOK(value)}
-              </dd>
-              <p className="text-xs text-muted-foreground">
-                {formatNOK(value / 12)} / mnd
-              </p>
-            </div>
+              </span>
+              <span className="text-xs text-muted-foreground">
+                ({formatNOK(value / 12)}/mnd)
+              </span>
+            </li>
           ))}
-        </dl>
+        </ul>
 
         {tpBreakdown.length > 1 ? (
           <div className="mt-4 rounded-xl border border-border bg-muted/40 p-3">

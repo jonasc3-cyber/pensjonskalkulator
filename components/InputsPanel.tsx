@@ -48,7 +48,7 @@ export function InputsPanel({
         </button>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-5 sm:grid-cols-2">
         <Field id="birthYear" label="Fødselsår" hint={`Alder i ${CURRENT_YEAR}: ${age} år`}>
           <input
             id="birthYear"
@@ -153,7 +153,7 @@ export function InputsPanel({
       {advanced ? (
         <div className="mt-6 space-y-4 border-t border-border pt-5">
           <h3 className="text-sm font-semibold text-primary">Avansert</h3>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2">
             <Field
               id="folketrygdBalance"
               label="Pensjonsbeholdning (folketrygd)"
