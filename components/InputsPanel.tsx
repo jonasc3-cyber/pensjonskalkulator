@@ -175,7 +175,10 @@ export function InputsPanel({
           </label>
         </Field>
 
-        <SectionDivider src="/divider-savings.webp" />
+        <SectionDivider
+          src="/divider-savings.webp"
+          className="sm:col-span-2"
+        />
 
         <TpAccounts
           accounts={values.tpAccounts}

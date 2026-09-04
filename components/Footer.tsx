@@ -80,17 +80,16 @@ export function Footer() {
           </a>
           .
         </p>
-        <p className="mt-3 text-xs text-slate-500">
-          Noen foto:{" "}
+        <p className="mt-3 text-xs text-slate-400">
+          Foto:{" "}
           <a
-            href="https://unsplash.com"
-            className="underline underline-offset-2 hover:text-slate-300"
+            href="https://unsplash.com/photos/ouXNRL9DW8E"
+            className="underline underline-offset-2 hover:text-white"
             target="_blank"
             rel="noopener noreferrer"
           >
             Unsplash
           </a>
-          .
         </p>
       </div>
     </footer>
