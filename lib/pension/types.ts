@@ -57,6 +57,11 @@ export interface CalculatorInputs {
   showNet: boolean;
   gGrowth: number;
   inflation: number;
+  /**
+   * Valgfri pensjonsbeholdning i folketrygden (NOK) fra NAV / Din pensjon.
+   * 0 eller udefinert = estimer historisk opptjening fra lønn.
+   */
+  folketrygdBalance: number;
 }
 
 export interface ScenarioAssumptions {

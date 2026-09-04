@@ -15,7 +15,11 @@ export interface FolketrygdParams {
   wageGrowth: number;
   gGrowth: number;
   sivilstatus: Sivilstatus;
-  /** Antatt allerede opptjent beholdning (0 = start fra scratch / forenklet). */
+  /**
+   * Allerede opptjent pensjonsbeholdning (NOK).
+   * Hvis satt og > 0, brukes denne i stedet for estimatePastBalance.
+   * Udefinert eller 0 = estimer historisk opptjening fra lønn.
+   */
   existingBalance?: number;
 }
 
@@ -39,7 +43,12 @@ export function projectFolketrygd(params: FolketrygdParams): FolketrygdResult {
   const years = Math.max(0, params.retirementAge - age);
   let g = G_NOK;
   let salary = params.currentSalary;
-  let balance = params.existingBalance ?? estimatePastBalance(params, age);
+  // Manuell beholdning (fra NAV) overstyrer estimat når den er satt > 0.
+  const manual = params.existingBalance;
+  let balance =
+    manual != null && manual > 0
+      ? manual
+      : estimatePastBalance(params, age);
 
   for (let i = 0; i < years; i++) {
     const cap = FOLKETRYGD_MAKS_G * g;

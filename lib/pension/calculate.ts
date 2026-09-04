@@ -65,14 +65,26 @@ export function calculatePension(inputs: CalculatorInputs): CalculationResult {
           }, fremskrevet med kontos egen avkastning.`
         : `Tjenestepensjon: ${inputs.tpAccounts.length} kontoer. Kun én aktiv ordning får pågående innskudd (rate × lønn opp til 12 G); øvrige er frosne saldoer som fortsatt får avkastning.`;
 
+  const inflationPct = (inputs.inflation * 100).toFixed(1).replace(".", ",");
+  const hasManualFt =
+    inputs.folketrygdBalance != null && inputs.folketrygdBalance > 0;
+
   const explanation = [
     `Ny folketrygd: 18,1 % av inntekt opp til 7,1 G legges til pensjonsbeholdningen hvert år.`,
     `Ved uttak divideres beholdningen med forenklet delingstall for alder ${inputs.retirementAge}.`,
+    hasManualFt
+      ? `Pensjonsbeholdning starter fra oppgitt saldo (${Math.round(inputs.folketrygdBalance).toLocaleString("nb-NO")} kr) fra NAV / Din pensjon.`
+      : "Pensjonsbeholdning før i dag er estimert ut fra dagens lønn (karriere fra 22 år).",
     tpSummary,
     inputs.afpType === "ingen"
       ? "AFP er ikke inkludert."
       : `AFP (${inputs.afpType}) er et forenklet tillegg — ikke offisielle satser.`,
     savingsSummary,
+    // Inflasjonsmodell: prognosen kjøres nominelt (lønnsvekst, G-vekst, avkastning),
+    // deretter deflateres utbetalinger til dagens kroneverdi:
+    // real = nominal / (1 + inflasjon)^årTilUttak.
+    `Beløpene vises i dagens kroneverdi: nominell prognose deflateres med inflasjon (${inflationPct} % p.a.) over ${yearsToRetirement} år.`,
+    `Erstatningsgrad er total pensjon delt på forventet sluttlønn (siste arbeidsår etter lønnsvekst), ikke dagens lønn.`,
     `Intervallene speiler ulike antagelser om lønnsvekst og avkastning (pessimistisk / basis / optimistisk).`,
     inputs.showNet
       ? `Netto er et grovt anslag (${Math.round(GROV_NETTO_ANDEL * 100)} % av brutto) og erstatter ikke skattemelding.`
@@ -96,6 +108,11 @@ function buildScenario(
   const gGrowth = inputs.gGrowth + SCENARIO_VEKST_DELTA[key];
   const returnDelta = SCENARIO_AVKASTNING_DELTA[key];
 
+  const years = Math.max(
+    0,
+    inputs.retirementAge - (CURRENT_YEAR - inputs.birthYear),
+  );
+
   const ft = projectFolketrygd({
     birthYear: inputs.birthYear,
     currentSalary: inputs.annualSalary,
@@ -103,6 +120,8 @@ function buildScenario(
     wageGrowth,
     gGrowth,
     sivilstatus: inputs.sivilstatus,
+    existingBalance:
+      inputs.folketrygdBalance > 0 ? inputs.folketrygdBalance : undefined,
   });
 
   const tp = projectTpAccounts(inputs.tpAccounts, {
@@ -168,25 +187,69 @@ function buildScenario(
     balanceAtRetirement: a.balanceAtRetirement,
   }));
 
-  const totalYearly =
-    folketrygd.yearly + tpC.yearly + afpC.yearly + savingC.yearly;
-  const totalMonthly = totalYearly / 12;
-
-  // Erstatningsgrad mot dagens lønn (ikke siste prosjektlønn) — mer forståelig
+  // --- P0-1: erstatningsgrad mot forventet sluttlønn (nominell) ---
+  // Sluttlønn = dagens lønn fremskrevet med scenariets lønnsvekst til siste arbeidsår.
+  const projectedFinalSalary =
+    inputs.annualSalary * Math.pow(1 + wageGrowth, years);
   const salaryRef = inputs.showNet
-    ? inputs.annualSalary * GROV_NETTO_ANDEL
-    : inputs.annualSalary;
-  const replacementRate = salaryRef > 0 ? totalYearly / salaryRef : 0;
+    ? projectedFinalSalary * GROV_NETTO_ANDEL
+    : projectedFinalSalary;
+
+  const totalYearlyNominal =
+    folketrygd.yearly + tpC.yearly + afpC.yearly + savingC.yearly;
+  // Erstatningsgrad beregnes på nominelle tall (samme ratio som real/real).
+  const replacementRate =
+    salaryRef > 0 ? totalYearlyNominal / salaryRef : 0;
+
+  // --- P0-2: inflasjon — vis i dagens kroneverdi ---
+  // Modell: kjør nominell prognose som før, deflater deretter utbetalinger:
+  //   real = nominal / (1 + inflation)^yearsToRetirement
+  // Lønnsvekst og avkastning forblir nominelle i projeksjonen; inflasjon
+  // påvirker kun presentasjonen (og dermed live-resultater når slideren endres).
+  const inflationFactor =
+    years > 0 ? Math.pow(1 + Math.max(0, inputs.inflation), years) : 1;
+  const toReal = (n: number) => n / inflationFactor;
+
+  const folketrygdR = {
+    yearly: toReal(folketrygd.yearly),
+    monthly: toReal(folketrygd.monthly),
+    balanceAtRetirement: folketrygd.balanceAtRetirement,
+  };
+  const tpR = {
+    yearly: toReal(tpC.yearly),
+    monthly: toReal(tpC.monthly),
+    balanceAtRetirement: tpC.balanceAtRetirement,
+  };
+  const afpR = {
+    yearly: toReal(afpC.yearly),
+    monthly: toReal(afpC.monthly),
+  };
+  const savingR = {
+    yearly: toReal(savingC.yearly),
+    monthly: toReal(savingC.monthly),
+    balanceAtRetirement: savingC.balanceAtRetirement,
+  };
+  const savingBreakdownR = savingBreakdown.map((a) => ({
+    ...a,
+    yearly: toReal(a.yearly),
+  }));
+  const tpBreakdownR = tpBreakdown.map((a) => ({
+    ...a,
+    yearly: toReal(a.yearly),
+  }));
+
+  const totalYearly = toReal(totalYearlyNominal);
+  const totalMonthly = totalYearly / 12;
 
   return {
     key,
     label: SCENARIO_LABELS[key],
-    folketrygd,
-    tp: tpC,
-    afp: afpC,
-    saving: savingC,
-    savingBreakdown,
-    tpBreakdown,
+    folketrygd: folketrygdR,
+    tp: tpR,
+    afp: afpR,
+    saving: savingR,
+    savingBreakdown: savingBreakdownR,
+    tpBreakdown: tpBreakdownR,
     totalYearly,
     totalMonthly,
     replacementRate,
@@ -259,5 +322,6 @@ export function defaultInputs(): CalculatorInputs {
     showNet: false,
     gGrowth: 0.03,
     inflation: 0.02,
+    folketrygdBalance: 0,
   };
 }

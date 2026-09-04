@@ -30,7 +30,8 @@ export function ResultsPanel({
           Estimert pensjon ({unit})
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Fra uttak ved {result.age + result.yearsToRetirement} år ·{" "}
+          I dagens kroneverdi · Fra uttak ved{" "}
+          {result.age + result.yearsToRetirement} år ·{" "}
           {result.yearsToRetirement} år til uttak · tre scenarioer
         </p>
 
@@ -71,7 +72,8 @@ export function ResultsPanel({
                 {formatNOK(s.totalYearly)} / år
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                Erstatningsgrad {formatPercent(s.replacementRate)}
+                Erstatningsgrad av forventet sluttlønn{" "}
+                {formatPercent(s.replacementRate)}
               </p>
             </div>
           ))}

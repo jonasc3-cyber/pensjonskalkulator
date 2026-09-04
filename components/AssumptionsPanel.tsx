@@ -52,11 +52,16 @@ export function AssumptionsPanel({ values, onChange }: Props) {
             onChange={(e) => onChange("gGrowth", Number(e.target.value) / 100)}
           />
         </Field>
-        <Field id="assumptions-inflation" label="Inflasjon %">
+        <Field
+          id="assumptions-inflation"
+          label="Inflasjon %"
+          hint="Deflaterer resultatet til dagens kroneverdi"
+        >
           <input
             id="assumptions-inflation"
             type="number"
             step={0.1}
+            min={0}
             className={inputClass}
             value={Number((values.inflation * 100).toFixed(1))}
             onChange={(e) =>

@@ -350,4 +350,104 @@ describe("golden-ish cases", () => {
     );
     expect(r2.scenarios.base.tpBreakdown?.length).toBe(2);
   });
+  it("erstatningsgrad bruker forventet sluttlønn (ikke dagens lønn)", () => {
+    const inputs = defaultInputs();
+    const result = calculatePension(inputs);
+    const years = result.yearsToRetirement;
+    const finalSalary =
+      inputs.annualSalary * Math.pow(1 + inputs.wageGrowth, years);
+    // Rekonstruer nominell total: real * (1+i)^n
+    const nominalTotal =
+      result.scenarios.base.totalYearly *
+      Math.pow(1 + inputs.inflation, years);
+    expect(result.scenarios.base.replacementRate).toBeCloseTo(
+      nominalTotal / finalSalary,
+      5,
+    );
+    // Skal være klart lavere enn «mot dagens lønn» (som ble ~150 %)
+    const againstToday = nominalTotal / inputs.annualSalary;
+    expect(result.scenarios.base.replacementRate).toBeLessThan(againstToday);
+    expect(result.scenarios.base.replacementRate).toBeLessThan(1.2);
+    expect(result.scenarios.base.replacementRate).toBeGreaterThan(0.3);
+  });
+
+  it("høyere inflasjon reduserer beløp i dagens kroneverdi", () => {
+    const base = calculatePension({ ...defaultInputs(), inflation: 0.02 });
+    const high = calculatePension({ ...defaultInputs(), inflation: 0.04 });
+    const zero = calculatePension({ ...defaultInputs(), inflation: 0 });
+    expect(high.scenarios.base.totalYearly).toBeLessThan(
+      base.scenarios.base.totalYearly,
+    );
+    expect(base.scenarios.base.totalYearly).toBeLessThan(
+      zero.scenarios.base.totalYearly,
+    );
+    expect(high.scenarios.base.folketrygd.yearly).toBeLessThan(
+      base.scenarios.base.folketrygd.yearly,
+    );
+    // Erstatningsgrad er ratio og skal være (nesten) uavhengig av inflasjon
+    expect(high.scenarios.base.replacementRate).toBeCloseTo(
+      base.scenarios.base.replacementRate,
+      5,
+    );
+  });
+
+  it("manuell pensjonsbeholdning overstyrer estimat", () => {
+    const estimated = calculatePension({
+      ...defaultInputs(),
+      folketrygdBalance: 0,
+    });
+    const manualLow = calculatePension({
+      ...defaultInputs(),
+      folketrygdBalance: 100_000,
+    });
+    const manualHigh = calculatePension({
+      ...defaultInputs(),
+      folketrygdBalance: 5_000_000,
+    });
+    // Lav manuell beholdning → lavere folketrygd enn auto-estimat (typisk)
+    expect(manualLow.scenarios.base.folketrygd.yearly).toBeLessThan(
+      estimated.scenarios.base.folketrygd.yearly,
+    );
+    expect(manualHigh.scenarios.base.folketrygd.yearly).toBeGreaterThan(
+      estimated.scenarios.base.folketrygd.yearly,
+    );
+  });
+
+  it("projectFolketrygd bruker existingBalance når > 0", () => {
+    const withManual = projectFolketrygd({
+      birthYear: 1985,
+      currentSalary: 650_000,
+      retirementAge: 67,
+      wageGrowth: 0.03,
+      gGrowth: 0.03,
+      sivilstatus: "enslig",
+      existingBalance: 1_000_000,
+    });
+    const estimated = projectFolketrygd({
+      birthYear: 1985,
+      currentSalary: 650_000,
+      retirementAge: 67,
+      wageGrowth: 0.03,
+      gGrowth: 0.03,
+      sivilstatus: "enslig",
+    });
+    const withZero = projectFolketrygd({
+      birthYear: 1985,
+      currentSalary: 650_000,
+      retirementAge: 67,
+      wageGrowth: 0.03,
+      gGrowth: 0.03,
+      sivilstatus: "enslig",
+      existingBalance: 0,
+    });
+    expect(withManual.balanceAtRetirement).not.toBeCloseTo(
+      estimated.balanceAtRetirement,
+      0,
+    );
+    // 0 skal falle tilbake til estimat
+    expect(withZero.balanceAtRetirement).toBeCloseTo(
+      estimated.balanceAtRetirement,
+      0,
+    );
+  });
 });

@@ -154,6 +154,31 @@ export function InputsPanel({
         <div className="mt-6 space-y-4 border-t border-border pt-5">
           <h3 className="text-sm font-semibold text-primary">Avansert</h3>
           <div className="grid gap-4 sm:grid-cols-2">
+            <Field
+              id="folketrygdBalance"
+              label="Pensjonsbeholdning (folketrygd)"
+              hint="Fra NAV / Din pensjon — lar stå tom for estimat"
+            >
+              <input
+                id="folketrygdBalance"
+                type="number"
+                min={0}
+                step={10000}
+                className={inputClass}
+                value={
+                  values.folketrygdBalance > 0 ? values.folketrygdBalance : ""
+                }
+                placeholder="Estimeres automatisk"
+                onChange={(e) => {
+                  const raw = e.target.value;
+                  onChange(
+                    "folketrygdBalance",
+                    raw === "" ? 0 : Math.max(0, Number(raw)),
+                  );
+                }}
+              />
+            </Field>
+
             <Field id="sivilstatus" label="Sivilstatus (garantipensjon)">
               <select
                 id="sivilstatus"
