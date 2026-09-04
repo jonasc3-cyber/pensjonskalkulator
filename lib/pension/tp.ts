@@ -249,3 +249,15 @@ export function ensureSingleActiveContribution(
     activeContribution: a.id === preferred.id,
   }));
 }
+
+/** Invers av annuityPayment: nødvendig hovedstol for gitt årlig utbetaling. */
+export function annuityPresentValue(
+  payment: number,
+  rate: number,
+  years: number,
+): number {
+  if (payment <= 0 || years <= 0) return 0;
+  if (Math.abs(rate) < 1e-9) return payment * years;
+  const growth = Math.pow(1 + rate, years);
+  return (payment * (growth - 1)) / (rate * growth);
+}

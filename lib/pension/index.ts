@@ -5,3 +5,4 @@ export * from "./tp";
 export * from "./afp";
 export * from "./saving";
 export * from "./calculate";
+export * from "./goalSeek";

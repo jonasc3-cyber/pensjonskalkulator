@@ -6,6 +6,7 @@ import type { CalculatorInputs } from "@/lib/pension/types";
 import { InputsPanel } from "./InputsPanel";
 import { AssumptionsPanel } from "./AssumptionsPanel";
 import { ResultsPanel } from "./ResultsPanel";
+import { GoalSeekPanel } from "./GoalSeekPanel";
 
 export function Calculator() {
   const [values, setValues] = useState<CalculatorInputs>(() => defaultInputs());
@@ -30,6 +31,7 @@ export function Calculator() {
       />
       <AssumptionsPanel values={values} onChange={onChange} />
       <ResultsPanel result={result} showNet={values.showNet} />
+      <GoalSeekPanel values={values} result={result} />
     </div>
   );
 }
