@@ -308,7 +308,7 @@ export function defaultInputs(): CalculatorInputs {
     ]),
     tpPayoutMode: "aar",
     tpPayoutYears: 10,
-    afpType: "privat",
+    afpType: "ingen",
     savings: [
       createSavingAccount("fond", {
         monthly: 2000,

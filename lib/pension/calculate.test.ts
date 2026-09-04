@@ -277,6 +277,11 @@ describe("golden-ish cases", () => {
     expect(some.yearlyPayout).toBeGreaterThan(20_000);
   });
 
+  it("default AFP er ingen", () => {
+    expect(defaultInputs().afpType).toBe("ingen");
+  });
+
+
   it("full kalkulasjon: pessimistisk < basis < optimistisk", () => {
     const result = calculatePension(defaultInputs());
     expect(result.scenarios.low.totalYearly).toBeLessThan(

@@ -155,9 +155,9 @@ export function InputsPanel({
               onChange("afpType", e.target.value as CalculatorInputs["afpType"])
             }
           >
+            <option value="ingen">Ingen AFP</option>
             <option value="privat">Privat AFP (forenkling)</option>
             <option value="offentlig">Offentlig AFP (forenkling)</option>
-            <option value="ingen">Ingen AFP</option>
           </select>
         </Field>
 

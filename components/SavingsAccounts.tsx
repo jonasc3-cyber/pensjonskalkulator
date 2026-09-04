@@ -85,7 +85,6 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
         </p>
       ) : null}
 
-
       {accounts.length === 0 ? (
         <p className="rounded-xl border border-dashed border-border bg-muted/40 px-4 py-6 text-center text-sm text-muted-foreground">
           Ingen sparekontoer ennå. Trykk under for å legge til.
@@ -153,75 +152,6 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                   </Field>
 
                   <Field
-                    id={`saving-label-${account.id}`}
-                    label="Navn / etikett (valgfritt)"
-                  >
-                    <input
-                      id={`saving-label-${account.id}`}
-                      type="text"
-                      className={inputClass}
-                      placeholder="F.eks. Buffer, Nordnet ASK"
-                      value={account.label ?? ""}
-                      onChange={(e) =>
-                        updateAccount(account.id, { label: e.target.value })
-                      }
-                    />
-                  </Field>
-
-                  {showsProvider(account.kind) ? (
-                    <Field
-                      id={`saving-provider-${account.id}`}
-                      label="Hvor ligger den?"
-                      hint="Påvirker ikke beregningen — valgfritt for egen oversikt"
-                    >
-                      <div className="space-y-2">
-                        <select
-                          id={`saving-provider-${account.id}`}
-                          className={selectClass}
-                          value={selectValue}
-                          onChange={(e) => {
-                            const v = e.target.value;
-                            if (v === "Annet") {
-                              updateAccount(account.id, {
-                                provider: isCustomProvider(account.provider)
-                                  ? account.provider
-                                  : "Annet",
-                              });
-                            } else {
-                              updateAccount(account.id, { provider: v });
-                            }
-                          }}
-                        >
-                          <option value="">Velg …</option>
-                          {SAVING_PROVIDERS.map((p) => (
-                            <option key={p} value={p}>
-                              {p}
-                            </option>
-                          ))}
-                        </select>
-                        {showCustom ? (
-                          <input
-                            type="text"
-                            className={inputClass}
-                            placeholder="Egen leverandør"
-                            aria-label="Egen leverandør"
-                            value={
-                              account.provider === "Annet"
-                                ? ""
-                                : (account.provider ?? "")
-                            }
-                            onChange={(e) =>
-                              updateAccount(account.id, {
-                                provider: e.target.value || "Annet",
-                              })
-                            }
-                          />
-                        ) : null}
-                      </div>
-                    </Field>
-                  ) : null}
-
-                  <Field
                     id={`saving-balance-${account.id}`}
                     label="Eksisterende saldo (kr)"
                   >
@@ -250,50 +180,127 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                       }
                     />
                   </Field>
-
-                  <Field
-                    id={`saving-return-${account.id}`}
-                    label="Forventet avkastning (%)"
-                    hint={
-                      account.kind === "bank"
-                        ? "Typisk 2–3 % for bank"
-                        : "Typisk 5–7 % for fond/ASK/IPS"
-                    }
-                  >
-                    <div className="flex items-center gap-2">
-                      <input
-                        id={`saving-return-${account.id}`}
-                        type="number"
-                        min={0}
-                        max={15}
-                        step={0.1}
-                        className={inputClass}
-                        value={Number(
-                          (account.expectedReturn * 100).toFixed(1),
-                        )}
-                        onChange={(e) =>
-                          updateAccount(account.id, {
-                            expectedReturn: Number(e.target.value) / 100,
-                          })
-                        }
-                      />
-                      <span className="text-sm text-muted-foreground">%</span>
-                    </div>
-                  </Field>
                 </div>
 
-                {account.kind === "ips" ? (
-                  <p
-                    className="mt-3 rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs leading-relaxed text-info-text sm:col-span-2"
-                    role="note"
-                    data-testid="ips-tax-disclaimer"
-                  >
-                    <strong className="font-semibold text-primary">IPS-skattefordel er ikke med:</strong>{" "}
-                    Ca. 22&nbsp;% inntektsfradrag / preferansebehandling for IPS er{" "}
-                    <em>ikke</em> inkludert i estimatet.
-                  </p>
-                ) : null}
+                <details className="mt-4 rounded-lg border border-border bg-card/80 open:shadow-sm">
+                  <summary className="cursor-pointer select-none px-3 py-2.5 text-sm font-medium text-primary marker:text-muted-foreground hover:bg-primary-soft/40">
+                    Flere detaljer
+                  </summary>
+                  <div className="grid grid-cols-1 gap-5 border-t border-border p-3 sm:grid-cols-2 sm:p-4">
+                    <Field
+                      id={`saving-label-${account.id}`}
+                      label="Navn / etikett (valgfritt)"
+                    >
+                      <input
+                        id={`saving-label-${account.id}`}
+                        type="text"
+                        className={inputClass}
+                        placeholder="F.eks. Buffer, Nordnet ASK"
+                        value={account.label ?? ""}
+                        onChange={(e) =>
+                          updateAccount(account.id, { label: e.target.value })
+                        }
+                      />
+                    </Field>
 
+                    {showsProvider(account.kind) ? (
+                      <Field
+                        id={`saving-provider-${account.id}`}
+                        label="Hvor ligger den?"
+                        hint="Påvirker ikke beregningen — valgfritt for egen oversikt"
+                      >
+                        <div className="space-y-2">
+                          <select
+                            id={`saving-provider-${account.id}`}
+                            className={selectClass}
+                            value={selectValue}
+                            onChange={(e) => {
+                              const v = e.target.value;
+                              if (v === "Annet") {
+                                updateAccount(account.id, {
+                                  provider: isCustomProvider(account.provider)
+                                    ? account.provider
+                                    : "Annet",
+                                });
+                              } else {
+                                updateAccount(account.id, { provider: v });
+                              }
+                            }}
+                          >
+                            <option value="">Velg …</option>
+                            {SAVING_PROVIDERS.map((p) => (
+                              <option key={p} value={p}>
+                                {p}
+                              </option>
+                            ))}
+                          </select>
+                          {showCustom ? (
+                            <input
+                              type="text"
+                              className={inputClass}
+                              placeholder="Egen leverandør"
+                              aria-label="Egen leverandør"
+                              value={
+                                account.provider === "Annet"
+                                  ? ""
+                                  : (account.provider ?? "")
+                              }
+                              onChange={(e) =>
+                                updateAccount(account.id, {
+                                  provider: e.target.value || "Annet",
+                                })
+                              }
+                            />
+                          ) : null}
+                        </div>
+                      </Field>
+                    ) : null}
+
+                    <Field
+                      id={`saving-return-${account.id}`}
+                      label="Forventet avkastning (%)"
+                      hint={
+                        account.kind === "bank"
+                          ? "Typisk 2–3 % for bank"
+                          : "Typisk 5–7 % for fond/ASK/IPS"
+                      }
+                    >
+                      <div className="flex items-center gap-2">
+                        <input
+                          id={`saving-return-${account.id}`}
+                          type="number"
+                          min={0}
+                          max={15}
+                          step={0.1}
+                          className={inputClass}
+                          value={Number(
+                            (account.expectedReturn * 100).toFixed(1),
+                          )}
+                          onChange={(e) =>
+                            updateAccount(account.id, {
+                              expectedReturn: Number(e.target.value) / 100,
+                            })
+                          }
+                        />
+                        <span className="text-sm text-muted-foreground">%</span>
+                      </div>
+                    </Field>
+
+                    {account.kind === "ips" ? (
+                      <p
+                        className="rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs leading-relaxed text-info-text sm:col-span-2"
+                        role="note"
+                        data-testid="ips-tax-disclaimer"
+                      >
+                        <strong className="font-semibold text-primary">
+                          IPS-skattefordel er ikke med:
+                        </strong>{" "}
+                        Ca. 22&nbsp;% inntektsfradrag / preferansebehandling for
+                        IPS er <em>ikke</em> inkludert i estimatet.
+                      </p>
+                    ) : null}
+                  </div>
+                </details>
               </li>
             );
           })}

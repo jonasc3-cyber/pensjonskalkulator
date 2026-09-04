@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 48" role="img" aria-label="Pensjonskalkulator">
+  <title>Pensjonskalkulator</title>
+  <rect x="0" y="4" width="40" height="40" rx="10" fill="#0B2A4A"/>
+  <rect x="0" y="4" width="4" height="40" rx="2" fill="#4F7A68"/>
+  <text x="20" y="32" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#F8FAFC">PK</text>
+  <text x="52" y="28" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="650" fill="#0B2A4A">Pensjonskalkulator</text>
+  <text x="52" y="42" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="10" font-weight="500" fill="#64748B">Forenklet modell · personvern først</text>
+</svg>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -15,6 +16,28 @@ import { formatNOK } from "@/lib/format";
 import { palette } from "@/lib/theme";
 
 export function TimelineChart({ data }: { data: TimelinePoint[] }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [chartKey, setChartKey] = useState(0);
+  const lastWidth = useRef(0);
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    let timer = 0;
+    const ro = new ResizeObserver((entries) => {
+      const width = Math.round(entries[0]?.contentRect.width ?? 0);
+      if (width === lastWidth.current) return;
+      lastWidth.current = width;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setChartKey((k) => k + 1), 0);
+    });
+    ro.observe(el);
+    return () => {
+      window.clearTimeout(timer);
+      ro.disconnect();
+    };
+  }, []);
+
   const chartData = data.map((p) => ({
     age: p.age,
     Folketrygd: Math.round(p.folketrygd),
@@ -25,11 +48,12 @@ export function TimelineChart({ data }: { data: TimelinePoint[] }) {
 
   return (
     <div
-      className="h-72 w-full"
+      ref={wrapRef}
+      className="h-72 w-full min-w-0"
       role="img"
       aria-label="Områdediagram over årlig pensjon over tid (basis-scenario)"
     >
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer key={chartKey} width="100%" height={288}>
         <AreaChart data={chartData} margin={{ top: 8, right: 8, left: 8, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={palette.chart.grid} />
           <XAxis

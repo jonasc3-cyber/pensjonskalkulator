@@ -1,16 +1,34 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+function navClass(active: boolean): string {
+  const base =
+    "rounded-full px-2.5 py-1.5 text-sm font-medium transition-colors sm:px-3";
+  if (active) {
+    return `${base} bg-primary-soft text-primary shadow-sm ring-1 ring-primary/15`;
+  }
+  return `${base} text-slate-700 hover:bg-primary-soft/70 hover:text-primary`;
+}
 
 export function Header() {
+  const pathname = usePathname();
+  const onKalkulator = pathname === "/";
+  const onOm = pathname === "/om" || pathname.startsWith("/om/");
+
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/90">
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between gap-3 px-4 sm:h-14 sm:gap-4 sm:px-6">
         <Link href="/" className="group flex min-w-0 items-center gap-2.5 sm:gap-3">
-          <span
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-xs font-bold text-primary-foreground shadow-sm sm:h-9 sm:w-9 sm:text-sm"
-            aria-hidden
-          >
-            PK
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/pk-mark.svg"
+            alt=""
+            width={36}
+            height={36}
+            className="h-8 w-8 shrink-0 sm:h-9 sm:w-9"
+          />
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-primary group-hover:text-primary-mid sm:text-base">
               Pensjonskalkulator
@@ -26,13 +44,15 @@ export function Header() {
         >
           <Link
             href="/"
-            className="rounded-lg px-2 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:bg-primary-soft hover:text-primary sm:px-3"
+            className={navClass(onKalkulator)}
+            aria-current={onKalkulator ? "page" : undefined}
           >
             Kalkulator
           </Link>
           <Link
             href="/om"
-            className="rounded-lg px-2 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:bg-primary-soft hover:text-primary sm:px-3"
+            className={navClass(onOm)}
+            aria-current={onOm ? "page" : undefined}
           >
             Om
             <span className="hidden sm:inline"> modellen</span>

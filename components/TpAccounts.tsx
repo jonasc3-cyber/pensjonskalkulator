@@ -159,73 +159,6 @@ export function TpAccounts({ accounts, onChange }: Props) {
                   </Field>
 
                   <Field
-                    id={`tp-label-${account.id}`}
-                    label="Navn / etikett (valgfritt)"
-                  >
-                    <input
-                      id={`tp-label-${account.id}`}
-                      type="text"
-                      className={inputClass}
-                      placeholder="F.eks. Nåværende arbeidsgiver"
-                      value={account.label ?? ""}
-                      onChange={(e) =>
-                        updateAccount(account.id, { label: e.target.value })
-                      }
-                    />
-                  </Field>
-
-                  <Field
-                    id={`tp-provider-${account.id}`}
-                    label="Hvor ligger den?"
-                    hint="Påvirker ikke beregningen — valgfritt for egen oversikt"
-                  >
-                    <div className="space-y-2">
-                      <select
-                        id={`tp-provider-${account.id}`}
-                        className={selectClass}
-                        value={selectValue}
-                        onChange={(e) => {
-                          const v = e.target.value;
-                          if (v === "Annet") {
-                            updateAccount(account.id, {
-                              provider: isCustomProvider(account.provider)
-                                ? account.provider
-                                : "Annet",
-                            });
-                          } else {
-                            updateAccount(account.id, { provider: v });
-                          }
-                        }}
-                      >
-                        <option value="">Velg …</option>
-                        {TP_PROVIDERS.map((p) => (
-                          <option key={p} value={p}>
-                            {p}
-                          </option>
-                        ))}
-                      </select>
-                      {showCustom ? (
-                        <input
-                          type="text"
-                          className={inputClass}
-                          placeholder="Egen leverandør"
-                          aria-label="Egen leverandør"
-                          value={
-                            account.provider === "Annet"
-                              ? ""
-                              : (account.provider ?? "")
-                          }
-                          onChange={(e) =>
-                            updateAccount(account.id, {
-                              provider: e.target.value || "Annet",
-                            })
-                          }
-                        />
-                      ) : null}
-                    </div>
-                  </Field>
-
-                  <Field
                     id={`tp-balance-${account.id}`}
                     label="Eksisterende saldo (kr)"
                     hint="Fra pensjonskapitalbevis / Norsk Pensjon"
@@ -267,32 +200,6 @@ export function TpAccounts({ accounts, onChange }: Props) {
                     </div>
                   </Field>
 
-                  <Field
-                    id={`tp-return-${account.id}`}
-                    label="Forventet avkastning (%)"
-                    hint="Typisk 3–5 % for tjenestepensjon"
-                  >
-                    <div className="flex items-center gap-2">
-                      <input
-                        id={`tp-return-${account.id}`}
-                        type="number"
-                        min={0}
-                        max={15}
-                        step={0.1}
-                        className={inputClass}
-                        value={Number(
-                          (account.expectedReturn * 100).toFixed(1),
-                        )}
-                        onChange={(e) =>
-                          updateAccount(account.id, {
-                            expectedReturn: Number(e.target.value) / 100,
-                          })
-                        }
-                      />
-                      <span className="text-sm text-muted-foreground">%</span>
-                    </div>
-                  </Field>
-
                   {showsYearlyEstimate(account.kind) ? (
                     <Field
                       id={`tp-estimate-${account.id}`}
@@ -312,28 +219,128 @@ export function TpAccounts({ accounts, onChange }: Props) {
                       />
                     </Field>
                   ) : null}
-
-                  <div className="sm:col-span-2">
-                    <label className="flex items-start gap-2 rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-slate-700 shadow-sm">
-                      <input
-                        type="radio"
-                        name="tp-active-contribution"
-                        className="mt-0.5 h-4 w-4 accent-primary"
-                        checked={account.activeContribution}
-                        onChange={() => setActive(account.id)}
-                      />
-                      <span>
-                        <span className="font-medium text-primary">
-                          Aktiv ordning (pågående innskudd)
-                        </span>
-                        <span className="mt-0.5 block text-xs text-muted-foreground">
-                          Kun én konto får innskudd = sats × lønn (opp til 12 G).
-                          Bytt hit hvis dette er din nåværende arbeidsgiverordning.
-                        </span>
-                      </span>
-                    </label>
-                  </div>
                 </div>
+
+                <details className="mt-4 rounded-lg border border-border bg-card/80 open:shadow-sm">
+                  <summary className="cursor-pointer select-none px-3 py-2.5 text-sm font-medium text-primary marker:text-muted-foreground hover:bg-primary-soft/40">
+                    Flere detaljer
+                  </summary>
+                  <div className="grid grid-cols-1 gap-5 border-t border-border p-3 sm:grid-cols-2 sm:p-4">
+                    <Field
+                      id={`tp-label-${account.id}`}
+                      label="Navn / etikett (valgfritt)"
+                    >
+                      <input
+                        id={`tp-label-${account.id}`}
+                        type="text"
+                        className={inputClass}
+                        placeholder="F.eks. Nåværende arbeidsgiver"
+                        value={account.label ?? ""}
+                        onChange={(e) =>
+                          updateAccount(account.id, { label: e.target.value })
+                        }
+                      />
+                    </Field>
+
+                    <Field
+                      id={`tp-provider-${account.id}`}
+                      label="Hvor ligger den?"
+                      hint="Påvirker ikke beregningen — valgfritt for egen oversikt"
+                    >
+                      <div className="space-y-2">
+                        <select
+                          id={`tp-provider-${account.id}`}
+                          className={selectClass}
+                          value={selectValue}
+                          onChange={(e) => {
+                            const v = e.target.value;
+                            if (v === "Annet") {
+                              updateAccount(account.id, {
+                                provider: isCustomProvider(account.provider)
+                                  ? account.provider
+                                  : "Annet",
+                              });
+                            } else {
+                              updateAccount(account.id, { provider: v });
+                            }
+                          }}
+                        >
+                          <option value="">Velg …</option>
+                          {TP_PROVIDERS.map((p) => (
+                            <option key={p} value={p}>
+                              {p}
+                            </option>
+                          ))}
+                        </select>
+                        {showCustom ? (
+                          <input
+                            type="text"
+                            className={inputClass}
+                            placeholder="Egen leverandør"
+                            aria-label="Egen leverandør"
+                            value={
+                              account.provider === "Annet"
+                                ? ""
+                                : (account.provider ?? "")
+                            }
+                            onChange={(e) =>
+                              updateAccount(account.id, {
+                                provider: e.target.value || "Annet",
+                              })
+                            }
+                          />
+                        ) : null}
+                      </div>
+                    </Field>
+
+                    <Field
+                      id={`tp-return-${account.id}`}
+                      label="Forventet avkastning (%)"
+                      hint="Typisk 3–5 % for tjenestepensjon"
+                    >
+                      <div className="flex items-center gap-2">
+                        <input
+                          id={`tp-return-${account.id}`}
+                          type="number"
+                          min={0}
+                          max={15}
+                          step={0.1}
+                          className={inputClass}
+                          value={Number(
+                            (account.expectedReturn * 100).toFixed(1),
+                          )}
+                          onChange={(e) =>
+                            updateAccount(account.id, {
+                              expectedReturn: Number(e.target.value) / 100,
+                            })
+                          }
+                        />
+                        <span className="text-sm text-muted-foreground">%</span>
+                      </div>
+                    </Field>
+
+                    <div className="sm:col-span-2">
+                      <label className="flex items-start gap-2 rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-slate-700 shadow-sm">
+                        <input
+                          type="radio"
+                          name="tp-active-contribution"
+                          className="mt-0.5 h-4 w-4 accent-primary"
+                          checked={account.activeContribution}
+                          onChange={() => setActive(account.id)}
+                        />
+                        <span>
+                          <span className="font-medium text-primary">
+                            Aktiv ordning (pågående innskudd)
+                          </span>
+                          <span className="mt-0.5 block text-xs text-muted-foreground">
+                            Kun én konto får innskudd = sats × lønn (opp til 12 G).
+                            Bytt hit hvis dette er din nåværende arbeidsgiverordning.
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </details>
               </li>
             );
           })}

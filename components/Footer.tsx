@@ -43,6 +43,14 @@ export function Footer() {
             Om modell, kilder og personvern
           </Link>
           <a
+            href="https://github.com/jonasc3-cyber/pensjonskalkulator/issues"
+            className="underline underline-offset-2 hover:text-white"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Tilbakemelding (GitHub)
+          </a>
+          <a
             href="https://www.nav.no/pensjon"
             className="underline underline-offset-2 hover:text-white"
             target="_blank"
@@ -59,6 +67,19 @@ export function Footer() {
             Norsk Pensjon
           </a>
         </div>
+        <p className="mt-4 max-w-3xl text-xs leading-relaxed text-slate-400">
+          Uavhengig indie-prototype for personlig bruk — ikke tilknyttet NAV, bank
+          eller pensjonsleverandør. Tilbakemelding via{" "}
+          <a
+            href="https://github.com/jonasc3-cyber/pensjonskalkulator/issues"
+            className="underline underline-offset-2 hover:text-white"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub issues
+          </a>
+          .
+        </p>
       </div>
     </footer>
   );

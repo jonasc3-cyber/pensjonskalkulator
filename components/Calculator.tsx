@@ -16,6 +16,7 @@ import { AssumptionsPanel } from "./AssumptionsPanel";
 import { ResultsPanel } from "./ResultsPanel";
 import { GoalSeekPanel } from "./GoalSeekPanel";
 import { CohortWarning } from "./CohortWarning";
+import { StickyMiniResult } from "./StickyMiniResult";
 
 const PERSIST_DEBOUNCE_MS = 400;
 
@@ -78,7 +79,7 @@ export function Calculator() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-16 sm:pb-0">
       <InputsPanel
         values={values}
         advanced={advanced}
@@ -91,6 +92,7 @@ export function Calculator() {
       <CohortWarning birthYear={values.birthYear} alert={false} />
       <ResultsPanel result={result} showNet={values.showNet} />
       <GoalSeekPanel values={values} result={result} />
+      <StickyMiniResult baseMonthly={result.scenarios.base.totalMonthly} />
     </div>
   );
 }

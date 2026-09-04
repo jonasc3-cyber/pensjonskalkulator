@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Pensjonskalkulator">
+  <title>Pensjonskalkulator</title>
+  <rect width="64" height="64" rx="14" fill="#0B2A4A"/>
+  <!-- sage left accent -->
+  <rect x="0" y="14" width="5" height="36" rx="2.5" fill="#4F7A68"/>
+  <!-- P -->
+  <path fill="#F8FAFC" d="M16 15h15.2c7.5 0 12.6 4.3 12.6 11.1 0 6.7-5.1 11-12.6 11H23.5V49H16V15zm7.5 6.8v8.6h6.4c3.5 0 5.6-1.7 5.6-4.3s-2.1-4.3-5.6-4.3h-6.4z"/>
+  <!-- K -->
+  <path fill="#F8FAFC" d="M40 15h7.4v14.8L56.8 15H64L52.6 30.8 64 49h-7.5L47.4 35.6V49H40V15z"/>
+</svg>

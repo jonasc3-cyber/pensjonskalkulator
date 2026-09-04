@@ -198,14 +198,14 @@ export function ResultsPanel({
           </div>
         ) : null}
 
-        <div className="mt-6">
+        <div className="mt-6 min-w-0 w-full">
           <h3 className="mb-2 text-sm font-semibold text-slate-800">
             Scenarioer etter kilde
           </h3>
           <BreakdownChart scenarios={[low, base, high]} />
         </div>
 
-        <div className="mt-6">
+        <div className="mt-6 min-w-0 w-full">
           <h3 className="mb-2 text-sm font-semibold text-slate-800">
             Årlig pensjon over tid (basis)
           </h3>

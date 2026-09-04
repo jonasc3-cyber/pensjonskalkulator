@@ -40,6 +40,19 @@ export default function OmPage() {
         Denne siden forklarer hvordan den forenklede pensjonskalkulatoren fungerer,
         hvilke antagelser som er gjort, og hva du bør sjekke andre steder.
       </p>
+      <p className="mt-3 rounded-lg border border-border bg-muted/40 px-3 py-2 text-sm text-slate-600">
+        Uavhengig indie-prototype for personlig bruk — ikke tilknyttet NAV, bank
+        eller pensjonsleverandør. Tilbakemelding via{" "}
+        <a
+          href="https://github.com/jonasc3-cyber/pensjonskalkulator/issues"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub issues
+        </a>
+        .
+      </p>
 
       <section className="mt-10 space-y-3">
         <h2 className="text-lg font-semibold text-primary">Personvern</h2>
