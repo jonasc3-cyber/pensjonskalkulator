@@ -2,7 +2,13 @@ import { describe, expect, it } from "vitest";
 import { G_NOK, FOLKETRYGD_OPPTJENINGSSATS, FOLKETRYGD_MAKS_G } from "../constants";
 import { getDelingstall } from "./delingstall";
 import { yearlyAccrual, projectFolketrygd } from "./folketrygd";
-import { annuityPayment, projectTp } from "./tp";
+import {
+  annuityPayment,
+  createTpAccount,
+  ensureSingleActiveContribution,
+  projectTp,
+  projectTpAccounts,
+} from "./tp";
 import {
   createSavingAccount,
   projectSaving,
@@ -33,6 +39,13 @@ describe("delingstall", () => {
   it("klipper alder til 62–75", () => {
     expect(getDelingstall(50)).toBe(getDelingstall(62));
     expect(getDelingstall(90)).toBe(getDelingstall(75));
+  });
+
+  it("bruker NAV-tall @ 67 for kjente kohorter", () => {
+    expect(getDelingstall(67, 1963)).toBeCloseTo(16.18, 2);
+    expect(getDelingstall(67, 1965)).toBeCloseTo(16.34, 2);
+    expect(getDelingstall(67, 1980)).toBeCloseTo(17.78, 2);
+    expect(getDelingstall(67, 2000)).toBeCloseTo(19.85, 2);
   });
 });
 
@@ -121,6 +134,74 @@ describe("projectSavings (multi-konto)", () => {
   });
 });
 
+describe("projectTpAccounts (multi-TP)", () => {
+  const baseOpts = {
+    birthYear: 1985,
+    currentSalary: 650_000,
+    retirementAge: 67,
+    wageGrowth: 0.03,
+    gGrowth: 0.03,
+    payoutMode: "aar" as const,
+    payoutYears: 10,
+  };
+
+  it("kun aktiv konto får lønnsinnskudd", () => {
+    const active = createTpAccount("innskudd", {
+      contributionRate: 0.05,
+      balance: 0,
+      expectedReturn: 0.045,
+      activeContribution: true,
+    });
+    const frozen = createTpAccount("innskudd", {
+      contributionRate: 0.05,
+      balance: 100_000,
+      expectedReturn: 0.045,
+      activeContribution: false,
+    });
+
+    const multi = projectTpAccounts(
+      ensureSingleActiveContribution([active, frozen], active.id),
+      baseOpts,
+    );
+
+    const onlyActive = projectTp({
+      ...baseOpts,
+      contributionRate: 0.05,
+      existingBalance: 0,
+      expectedReturn: 0.045,
+    });
+    const onlyFrozenBalance = projectTp({
+      ...baseOpts,
+      contributionRate: 0,
+      existingBalance: 100_000,
+      expectedReturn: 0.045,
+    });
+
+    expect(multi.accounts).toHaveLength(2);
+    expect(multi.balanceAtRetirement).toBeCloseTo(
+      onlyActive.balanceAtRetirement + onlyFrozenBalance.balanceAtRetirement,
+      0,
+    );
+    // If frozen also got contributionRate×salary, saldo would be much higher
+    const ifFrozenAlsoContributed = projectTp({
+      ...baseOpts,
+      contributionRate: 0.05,
+      existingBalance: 100_000,
+      expectedReturn: 0.045,
+    });
+    expect(multi.accounts.find((a) => a.id === frozen.id)!.balanceAtRetirement)
+      .toBeCloseTo(onlyFrozenBalance.balanceAtRetirement, 0);
+    expect(multi.accounts.find((a) => a.id === frozen.id)!.balanceAtRetirement)
+      .toBeLessThan(ifFrozenAlsoContributed.balanceAtRetirement);
+  });
+
+  it("tom liste gir null", () => {
+    const result = projectTpAccounts([], baseOpts);
+    expect(result.yearlyPayout).toBe(0);
+    expect(result.accounts).toHaveLength(0);
+  });
+});
+
 describe("golden-ish cases", () => {
   it("høyere lønn gir høyere folketrygd (under taket)", () => {
     const low = projectFolketrygd({
@@ -164,7 +245,6 @@ describe("golden-ish cases", () => {
       sivilstatus: "enslig",
       existingBalance: 2_000_000,
     });
-    // Mer opptjening + lavere delingstall → høyere årlig
     expect(late.yearlyGross).toBeGreaterThan(early.yearlyGross);
   });
 
@@ -240,5 +320,34 @@ describe("golden-ish cases", () => {
     const result = calculatePension(inputs);
     expect(result.scenarios.base.saving.yearly).toBe(0);
     expect(result.scenarios.base.savingBreakdown).toEqual([]);
+  });
+
+  it("flere TP-kontoer gir breakdown og øker total TP", () => {
+    const one = defaultInputs();
+    const two = {
+      ...defaultInputs(),
+      tpAccounts: ensureSingleActiveContribution([
+        createTpAccount("innskudd", {
+          contributionRate: 0.02,
+          balance: 0,
+          expectedReturn: 0.045,
+          activeContribution: true,
+        }),
+        createTpAccount("innskudd", {
+          contributionRate: 0.02,
+          balance: 200_000,
+          expectedReturn: 0.045,
+          activeContribution: false,
+          label: "Tidligere arbeidsgiver",
+          provider: "Storebrand",
+        }),
+      ]),
+    };
+    const r1 = calculatePension(one);
+    const r2 = calculatePension(two);
+    expect(r2.scenarios.base.tp.yearly).toBeGreaterThan(
+      r1.scenarios.base.tp.yearly,
+    );
+    expect(r2.scenarios.base.tpBreakdown?.length).toBe(2);
   });
 });

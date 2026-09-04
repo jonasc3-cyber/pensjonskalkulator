@@ -2,6 +2,7 @@
 
 import { Field, inputClass, selectClass } from "./Field";
 import { SavingsAccounts } from "./SavingsAccounts";
+import { TpAccounts } from "./TpAccounts";
 import type { CalculatorInputs } from "@/lib/pension/types";
 import { CURRENT_YEAR } from "@/lib/constants";
 
@@ -110,42 +111,6 @@ export function InputsPanel({
           </div>
         </Field>
 
-        <Field
-          id="tpRate"
-          label="Tjenestepensjon innskudd"
-          hint="OTP typisk minst 2 % opp til 12 G"
-        >
-          <div className="flex items-center gap-2">
-            <input
-              id="tpRate"
-              type="number"
-              min={0}
-              max={15}
-              step={0.1}
-              className={inputClass}
-              value={Number((values.tpRate * 100).toFixed(1))}
-              onChange={(e) => onChange("tpRate", Number(e.target.value) / 100)}
-            />
-            <span className="text-sm text-muted-foreground">%</span>
-          </div>
-        </Field>
-
-        <Field
-          id="tpBalance"
-          label="Eksisterende tjenestepensjon"
-          hint="Saldo du har spart opp til nå (fra pensjonskapitalbevis / Norsk Pensjon)"
-        >
-          <input
-            id="tpBalance"
-            type="number"
-            min={0}
-            step={10000}
-            className={inputClass}
-            value={values.tpBalance}
-            onChange={(e) => onChange("tpBalance", Number(e.target.value))}
-          />
-        </Field>
-
         <Field id="afpType" label="AFP" hint="Forenklet anslag — ikke offisielle regler">
           <select
             id="afpType"
@@ -174,6 +139,11 @@ export function InputsPanel({
           </label>
         </Field>
 
+        <TpAccounts
+          accounts={values.tpAccounts}
+          onChange={(tpAccounts) => onChange("tpAccounts", tpAccounts)}
+        />
+
         <SavingsAccounts
           accounts={values.savings}
           onChange={(savings) => onChange("savings", savings)}
@@ -201,22 +171,11 @@ export function InputsPanel({
               </select>
             </Field>
 
-            <Field id="tpReturn" label="Forventet avkastning TP (%)">
-              <input
-                id="tpReturn"
-                type="number"
-                min={0}
-                max={15}
-                step={0.1}
-                className={inputClass}
-                value={Number((values.tpReturn * 100).toFixed(1))}
-                onChange={(e) =>
-                  onChange("tpReturn", Number(e.target.value) / 100)
-                }
-              />
-            </Field>
-
-            <Field id="tpPayoutMode" label="TP-utbetaling">
+            <Field
+              id="tpPayoutMode"
+              label="TP-utbetaling"
+              hint="Gjelder alle TP-kontoer"
+            >
               <select
                 id="tpPayoutMode"
                 className={selectClass}

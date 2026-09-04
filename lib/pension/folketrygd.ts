@@ -51,7 +51,7 @@ export function projectFolketrygd(params: FolketrygdParams): FolketrygdResult {
     g *= 1 + params.gGrowth;
   }
 
-  const delingstall = getDelingstall(params.retirementAge);
+  const delingstall = getDelingstall(params.retirementAge, params.birthYear);
   const earned = balance / delingstall;
   const floor = GARANTIPENSJON_G[params.sivilstatus] * g;
   const garantipensjonApplied = earned < floor;

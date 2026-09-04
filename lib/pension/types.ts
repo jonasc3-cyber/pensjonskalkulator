@@ -16,14 +16,37 @@ export interface SavingAccount {
   expectedReturn: number;
 }
 
+export type TpKind = "innskudd" | "ytelse" | "hybrid" | "offentlig" | "annet";
+
+export interface TpAccount {
+  id: string;
+  kind: TpKind;
+  label?: string;
+  provider?: string;
+  /** Eksisterende pensjonskapital / saldo. */
+  balance: number;
+  /** Innskuddssats som desimal (f.eks. 0.02). Brukes kun når activeContribution er true. */
+  contributionRate: number;
+  /** Forventet årlig avkastning som desimal. */
+  expectedReturn: number;
+  /**
+   * Kun én konto bør være aktiv for pågående innskudd (rate × lønn opp til 12 G).
+   * Øvrige kontoer er «frosne» saldoer som fortsatt får avkastning.
+   */
+  activeContribution: boolean;
+  /**
+   * Valgfritt årlig pensjonsanslag for ytelses-/offentlig ordning (forenkling).
+   * Hvis satt > 0, brukes det som årlig utbetaling i stedet for annuitet av saldo.
+   */
+  yearlyPensionEstimate?: number;
+}
+
 export interface CalculatorInputs {
   birthYear: number;
   annualSalary: number;
   wageGrowth: number;
   retirementAge: number;
-  tpRate: number;
-  tpBalance: number;
-  tpReturn: number;
+  tpAccounts: TpAccount[];
   tpPayoutMode: TpPayoutMode;
   tpPayoutYears: number;
   afpType: AfpType;
@@ -39,7 +62,6 @@ export interface CalculatorInputs {
 export interface ScenarioAssumptions {
   wageGrowth: number;
   gGrowth: number;
-  tpReturn: number;
 }
 
 export interface ComponentResult {
@@ -57,6 +79,8 @@ export interface ScenarioResult {
   saving: ComponentResult;
   /** Valgfri oppdeling per sparekonto (basis-beløp før netto). */
   savingBreakdown?: { id: string; label: string; yearly: number; balanceAtRetirement: number }[];
+  /** Valgfri oppdeling per TP-konto. */
+  tpBreakdown?: { id: string; label: string; yearly: number; balanceAtRetirement: number }[];
   totalYearly: number;
   totalMonthly: number;
   replacementRate: number;

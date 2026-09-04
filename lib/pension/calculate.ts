@@ -7,7 +7,12 @@ import {
 import { estimateAfp } from "./afp";
 import { projectFolketrygd } from "./folketrygd";
 import { createSavingAccount, projectSavings, SAVING_KIND_LABELS } from "./saving";
-import { projectTp } from "./tp";
+import {
+  createTpAccount,
+  ensureSingleActiveContribution,
+  projectTpAccounts,
+  TP_KIND_LABELS,
+} from "./tp";
 import type {
   CalculationResult,
   CalculatorInputs,
@@ -48,10 +53,22 @@ export function calculatePension(inputs: CalculatorInputs): CalculationResult {
           .map((s) => SAVING_KIND_LABELS[s.kind])
           .join(", ")}) fremskrives hver for seg og summeres.`;
 
+  const activeTp = inputs.tpAccounts.find((a) => a.activeContribution);
+  const tpSummary =
+    inputs.tpAccounts.length === 0
+      ? "Tjenestepensjon er ikke inkludert."
+      : inputs.tpAccounts.length === 1
+        ? `Tjenestepensjon: ${TP_KIND_LABELS[inputs.tpAccounts[0].kind]}${
+            activeTp
+              ? ` med ${((activeTp.contributionRate * 100).toFixed(1)).replace(".", ",")} % innskudd av lønn opp til 12 G`
+              : " (kun eksisterende saldo)"
+          }, fremskrevet med kontos egen avkastning.`
+        : `Tjenestepensjon: ${inputs.tpAccounts.length} kontoer. Kun én aktiv ordning får pågående innskudd (rate × lønn opp til 12 G); øvrige er frosne saldoer som fortsatt får avkastning.`;
+
   const explanation = [
     `Ny folketrygd: 18,1 % av inntekt opp til 7,1 G legges til pensjonsbeholdningen hvert år.`,
     `Ved uttak divideres beholdningen med forenklet delingstall for alder ${inputs.retirementAge}.`,
-    `Tjenestepensjon: ${((inputs.tpRate * 100).toFixed(1)).replace(".", ",")} % av lønn opp til 12 G, fremskrevet med valgt avkastning.`,
+    tpSummary,
     inputs.afpType === "ingen"
       ? "AFP er ikke inkludert."
       : `AFP (${inputs.afpType}) er et forenklet tillegg — ikke offisielle satser.`,
@@ -77,8 +94,7 @@ function buildScenario(
 ): ScenarioResult {
   const wageGrowth = inputs.wageGrowth + SCENARIO_VEKST_DELTA[key];
   const gGrowth = inputs.gGrowth + SCENARIO_VEKST_DELTA[key];
-  const tpReturn = inputs.tpReturn + SCENARIO_AVKASTNING_DELTA[key];
-  const savingReturnDelta = SCENARIO_AVKASTNING_DELTA[key];
+  const returnDelta = SCENARIO_AVKASTNING_DELTA[key];
 
   const ft = projectFolketrygd({
     birthYear: inputs.birthYear,
@@ -89,17 +105,15 @@ function buildScenario(
     sivilstatus: inputs.sivilstatus,
   });
 
-  const tp = projectTp({
+  const tp = projectTpAccounts(inputs.tpAccounts, {
     birthYear: inputs.birthYear,
     currentSalary: inputs.annualSalary,
     retirementAge: inputs.retirementAge,
     wageGrowth,
     gGrowth,
-    contributionRate: inputs.tpRate,
-    existingBalance: inputs.tpBalance,
-    expectedReturn: tpReturn,
     payoutMode: inputs.tpPayoutMode,
     payoutYears: inputs.tpPayoutYears,
+    returnDelta,
   });
 
   const afp = estimateAfp({
@@ -115,7 +129,7 @@ function buildScenario(
     retirementAge: inputs.retirementAge,
     payoutMode: inputs.savingPayoutMode,
     payoutYears: inputs.savingPayoutYears,
-    returnDelta: savingReturnDelta,
+    returnDelta,
   });
 
   const netFactor = inputs.showNet ? GROV_NETTO_ANDEL : 1;
@@ -147,6 +161,13 @@ function buildScenario(
     balanceAtRetirement: a.balanceAtRetirement,
   }));
 
+  const tpBreakdown = tp.accounts.map((a) => ({
+    id: a.id,
+    label: a.label,
+    yearly: a.yearlyPayout * netFactor,
+    balanceAtRetirement: a.balanceAtRetirement,
+  }));
+
   const totalYearly =
     folketrygd.yearly + tpC.yearly + afpC.yearly + savingC.yearly;
   const totalMonthly = totalYearly / 12;
@@ -165,6 +186,7 @@ function buildScenario(
     afp: afpC,
     saving: savingC,
     savingBreakdown,
+    tpBreakdown,
     totalYearly,
     totalMonthly,
     replacementRate,
@@ -213,9 +235,14 @@ export function defaultInputs(): CalculatorInputs {
     annualSalary: 650_000,
     wageGrowth: 0.03,
     retirementAge: 67,
-    tpRate: 0.02,
-    tpBalance: 0,
-    tpReturn: 0.045,
+    tpAccounts: ensureSingleActiveContribution([
+      createTpAccount("innskudd", {
+        contributionRate: 0.02,
+        balance: 0,
+        activeContribution: true,
+        label: "",
+      }),
+    ]),
     tpPayoutMode: "aar",
     tpPayoutYears: 10,
     afpType: "privat",
