@@ -7,12 +7,12 @@ import {
   type ReactNode,
 } from "react";
 
-const CHART_HEIGHT = 288;
+export const CHART_HEIGHT = 288;
 
 /**
- * Hardens Recharts ResponsiveContainer against intermittent 0×0 sizing
- * (flex/grid race on first paint). Measures the host with ResizeObserver and
- * only mounts children once width is non-zero; remounts if size was 0.
+ * Hardens Recharts against intermittent 0×0 sizing (flex/grid first-paint race).
+ * Measures host with ResizeObserver + rAF/timeout retries; only mounts the chart
+ * once width is non-zero, with explicit pixel width/height.
  */
 export function ChartFrame({
   children,
@@ -34,19 +34,21 @@ export function ChartFrame({
     };
 
     measure();
-    // Retry after layout/paint — catches flex/grid races where first measure is 0
     const raf = requestAnimationFrame(measure);
     const t1 = window.setTimeout(measure, 50);
     const t2 = window.setTimeout(measure, 200);
 
-    const ro = new ResizeObserver(() => measure());
-    ro.observe(el);
+    const ro =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => measure())
+        : null;
+    ro?.observe(el);
 
     return () => {
       cancelAnimationFrame(raf);
       window.clearTimeout(t1);
       window.clearTimeout(t2);
-      ro.disconnect();
+      ro?.disconnect();
     };
   }, []);
 
@@ -62,5 +64,3 @@ export function ChartFrame({
     </div>
   );
 }
-
-export { CHART_HEIGHT };
