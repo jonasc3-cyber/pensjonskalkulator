@@ -6,7 +6,7 @@ import {
 } from "../constants";
 import { estimateAfp } from "./afp";
 import { projectFolketrygd } from "./folketrygd";
-import { projectSaving } from "./saving";
+import { createSavingAccount, projectSavings, SAVING_KIND_LABELS } from "./saving";
 import { projectTp } from "./tp";
 import type {
   CalculationResult,
@@ -41,6 +41,13 @@ export function calculatePension(inputs: CalculatorInputs): CalculationResult {
 
   const timeline = buildTimeline(inputs, scenarios.base);
 
+  const savingsSummary =
+    inputs.savings.length === 0
+      ? "Egen sparing er ikke inkludert."
+      : `Egen sparing: ${inputs.savings.length} konto${inputs.savings.length === 1 ? "" : "er"} (${inputs.savings
+          .map((s) => SAVING_KIND_LABELS[s.kind])
+          .join(", ")}) fremskrives hver for seg og summeres.`;
+
   const explanation = [
     `Ny folketrygd: 18,1 % av inntekt opp til 7,1 G legges til pensjonsbeholdningen hvert år.`,
     `Ved uttak divideres beholdningen med forenklet delingstall for alder ${inputs.retirementAge}.`,
@@ -48,6 +55,7 @@ export function calculatePension(inputs: CalculatorInputs): CalculationResult {
     inputs.afpType === "ingen"
       ? "AFP er ikke inkludert."
       : `AFP (${inputs.afpType}) er et forenklet tillegg — ikke offisielle satser.`,
+    savingsSummary,
     `Intervallene speiler ulike antagelser om lønnsvekst og avkastning (pessimistisk / basis / optimistisk).`,
     inputs.showNet
       ? `Netto er et grovt anslag (${Math.round(GROV_NETTO_ANDEL * 100)} % av brutto) og erstatter ikke skattemelding.`
@@ -70,7 +78,7 @@ function buildScenario(
   const wageGrowth = inputs.wageGrowth + SCENARIO_VEKST_DELTA[key];
   const gGrowth = inputs.gGrowth + SCENARIO_VEKST_DELTA[key];
   const tpReturn = inputs.tpReturn + SCENARIO_AVKASTNING_DELTA[key];
-  const savingReturn = inputs.savingReturn + SCENARIO_AVKASTNING_DELTA[key];
+  const savingReturnDelta = SCENARIO_AVKASTNING_DELTA[key];
 
   const ft = projectFolketrygd({
     birthYear: inputs.birthYear,
@@ -102,14 +110,12 @@ function buildScenario(
     scenarioFactor: AFP_SCENARIO_FACTOR[key],
   });
 
-  const saving = projectSaving({
+  const saving = projectSavings(inputs.savings, {
     birthYear: inputs.birthYear,
     retirementAge: inputs.retirementAge,
-    monthlyContribution: inputs.savingMonthly,
-    existingBalance: inputs.savingBalance,
-    expectedReturn: savingReturn,
     payoutMode: inputs.savingPayoutMode,
     payoutYears: inputs.savingPayoutYears,
+    returnDelta: savingReturnDelta,
   });
 
   const netFactor = inputs.showNet ? GROV_NETTO_ANDEL : 1;
@@ -134,6 +140,13 @@ function buildScenario(
     balanceAtRetirement: saving.balanceAtRetirement,
   };
 
+  const savingBreakdown = saving.accounts.map((a) => ({
+    id: a.id,
+    label: a.label,
+    yearly: a.yearlyPayout * netFactor,
+    balanceAtRetirement: a.balanceAtRetirement,
+  }));
+
   const totalYearly =
     folketrygd.yearly + tpC.yearly + afpC.yearly + savingC.yearly;
   const totalMonthly = totalYearly / 12;
@@ -151,6 +164,7 @@ function buildScenario(
     tp: tpC,
     afp: afpC,
     saving: savingC,
+    savingBreakdown,
     totalYearly,
     totalMonthly,
     replacementRate,
@@ -205,9 +219,13 @@ export function defaultInputs(): CalculatorInputs {
     tpPayoutMode: "aar",
     tpPayoutYears: 10,
     afpType: "privat",
-    savingMonthly: 2000,
-    savingBalance: 0,
-    savingReturn: 0.05,
+    savings: [
+      createSavingAccount("fond", {
+        monthly: 2000,
+        balance: 0,
+        label: "",
+      }),
+    ],
     savingPayoutMode: "aar",
     savingPayoutYears: 15,
     sivilstatus: "enslig",

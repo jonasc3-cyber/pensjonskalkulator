@@ -3,6 +3,19 @@ export type AfpType = "privat" | "offentlig" | "ingen";
 export type TpPayoutMode = "aar" | "livsvarig";
 export type ScenarioKey = "low" | "base" | "high";
 
+export type SavingKind = "ips" | "ask" | "fond" | "bank" | "annet";
+
+export interface SavingAccount {
+  id: string;
+  kind: SavingKind;
+  label?: string;
+  provider?: string;
+  balance: number;
+  monthly: number;
+  /** Forventet årlig avkastning som desimal (f.eks. 0.06 = 6 %). */
+  expectedReturn: number;
+}
+
 export interface CalculatorInputs {
   birthYear: number;
   annualSalary: number;
@@ -14,9 +27,7 @@ export interface CalculatorInputs {
   tpPayoutMode: TpPayoutMode;
   tpPayoutYears: number;
   afpType: AfpType;
-  savingMonthly: number;
-  savingBalance: number;
-  savingReturn: number;
+  savings: SavingAccount[];
   savingPayoutMode: TpPayoutMode;
   savingPayoutYears: number;
   sivilstatus: Sivilstatus;
@@ -29,7 +40,6 @@ export interface ScenarioAssumptions {
   wageGrowth: number;
   gGrowth: number;
   tpReturn: number;
-  savingReturn: number;
 }
 
 export interface ComponentResult {
@@ -45,6 +55,8 @@ export interface ScenarioResult {
   tp: ComponentResult;
   afp: ComponentResult;
   saving: ComponentResult;
+  /** Valgfri oppdeling per sparekonto (basis-beløp før netto). */
+  savingBreakdown?: { id: string; label: string; yearly: number; balanceAtRetirement: number }[];
   totalYearly: number;
   totalMonthly: number;
   replacementRate: number;

@@ -3,6 +3,11 @@ import { G_NOK, FOLKETRYGD_OPPTJENINGSSATS, FOLKETRYGD_MAKS_G } from "../constan
 import { getDelingstall } from "./delingstall";
 import { yearlyAccrual, projectFolketrygd } from "./folketrygd";
 import { annuityPayment, projectTp } from "./tp";
+import {
+  createSavingAccount,
+  projectSaving,
+  projectSavings,
+} from "./saving";
 import { calculatePension, defaultInputs } from "./calculate";
 
 describe("yearlyAccrual", () => {
@@ -40,6 +45,79 @@ describe("annuityPayment", () => {
     const linear = annuityPayment(1_000_000, 0, 10);
     const withRate = annuityPayment(1_000_000, 0.04, 10);
     expect(withRate).toBeGreaterThan(linear);
+  });
+});
+
+describe("projectSavings (multi-konto)", () => {
+  const baseOpts = {
+    birthYear: 1985,
+    retirementAge: 67,
+    payoutMode: "aar" as const,
+    payoutYears: 15,
+  };
+
+  it("tom liste gir null utbetaling", () => {
+    const result = projectSavings([], baseOpts);
+    expect(result.yearlyPayout).toBe(0);
+    expect(result.balanceAtRetirement).toBe(0);
+    expect(result.accounts).toHaveLength(0);
+  });
+
+  it("summerer flere kontoer", () => {
+    const a = createSavingAccount("fond", {
+      monthly: 2000,
+      balance: 100_000,
+      expectedReturn: 0.05,
+    });
+    const b = createSavingAccount("bank", {
+      monthly: 1000,
+      balance: 50_000,
+      expectedReturn: 0.02,
+    });
+
+    const multi = projectSavings([a, b], baseOpts);
+    const onlyA = projectSaving({
+      birthYear: baseOpts.birthYear,
+      retirementAge: baseOpts.retirementAge,
+      monthlyContribution: a.monthly,
+      existingBalance: a.balance,
+      expectedReturn: a.expectedReturn,
+      payoutMode: baseOpts.payoutMode,
+      payoutYears: baseOpts.payoutYears,
+    });
+    const onlyB = projectSaving({
+      birthYear: baseOpts.birthYear,
+      retirementAge: baseOpts.retirementAge,
+      monthlyContribution: b.monthly,
+      existingBalance: b.balance,
+      expectedReturn: b.expectedReturn,
+      payoutMode: baseOpts.payoutMode,
+      payoutYears: baseOpts.payoutYears,
+    });
+
+    expect(multi.accounts).toHaveLength(2);
+    expect(multi.balanceAtRetirement).toBeCloseTo(
+      onlyA.balanceAtRetirement + onlyB.balanceAtRetirement,
+      5,
+    );
+    expect(multi.yearlyPayout).toBeCloseTo(
+      onlyA.yearlyPayout + onlyB.yearlyPayout,
+      5,
+    );
+  });
+
+  it("returnDelta justerer avkastning per konto", () => {
+    const account = createSavingAccount("fond", {
+      monthly: 1000,
+      balance: 0,
+      expectedReturn: 0.05,
+    });
+    const base = projectSavings([account], baseOpts);
+    const high = projectSavings([account], {
+      ...baseOpts,
+      returnDelta: 0.015,
+    });
+    expect(high.balanceAtRetirement).toBeGreaterThan(base.balanceAtRetirement);
   });
 });
 
@@ -129,5 +207,38 @@ describe("golden-ish cases", () => {
     );
     expect(result.scenarios.base.totalMonthly).toBeGreaterThan(10_000);
     expect(result.timeline.length).toBeGreaterThan(5);
+  });
+
+  it("flere sparekontoer øker egen sparing i totalen", () => {
+    const one = defaultInputs();
+    const two = {
+      ...defaultInputs(),
+      savings: [
+        createSavingAccount("fond", {
+          monthly: 2000,
+          balance: 0,
+          expectedReturn: 0.06,
+        }),
+        createSavingAccount("ips", {
+          monthly: 1500,
+          balance: 100_000,
+          expectedReturn: 0.06,
+          provider: "Nordnet",
+        }),
+      ],
+    };
+    const r1 = calculatePension(one);
+    const r2 = calculatePension(two);
+    expect(r2.scenarios.base.saving.yearly).toBeGreaterThan(
+      r1.scenarios.base.saving.yearly,
+    );
+    expect(r2.scenarios.base.savingBreakdown?.length).toBe(2);
+  });
+
+  it("null sparekontoer gir null egen sparing", () => {
+    const inputs = { ...defaultInputs(), savings: [] };
+    const result = calculatePension(inputs);
+    expect(result.scenarios.base.saving.yearly).toBe(0);
+    expect(result.scenarios.base.savingBreakdown).toEqual([]);
   });
 });

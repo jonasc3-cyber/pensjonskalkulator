@@ -25,10 +25,11 @@ export function AssumptionsPanel({ values, onChange }: Props) {
       </h2>
       <p className="mt-1 text-xs text-muted-foreground">
         Endringer oppdaterer prognosen med én gang. Scenarioene justerer i tillegg
-        avkastning og vekst automatisk.
+        avkastning og vekst automatisk. Avkastning for egen sparing settes per
+        konto under «Egen sparing».
       </p>
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <Field id="assumptions-wage" label="Lønnsvekst %">
           <input
             id="assumptions-wage"
@@ -72,18 +73,6 @@ export function AssumptionsPanel({ values, onChange }: Props) {
             value={Number((values.tpReturn * 100).toFixed(1))}
             onChange={(e) =>
               onChange("tpReturn", Number(e.target.value) / 100)
-            }
-          />
-        </Field>
-        <Field id="assumptions-save-ret" label="Avkastning sparing %">
-          <input
-            id="assumptions-save-ret"
-            type="number"
-            step={0.1}
-            className={inputClass}
-            value={Number((values.savingReturn * 100).toFixed(1))}
-            onChange={(e) =>
-              onChange("savingReturn", Number(e.target.value) / 100)
             }
           />
         </Field>

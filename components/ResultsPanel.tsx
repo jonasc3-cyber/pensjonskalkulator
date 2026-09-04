@@ -16,6 +16,7 @@ export function ResultsPanel({
 }) {
   const { low, base, high } = result.scenarios;
   const unit = showNet ? "netto (anslag)" : "brutto";
+  const breakdown = base.savingBreakdown ?? [];
 
   return (
     <section
@@ -124,6 +125,27 @@ export function ResultsPanel({
             </div>
           ))}
         </dl>
+
+        {breakdown.length > 1 ? (
+          <div className="mt-4 rounded-xl border border-border bg-muted/40 p-3">
+            <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Egen sparing per konto
+            </h4>
+            <ul className="mt-2 divide-y divide-border">
+              {breakdown.map((row) => (
+                <li
+                  key={row.id}
+                  className="flex items-center justify-between gap-3 py-2 text-sm"
+                >
+                  <span className="text-slate-700">{row.label}</span>
+                  <span className="tabular-nums font-medium text-primary">
+                    {formatNOK(row.yearly)} / år
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         <div className="mt-6">
           <h3 className="mb-2 text-sm font-semibold text-slate-800">

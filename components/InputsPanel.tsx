@@ -1,6 +1,7 @@
 "use client";
 
 import { Field, inputClass, selectClass } from "./Field";
+import { SavingsAccounts } from "./SavingsAccounts";
 import type { CalculatorInputs } from "@/lib/pension/types";
 import { CURRENT_YEAR } from "@/lib/constants";
 
@@ -144,18 +145,6 @@ export function InputsPanel({
           </select>
         </Field>
 
-        <Field id="savingMonthly" label="Egen sparing per måned (kr)">
-          <input
-            id="savingMonthly"
-            type="number"
-            min={0}
-            step={500}
-            className={inputClass}
-            value={values.savingMonthly}
-            onChange={(e) => onChange("savingMonthly", Number(e.target.value))}
-          />
-        </Field>
-
         <Field id="showNet" label="Visning">
           <label className="flex items-center gap-2 text-sm text-slate-700">
             <input
@@ -168,6 +157,11 @@ export function InputsPanel({
             Vis grovt nettoanslag (ca. 78 % av brutto)
           </label>
         </Field>
+
+        <SavingsAccounts
+          accounts={values.savings}
+          onChange={(savings) => onChange("savings", savings)}
+        />
       </div>
 
       {advanced ? (
@@ -250,35 +244,6 @@ export function InputsPanel({
                 />
               </Field>
             ) : null}
-
-            <Field id="savingBalance" label="Eksisterende egen sparing (kr)">
-              <input
-                id="savingBalance"
-                type="number"
-                min={0}
-                step={10000}
-                className={inputClass}
-                value={values.savingBalance}
-                onChange={(e) =>
-                  onChange("savingBalance", Number(e.target.value))
-                }
-              />
-            </Field>
-
-            <Field id="savingReturn" label="Forventet avkastning sparing (%)">
-              <input
-                id="savingReturn"
-                type="number"
-                min={0}
-                max={15}
-                step={0.1}
-                className={inputClass}
-                value={Number((values.savingReturn * 100).toFixed(1))}
-                onChange={(e) =>
-                  onChange("savingReturn", Number(e.target.value) / 100)
-                }
-              />
-            </Field>
 
             <Field id="savingPayoutMode" label="Sparing-utbetaling">
               <select
