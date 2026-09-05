@@ -29,14 +29,12 @@ export function Hero() {
             </h1>
             <p className="mt-2 text-sm leading-snug text-primary-foreground/90 sm:mt-3 sm:text-base sm:leading-relaxed">
               <span className="sm:hidden">
-                Estimer pensjon som et intervall. Alt regnes i nettleseren.
+                Intervallanslag uten innlogging. Alt regnes i nettleseren.
               </span>
               <span className="hidden sm:inline">
-                Estimer alderspensjon fra folketrygd, tjenestepensjon, AFP og
-                egen sparing. Du får et{" "}
-                <strong className="font-semibold text-white">intervall</strong>{" "}
-                — ikke ett falskt presist tall. Alle beregninger skjer hos deg i
-                nettleseren.
+                Få et intervallanslag på alderspensjon fra folketrygd,
+                tjenestepensjon, AFP og egen sparing — uten innlogging. Alt
+                regnes i nettleseren din; ingenting lagres på server.
               </span>
             </p>
             <p className="mt-3 inline-flex items-center rounded-full border border-white/25 bg-accent/90 px-3 py-1 text-xs font-medium text-white shadow-sm sm:mt-4 sm:text-sm">

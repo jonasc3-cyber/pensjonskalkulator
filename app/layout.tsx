@@ -15,17 +15,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteTitle = "Pensjonskalkulator | Forenklet norsk pensjonsestimat";
+const siteTitle =
+  "Pensjonskalkulator uten innlogging | Folketrygd, TP, AFP og sparing";
 const siteDescription =
-  "Estimer folketrygd, tjenestepensjon, AFP og egen sparing som intervaller. Alt beregnes i nettleseren — ingen lagring av dine data.";
+  "Estimer pensjonen din uten BankID. Folketrygd, tjenestepensjon, AFP og egen sparing — som intervall, lokalt i nettleseren. Gratis på sjekkpensjon.no.";
 
 export const metadata: Metadata = {
   title: siteTitle,
   description: siteDescription,
-  metadataBase: new URL("https://pensjonskalkulator.no"),
+  metadataBase: new URL("https://sjekkpensjon.no"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: siteTitle,
     description: siteDescription,
+    url: "https://sjekkpensjon.no",
+    siteName: "Sjekkpensjon",
     locale: "nb_NO",
     type: "website",
     images: [
@@ -33,7 +39,7 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Pensjonskalkulator — forenklet norsk pensjonsestimat",
+        alt: "Uinnlogget pensjonskalkulator | Sjekk pensjonen uten BankID",
       },
     ],
   },
