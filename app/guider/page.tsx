@@ -15,6 +15,12 @@ const GUIDES = [
     blurb:
       "Tre pilarer + AFP, hvorfor tall spriker, og hvordan du får et raskt anslag uten BankID.",
   },
+  {
+    href: "/guider/uinnlogget-vs-nav",
+    title: "Uinnlogget pensjonskalkulator vs Nav",
+    blurb:
+      "Når uinnlogget anslag er nok — og når du bør bruke Navs innloggede kalkulator.",
+  },
 ] as const;
 
 export default function GuiderIndexPage() {
