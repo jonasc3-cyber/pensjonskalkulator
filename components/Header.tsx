@@ -16,6 +16,7 @@ export function Header() {
   const pathname = usePathname();
   const onKalkulator = pathname === "/";
   const onOm = pathname === "/om" || pathname.startsWith("/om/");
+  const onGuider = pathname === "/guider" || pathname.startsWith("/guider/");
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/90">
@@ -48,6 +49,13 @@ export function Header() {
             aria-current={onKalkulator ? "page" : undefined}
           >
             Kalkulator
+          </Link>
+          <Link
+            href="/guider"
+            className={navClass(onGuider)}
+            aria-current={onGuider ? "page" : undefined}
+          >
+            Guider
           </Link>
           <Link
             href="/om"

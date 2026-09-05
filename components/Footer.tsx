@@ -37,6 +37,12 @@ export function Footer() {
         </p>
         <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-300">
           <Link
+            href="/guider"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            Guider
+          </Link>
+          <Link
             href="/om"
             className="underline underline-offset-2 hover:text-white"
           >
