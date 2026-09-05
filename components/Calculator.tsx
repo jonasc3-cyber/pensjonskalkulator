@@ -118,7 +118,7 @@ export function Calculator() {
       <AssumptionsPanel values={values} onChange={onChange} />
       <CohortWarning birthYear={values.birthYear} alert={false} />
       <SectionDivider src="/divider-home.webp" />
-      <ResultsPanel result={result} showNet={values.showNet} />
+      <ResultsPanel result={result} showNet={values.showNet} inputs={values} />
       <GoalSeekPanel values={values} result={result} />
       <StickyMiniResult baseMonthly={result.scenarios.base.totalMonthly} />
     </div>

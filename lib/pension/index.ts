@@ -7,3 +7,4 @@ export * from "./saving";
 export * from "./calculate";
 export * from "./goalSeek";
 export * from "./persistence";
+export * from "./withdrawalAgeComparison";

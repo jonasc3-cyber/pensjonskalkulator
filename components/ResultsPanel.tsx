@@ -1,18 +1,21 @@
 "use client";
 
-import type { CalculationResult } from "@/lib/pension/types";
+import type { CalculationResult, CalculatorInputs } from "@/lib/pension/types";
 import { formatNOK, formatPercent, formatRange } from "@/lib/format";
 import { palette } from "@/lib/theme";
 import { BreakdownChart } from "./BreakdownChart";
 import { TimelineChart } from "./TimelineChart";
 import { HowWeCalculated } from "./HowWeCalculated";
+import { WithdrawalAgeComparison } from "./WithdrawalAgeComparison";
 
 export function ResultsPanel({
   result,
   showNet,
+  inputs,
 }: {
   result: CalculationResult;
   showNet: boolean;
+  inputs: CalculatorInputs;
 }) {
   const { low, base, high } = result.scenarios;
   const unit = showNet ? "netto (anslag)" : "brutto";
@@ -119,6 +122,8 @@ export function ResultsPanel({
           </p>
         ) : null}
       </div>
+
+      <WithdrawalAgeComparison inputs={inputs} showNet={showNet} />
 
       <div className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">
         <h3 className="text-base font-semibold text-primary">
