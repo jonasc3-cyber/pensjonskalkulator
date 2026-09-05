@@ -20,6 +20,9 @@ const siteTitle =
 const siteDescription =
   "Estimer pensjonen din uten BankID. Folketrygd, tjenestepensjon, AFP og egen sparing — som intervall, lokalt i nettleseren. Gratis på sjekkpensjon.no.";
 
+const googleVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
+const bingVerification = process.env.BING_SITE_VERIFICATION?.trim();
+
 export const metadata: Metadata = {
   title: siteTitle,
   description: siteDescription,
@@ -53,6 +56,16 @@ export const metadata: Metadata = {
     icon: [{ url: "/pk-mark.svg", type: "image/svg+xml" }, { url: "/icon.png" }],
     apple: [{ url: "/apple-touch-icon.png" }],
   },
+  ...(googleVerification || bingVerification
+    ? {
+        verification: {
+          ...(googleVerification ? { google: googleVerification } : {}),
+          ...(bingVerification
+            ? { other: { "msvalidate.01": bingVerification } }
+            : {}),
+        },
+      }
+    : {}),
 };
 
 export default function RootLayout({
