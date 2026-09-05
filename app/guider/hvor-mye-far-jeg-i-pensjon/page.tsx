@@ -108,7 +108,7 @@ export default function GuideHvorMyePage() {
           hvert år.
         </p>
         <p className="text-slate-600 leading-relaxed">
-          Tommelfingerregler du ser ute på nettet (f.eks. «omtrent halvparten av
+          Tommelfingerregler du ser ute på nettet (for eksempel «omtrent halvparten av
           lønnen») er bare grove anslag. Din egen historikk, uttaksalder og
           AFP/tjenestepensjon kan gi et helt annet bilde.
         </p>
@@ -120,7 +120,7 @@ export default function GuideHvorMyePage() {
           De fleste arbeidsgivere sparer til pensjon for deg (OTP / innskudd,
           ytelse, hybrid eller offentlig ordning). Hvor mye du får, avhenger av
           sats, lønn, antall år og avkastning. Har du byttet jobb, kan du ha
-          flere saldoer (f.eks. pensjonskapitalbevis) — det er lett å glemme
+          flere saldoer (for eksempel pensjonskapitalbevis) — det er lett å glemme
           dem.
         </p>
       </section>
