@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { CalculationResult, CalculatorInputs } from "@/lib/pension/types";
 import {
   computeGoalSeek,
   defaultGoalAccountId,
+  defaultGoalMonthly,
   goalAccountOptions,
 } from "@/lib/pension/goalSeek";
 import { formatNOK, formatRange } from "@/lib/format";
@@ -27,6 +28,21 @@ export function GoalSeekPanel({ values, result }: Props) {
   const [accountId, setAccountId] = useState(() =>
     defaultGoalAccountId(values.savings),
   );
+  /** Siste auto-utfylte mål — brukes for å oppdatere ved lønnsendring uten å overskrive brukerinput. */
+  const autoDefaultRef = useRef(0);
+
+  // Smart default: ~75 % av årslønn / 12 når feltet er tomt eller fortsatt på forrige auto-verdi
+  useEffect(() => {
+    const nextDefault = defaultGoalMonthly(values.annualSalary);
+    if (!(nextDefault > 0)) return;
+    setTargetMonthly((current) => {
+      if (current === 0 || current === autoDefaultRef.current) {
+        autoDefaultRef.current = nextDefault;
+        return nextDefault;
+      }
+      return current;
+    });
+  }, [values.annualSalary]);
 
   // Hold valgt konto gyldig når sparelisten endres
   useEffect(() => {
@@ -80,8 +96,8 @@ export function GoalSeekPanel({ values, result }: Props) {
           label={`Ønsket pensjon per måned (${unit})`}
           hint={
             values.showNet
-              ? "Målet tolkes som nettoanslag (samme ~78 % av brutto som i prognosen)."
-              : "Samme basis som estimert pensjon over (brutto før skatt)."
+              ? "Forslag: ca. 75 % av årslønn / 12. Målet tolkes som nettoanslag (samme ~78 % av brutto som i prognosen)."
+              : "Forslag: ca. 75 % av årslønn / 12. Samme basis som estimert pensjon over (brutto før skatt)."
           }
         >
           <CurrencyInput

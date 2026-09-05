@@ -95,7 +95,11 @@ export function AssumptionsPanel({ values, onChange }: Props) {
               }
             />
           </Field>
-          <Field id="assumptions-tp-years" label="TP utbetalingsår">
+          <Field
+            id="assumptions-tp-years"
+            label="TP utbetalingsår"
+            hint="Brukes når TP-utbetaling er «Over N år»"
+          >
             <input
               id="assumptions-tp-years"
               type="number"
@@ -108,7 +112,11 @@ export function AssumptionsPanel({ values, onChange }: Props) {
               }
             />
           </Field>
-          <Field id="assumptions-save-years" label="Sparing utbetalingsår">
+          <Field
+            id="assumptions-save-years"
+            label="Sparing utbetalingsår"
+            hint="Brukes når sparing-utbetaling er «Over N år»"
+          >
             <input
               id="assumptions-save-years"
               type="number"

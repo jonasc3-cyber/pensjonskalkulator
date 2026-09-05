@@ -210,6 +210,15 @@ export function ResultsPanel({
             Årlig pensjon over tid (basis)
           </h3>
           <TimelineChart data={result.timeline} />
+          <p
+            className="mt-3 rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs leading-relaxed text-info-text"
+            role="note"
+            data-testid="timeline-payout-callout"
+          >
+            Tjenestepensjon og egen sparing er ofte tidsbegrenset. Når
+            utbetalingsperioden er over, kan grafen vise bare folketrygd (og
+            eventuell AFP) — det er forventet, ikke en feil i prognosen.
+          </p>
         </div>
       </div>
 

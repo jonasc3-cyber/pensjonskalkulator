@@ -23,6 +23,22 @@ const SCENARIO_LABELS: Record<ScenarioKey, string> = {
 /** Syntetisk konto-id når brukeren ikke har (eller ikke velger) en eksisterende sparekonto. */
 export const SYNTHETIC_GOAL_ACCOUNT_ID = "__synthetic_fond__";
 
+/** Vanlig tommelfingerregel: ønsket pensjon ≈ 75 % av årslønn. */
+export const GOAL_REPLACEMENT_RATE = 0.75;
+
+/** Avrund ønsket månedlig mål til nærmeste 500 kr. */
+export const GOAL_DEFAULT_ROUND_TO = 500;
+
+/**
+ * Smart standard for «ønsket pensjon per måned»: ~75 % av årslønn / 12,
+ * avrundet til nærmeste 500 NOK. Returnerer 0 hvis lønn mangler.
+ */
+export function defaultGoalMonthly(annualSalary: number): number {
+  if (!(annualSalary > 0)) return 0;
+  const raw = (annualSalary * GOAL_REPLACEMENT_RATE) / 12;
+  return Math.round(raw / GOAL_DEFAULT_ROUND_TO) * GOAL_DEFAULT_ROUND_TO;
+}
+
 export interface GoalSeekAccountOption {
   id: string;
   label: string;

@@ -125,28 +125,6 @@ export function InputsPanel({
           />
         </Field>
 
-        <Field
-          id="wageGrowth"
-          label="Forventet lønnsvekst"
-          hint="Standard 3 %"
-        >
-          <div className="flex items-center gap-2">
-            <input
-              id="wageGrowth"
-              type="number"
-              min={0}
-              max={10}
-              step={0.1}
-              className={inputClass}
-              value={Number((values.wageGrowth * 100).toFixed(1))}
-              onChange={(e) =>
-                onChange("wageGrowth", Number(e.target.value) / 100)
-              }
-            />
-            <span className="text-sm text-muted-foreground">%</span>
-          </div>
-        </Field>
-
         <Field id="afpType" label="AFP" hint="Forenklet anslag — ikke offisielle regler">
           <select
             id="afpType"
@@ -232,7 +210,7 @@ export function InputsPanel({
             <Field
               id="tpPayoutMode"
               label="TP-utbetaling"
-              hint="Gjelder alle TP-kontoer"
+              hint="Gjelder alle TP-kontoer. Antall år justeres under Antagelser."
             >
               <select
                 id="tpPayoutMode"
@@ -250,23 +228,11 @@ export function InputsPanel({
               </select>
             </Field>
 
-            {values.tpPayoutMode === "aar" ? (
-              <Field id="tpPayoutYears" label="TP utbetalingsår">
-                <input
-                  id="tpPayoutYears"
-                  type="number"
-                  min={5}
-                  max={25}
-                  className={inputClass}
-                  value={values.tpPayoutYears}
-                  onChange={(e) =>
-                    onChange("tpPayoutYears", Number(e.target.value))
-                  }
-                />
-              </Field>
-            ) : null}
-
-            <Field id="savingPayoutMode" label="Sparing-utbetaling">
+            <Field
+              id="savingPayoutMode"
+              label="Sparing-utbetaling"
+              hint="Antall år justeres under Antagelser."
+            >
               <select
                 id="savingPayoutMode"
                 className={selectClass}
@@ -283,21 +249,6 @@ export function InputsPanel({
               </select>
             </Field>
 
-            {values.savingPayoutMode === "aar" ? (
-              <Field id="savingPayoutYears" label="Sparing utbetalingsår">
-                <input
-                  id="savingPayoutYears"
-                  type="number"
-                  min={5}
-                  max={30}
-                  className={inputClass}
-                  value={values.savingPayoutYears}
-                  onChange={(e) =>
-                    onChange("savingPayoutYears", Number(e.target.value))
-                  }
-                />
-              </Field>
-            ) : null}
           </div>
         </div>
       ) : null}

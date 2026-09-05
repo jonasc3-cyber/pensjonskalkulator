@@ -11,6 +11,9 @@ import {
   computeGoalSeek,
   coveredOtherMonthly,
   defaultGoalAccountId,
+  defaultGoalMonthly,
+  GOAL_DEFAULT_ROUND_TO,
+  GOAL_REPLACEMENT_RATE,
   requiredAnnualContribution,
   requiredMonthlySaving,
   yearsUntilRetirement,
@@ -223,5 +226,26 @@ describe("computeGoalSeek (akseptanse)", () => {
     });
     expect(seek).not.toBeNull();
     expect(Number.isFinite(seek!.required.base.monthly)).toBe(true);
+  });
+});
+
+describe("defaultGoalMonthly", () => {
+  it("gir ~75 % av årslønn / 12, avrundet til nærmeste 500", () => {
+    // 600 000 * 0.75 / 12 = 37 500 → 37 500
+    expect(defaultGoalMonthly(600_000)).toBe(37_500);
+    // 550 000 * 0.75 / 12 = 34 375 → 34 500
+    expect(defaultGoalMonthly(550_000)).toBe(34_500);
+    // 700 000 * 0.75 / 12 = 43 750 → 44 000
+    expect(defaultGoalMonthly(700_000)).toBe(44_000);
+  });
+
+  it("returnerer 0 ved manglende lønn", () => {
+    expect(defaultGoalMonthly(0)).toBe(0);
+    expect(defaultGoalMonthly(-10)).toBe(0);
+  });
+
+  it("bruker 500-kr steg og 75 % rate", () => {
+    expect(GOAL_DEFAULT_ROUND_TO).toBe(500);
+    expect(GOAL_REPLACEMENT_RATE).toBe(0.75);
   });
 });
