@@ -307,6 +307,7 @@ export function InputsPanel({
 
               <SectionDivider
                 src="/divider-savings.webp"
+                alt="Sparing og økonomi – illustrasjonsbilde"
                 className="sm:col-span-2"
               />
 

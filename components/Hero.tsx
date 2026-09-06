@@ -68,11 +68,10 @@ export function Hero() {
         {/* Full-viewport photo on the right half (md+); full-bleed under text on mobile */}
         <div
           className="pointer-events-none absolute inset-0 md:inset-y-0 md:left-auto md:right-0 md:w-[52%] lg:w-[55%]"
-          aria-hidden
         >
           <Image
             src="/hero-couple-b-bright.webp"
-            alt=""
+            alt="Par som sjekker pensjon sammen på laptop"
             fill
             priority
             sizes="(min-width: 768px) 55vw, 100vw"

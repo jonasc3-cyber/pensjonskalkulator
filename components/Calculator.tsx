@@ -152,7 +152,7 @@ export function Calculator() {
         onOpenChange={setAssumptionsOpen}
       />
       <CohortWarning birthYear={values.birthYear} alert={false} />
-      <SectionDivider src="/divider-home.webp" />
+      <SectionDivider src="/divider-home.webp" alt="Hjem og trygghet – illustrasjonsbilde" />
       {result ? (
         <>
           <ResultsPanel
