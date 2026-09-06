@@ -1,6 +1,6 @@
 "use client";
 
-import { formatNOK } from "@/lib/format";
+import { formatChartSeriesValue, formatNOK, isAfpNotIncluded } from "@/lib/format";
 import { chartSeriesOrder, palette, type ChartSeriesKey } from "@/lib/theme";
 
 type TooltipEntry = {
@@ -55,24 +55,36 @@ export function ChartTooltip({ active, payload, label, labelPrefix }: Props) {
         <p className="mb-1.5 font-medium text-slate-800">{heading}</p>
       ) : null}
       <ul className="space-y-1">
-        {rows.map((row) => (
-          <li
-            key={row.key}
-            className="flex items-center justify-between gap-4 text-slate-600"
-          >
-            <span className="inline-flex items-center gap-1.5">
+        {rows.map((row) => {
+          const afpExcluded = row.key === "AFP" && isAfpNotIncluded(row.value);
+          return (
+            <li
+              key={row.key}
+              className="flex items-center justify-between gap-4 text-slate-600"
+            >
+              <span className="inline-flex items-center gap-1.5">
+                <span
+                  className="inline-block h-2 w-2 shrink-0 rounded-[2px]"
+                  style={{ backgroundColor: row.color }}
+                  aria-hidden
+                />
+                {row.key}
+              </span>
               <span
-                className="inline-block h-2 w-2 shrink-0 rounded-[2px]"
-                style={{ backgroundColor: row.color }}
-                aria-hidden
-              />
-              {row.key}
-            </span>
-            <span className="tabular-nums font-medium text-slate-800">
-              {formatNOK(row.value)}
-            </span>
-          </li>
-        ))}
+                className={
+                  afpExcluded
+                    ? "font-medium text-muted-foreground"
+                    : "tabular-nums font-medium text-slate-800"
+                }
+                {...(afpExcluded
+                  ? { "data-testid": "afp-not-included-tooltip" }
+                  : {})}
+              >
+                {formatChartSeriesValue(row.key, row.value)}
+              </span>
+            </li>
+          );
+        })}
       </ul>
       {rows.length > 1 ? (
         <p className="mt-1.5 flex justify-between gap-4 border-t border-slate-100 pt-1.5 font-medium text-slate-800">

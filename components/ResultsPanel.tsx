@@ -1,7 +1,13 @@
 "use client";
 
 import type { CalculationResult, CalculatorInputs } from "@/lib/pension/types";
-import { formatNOK, formatPercent, formatRange } from "@/lib/format";
+import {
+  AFP_NOT_INCLUDED_LABEL,
+  formatNOK,
+  formatPercent,
+  formatRange,
+  isAfpNotIncluded,
+} from "@/lib/format";
 import { palette } from "@/lib/theme";
 import { BreakdownChart } from "./BreakdownChart";
 import { TimelineChart } from "./TimelineChart";
@@ -150,7 +156,7 @@ export function ResultsPanel({
               ["Egen sparing", base.saving.yearly, palette.chart.sparing],
             ] as const
           ).map(([label, value, color]) => {
-            const isAfpZero = label === "AFP" && Math.round(value) === 0;
+            const isAfpZero = label === "AFP" && isAfpNotIncluded(value);
             return (
               <li
                 key={label}
@@ -167,7 +173,7 @@ export function ResultsPanel({
                     className="font-medium text-muted-foreground"
                     data-testid="afp-not-included"
                   >
-                    Ikke inkludert
+                    {AFP_NOT_INCLUDED_LABEL}
                   </span>
                 ) : (
                   <>

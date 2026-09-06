@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState, type ReactNode } from "react";
-import { formatNOK } from "@/lib/format";
+import { AFP_NOT_INCLUDED_LABEL, formatChartSeriesValue, isAfpNotIncluded } from "@/lib/format";
 
 export type ChartTableColumn = {
   key: string;
@@ -31,6 +31,16 @@ export function ChartTableToggle({
   const [asTable, setAsTable] = useState(false);
   const toggleId = useId();
 
+  // Hide AFP column when not included (all rounded yearly values are 0)
+  const afpAllZero =
+    columns.some((c) => c.key === "AFP") &&
+    rows.length > 0 &&
+    rows.every((row) => isAfpNotIncluded(row.values.AFP ?? 0));
+
+  const visibleColumns = afpAllZero
+    ? columns.filter((c) => c.key !== "AFP")
+    : columns;
+
   return (
     <div className="space-y-2">
       <div className="flex justify-end">
@@ -58,7 +68,7 @@ export function ChartTableToggle({
                 >
                   &nbsp;
                 </th>
-                {columns.map((col) => (
+                {visibleColumns.map((col) => (
                   <th
                     key={col.key}
                     scope="col"
@@ -81,18 +91,39 @@ export function ChartTableToggle({
                   >
                     {row.label}
                   </th>
-                  {columns.map((col) => (
-                    <td
-                      key={col.key}
-                      className="px-3 py-2.5 tabular-nums text-sm text-primary"
-                    >
-                      {formatNOK(row.values[col.key] ?? 0)}
-                    </td>
-                  ))}
+                  {visibleColumns.map((col) => {
+                    const value = row.values[col.key] ?? 0;
+                    const label = formatChartSeriesValue(col.key, value);
+                    const afpExcluded =
+                      col.key === "AFP" && label === AFP_NOT_INCLUDED_LABEL;
+                    return (
+                      <td
+                        key={col.key}
+                        className={
+                          afpExcluded
+                            ? "px-3 py-2.5 text-sm font-medium text-muted-foreground"
+                            : "px-3 py-2.5 tabular-nums text-sm text-primary"
+                        }
+                        {...(afpExcluded
+                          ? { "data-testid": "afp-not-included-table" }
+                          : {})}
+                      >
+                        {label}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))}
             </tbody>
           </table>
+          {afpAllZero ? (
+            <p
+              className="border-t border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground"
+              data-testid="afp-not-included-table-note"
+            >
+              AFP: {AFP_NOT_INCLUDED_LABEL}
+            </p>
+          ) : null}
         </div>
       ) : (
         chart

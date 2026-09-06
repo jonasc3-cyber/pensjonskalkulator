@@ -45,3 +45,18 @@ export function formatPercent(rate: number): string {
 export function formatRange(low: number, high: number): string {
   return `${formatNOK(low)} – ${formatNOK(high)}`;
 }
+
+/** Copy when AFP rounds to 0 — keep legend, tooltip and table in sync. */
+export const AFP_NOT_INCLUDED_LABEL = "Ikke inkludert";
+
+export function isAfpNotIncluded(value: number): boolean {
+  return Number.isFinite(value) && Math.round(value) === 0;
+}
+
+/** Chart/table cell value: AFP → «Ikke inkludert» when yearly rounds to 0. */
+export function formatChartSeriesValue(seriesKey: string, value: number): string {
+  if (seriesKey === "AFP" && isAfpNotIncluded(value)) {
+    return AFP_NOT_INCLUDED_LABEL;
+  }
+  return formatNOK(value);
+}
