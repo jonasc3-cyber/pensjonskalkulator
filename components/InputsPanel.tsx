@@ -42,7 +42,8 @@ export function InputsPanel({
 
   return (
     <section
-      className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
+      id="skjema"
+      className="scroll-mt-20 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
       aria-labelledby="inputs-heading"
     >
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
@@ -70,6 +71,27 @@ export function InputsPanel({
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <span
+            className="inline-flex items-center gap-1.5 rounded-full border border-accent/25 bg-accent-soft px-2.5 py-1 text-xs font-medium text-accent"
+            title="Beregningene skjer i nettleseren din"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path
+                d="M12 3l8 3v6c0 5-3.4 8.4-8 9.5C7.4 20.4 4 17 4 12V6l8-3z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M9 12l2 2 4-4"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            100 % privat – beregnes lokalt
+          </span>
           {onReset ? (
             <button
               type="button"
