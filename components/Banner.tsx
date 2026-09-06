@@ -11,7 +11,7 @@ export function Banner() {
 
   return (
     <div className="border-b border-info-border bg-info-bg" role="status">
-      <div className="mx-auto max-w-6xl px-4 py-2 text-sm leading-relaxed text-info-text sm:px-6 sm:py-2.5">
+      <div className="mx-auto max-w-6xl px-4 py-1.5 text-sm leading-relaxed text-info-text sm:px-6 sm:py-2">
         {/* Mobile: one line + Les mer */}
         <div className="sm:hidden">
           <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1">

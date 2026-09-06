@@ -88,7 +88,7 @@ export function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-40 bg-primary shadow-sm">
+    <header className="sticky top-0 z-40 w-full bg-primary shadow-sm">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-2 px-4 sm:h-16 sm:gap-4 sm:px-6">
         <Link
           href="/"

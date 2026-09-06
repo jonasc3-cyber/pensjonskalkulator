@@ -57,48 +57,54 @@ const chips = [
   },
 ] as const;
 
-/** Variant B: foto-hero + BankID-copy, tillitsstripe under bildet. */
+/** Variant B: full-bleed navy + photo; copy stays in max-w-6xl. */
 export function Hero() {
   return (
     <>
       <section
-        className="relative isolate overflow-hidden"
+        className="relative isolate w-full overflow-hidden bg-primary"
         aria-labelledby="hero-heading"
       >
-        <div className="relative h-[200px] sm:h-[280px] lg:h-[320px]">
+        {/* Full-viewport photo on the right half (md+); full-bleed under text on mobile */}
+        <div
+          className="pointer-events-none absolute inset-0 md:inset-y-0 md:left-auto md:right-0 md:w-[52%] lg:w-[55%]"
+          aria-hidden
+        >
           <Image
             src="/hero-couple-b-bright.webp"
             alt=""
             fill
             priority
-            sizes="100vw"
-            className="object-cover object-[55%_30%] sm:object-[60%_28%]"
+            sizes="(min-width: 768px) 55vw, 100vw"
+            className="object-cover object-[55%_30%] sm:object-[60%_28%] md:object-[40%_28%]"
           />
-          <div
-            className="absolute inset-0 bg-gradient-to-r from-primary via-primary/85 to-transparent"
-            aria-hidden
-          />
-          <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-center px-4 py-8 sm:px-6 sm:py-10 lg:py-12">
-            <div className="max-w-xl text-primary-foreground">
-              <h1
-                id="hero-heading"
-                className="text-[28px] font-bold leading-tight tracking-tight sm:text-4xl lg:text-[40px]"
-              >
-                Pensjonskalkulator uten BankID
-              </h1>
-              <p className="mt-3 text-base leading-relaxed text-primary-foreground/90 sm:mt-4">
-                Få et raskt estimat på hva du kan få i pensjon – helt uten
-                innlogging. Alt beregnes{" "}
-                <strong className="font-semibold text-white">lokalt</strong> i
-                nettleseren din. Enkelt, privat og uten sporing.
-              </p>
-            </div>
+        </div>
+        {/* Navy wash: solid on left, soft blend into photo */}
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-primary from-0% via-primary/95 via-40% to-primary/20 to-100% md:via-primary md:via-[45%] md:to-transparent md:to-[72%]"
+          aria-hidden
+        />
+
+        <div className="relative z-10 mx-auto flex min-h-[200px] w-full max-w-6xl flex-col justify-center px-4 py-8 sm:min-h-[280px] sm:px-6 sm:py-10 lg:min-h-[320px] lg:py-12">
+          <div className="max-w-xl text-primary-foreground">
+            <h1
+              id="hero-heading"
+              className="text-[28px] font-bold leading-tight tracking-tight sm:text-4xl lg:text-[40px]"
+            >
+              Pensjonskalkulator uten BankID
+            </h1>
+            <p className="mt-3 text-base leading-relaxed text-primary-foreground/90 sm:mt-4">
+              Få et raskt estimat på hva du kan få i pensjon – helt uten
+              innlogging. Alt beregnes{" "}
+              <strong className="font-semibold text-white">lokalt</strong> i
+              nettleseren din. Enkelt, privat og uten sporing.
+            </p>
           </div>
         </div>
       </section>
 
       <section
-        className="border-b border-border/60 bg-[#F3F5F8]"
+        className="w-full border-b border-border/60 bg-[#F3F5F8]"
         aria-label="Hvorfor sjekkpensjon.no"
       >
         <ul className="mx-auto grid max-w-6xl gap-4 px-4 py-6 sm:grid-cols-3 sm:gap-5 sm:px-6 sm:py-8">

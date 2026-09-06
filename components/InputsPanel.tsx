@@ -60,10 +60,10 @@ export function InputsPanel({
   return (
     <section
       id="skjema"
-      className="scroll-mt-20 rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8"
+      className="scroll-mt-20 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-7"
       aria-labelledby="inputs-heading"
     >
-      <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
+      <div className="mb-5 flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0 max-w-2xl">
           <div className="flex flex-wrap items-center gap-2">
             <h2
@@ -82,12 +82,10 @@ export function InputsPanel({
               </span>
             ) : null}
           </div>
-          <p className="mt-1.5 text-sm text-muted-foreground">
-            Fyll inn informasjonen under så beregner vi et estimat på din
-            fremtidige pensjon.
+          <p className="mt-1 text-sm text-muted-foreground">
             {isExampleData
-              ? " Tallene under er eksempeldata — bytt dem til dine egne."
-              : ""}
+              ? "Tallene under er eksempeldata — bytt dem til dine egne for et personlig estimat."
+              : "Fyll inn informasjonen under så beregner vi et estimat på din fremtidige pensjon."}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -112,8 +110,7 @@ export function InputsPanel({
         </div>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
-        <div className="min-w-0 space-y-6">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start lg:gap-8">
           <div>
             <h3 className="text-base font-semibold text-primary">1. Om deg</h3>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5">
@@ -226,6 +223,40 @@ export function InputsPanel({
             </div>
           </div>
 
+        <aside className="rounded-xl border border-primary/15 bg-primary-soft/80 p-5 lg:sticky lg:top-20 lg:row-span-2">
+          <div className="flex items-start gap-2">
+            <span
+              className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white"
+              aria-hidden
+            >
+              i
+            </span>
+            <h3 className="text-sm font-semibold text-primary">
+              Om beregningen
+            </h3>
+          </div>
+          <div className="mt-3 space-y-2.5 text-sm leading-relaxed text-slate-600">
+            <p>
+              Estimatet følger dagens regler for folketrygd, med forenklede
+              forutsetninger for tjenestepensjon, AFP og sparing.
+            </p>
+            <p>
+              Vi tar høyde for lønnsvekst og viser et intervall (lav / basis /
+              høy) — ikke ett fasitsvar.
+            </p>
+            <p>
+              Alt skjer lokalt i nettleseren. Ingen data sendes til server.
+            </p>
+          </div>
+          <Link
+            href="/om"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-mid"
+          >
+            Les mer om forutsetningene
+            <span aria-hidden>→</span>
+          </Link>
+        </aside>
+
           <div
             id="flere-opplysninger"
             className="scroll-mt-24 space-y-4 border-t border-border pt-6"
@@ -290,41 +321,7 @@ export function InputsPanel({
               />
             </div>
           </div>
-        </div>
 
-        <aside className="rounded-xl border border-primary/15 bg-primary-soft/80 p-5 lg:sticky lg:top-20">
-          <div className="flex items-start gap-2">
-            <span
-              className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white"
-              aria-hidden
-            >
-              i
-            </span>
-            <h3 className="text-sm font-semibold text-primary">
-              Om beregningen
-            </h3>
-          </div>
-          <div className="mt-3 space-y-2.5 text-sm leading-relaxed text-slate-600">
-            <p>
-              Estimatet følger dagens regler for folketrygd, med forenklede
-              forutsetninger for tjenestepensjon, AFP og sparing.
-            </p>
-            <p>
-              Vi tar høyde for lønnsvekst og viser et intervall (lav / basis /
-              høy) — ikke ett fasitsvar.
-            </p>
-            <p>
-              Alt skjer lokalt i nettleseren. Ingen data sendes til server.
-            </p>
-          </div>
-          <Link
-            href="/om"
-            className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-mid"
-          >
-            Les mer om forutsetningene
-            <span aria-hidden>→</span>
-          </Link>
-        </aside>
       </div>
     </section>
   );
