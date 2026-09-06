@@ -16,21 +16,9 @@ import { CurrencyInput } from "./CurrencyInput";
 type Props = {
   values: CalculatorInputs;
   result: CalculationResult;
-  /**
-   * External prefill of «ønsket pensjon per måned» (e.g. timeline nivå før fall).
-   * Applied when prefillToken changes.
-   */
-  prefillTargetMonthly?: number | null;
-  /** Increment to re-apply the same prefill value. */
-  prefillToken?: number;
 };
 
-export function GoalSeekPanel({
-  values,
-  result,
-  prefillTargetMonthly = null,
-  prefillToken = 0,
-}: Props) {
+export function GoalSeekPanel({ values, result }: Props) {
   const options = useMemo(
     () => goalAccountOptions(values.savings),
     [values.savings],
@@ -55,16 +43,6 @@ export function GoalSeekPanel({
       return current;
     });
   }, [values.annualSalary]);
-
-  // Prefill from timeline gap CTA (nivå før fall) — locks against salary auto-default
-  useEffect(() => {
-    if (!(prefillToken > 0) || !(prefillTargetMonthly != null && prefillTargetMonthly > 0)) {
-      return;
-    }
-    setTargetMonthly(prefillTargetMonthly);
-    // NaN never equals a salary default, so auto-default will not overwrite
-    autoDefaultRef.current = Number.NaN;
-  }, [prefillToken, prefillTargetMonthly]);
 
   // Hold valgt konto gyldig når sparelisten endres
   useEffect(() => {
