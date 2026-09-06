@@ -17,19 +17,21 @@ import { ChartFrame } from "./ChartFrame";
 import { ChartLegendContent } from "./ChartLegend";
 import { ChartTooltip } from "./ChartTooltip";
 
-/** First age where TP+sparing drop to ~0 after having been positive. */
-function findTpSavingEndAge(
+/**
+ * First age where TP+sparing fall meaningfully (e.g. TP ends ~77 while
+ * sparing continues) — not only when both hit ~0 (~82).
+ */
+function findFirstTpSavingDropAge(
   points: { age: number; TP: number; Sparing: number }[],
 ): number | null {
-  let hadTpOrSaving = false;
-  for (const p of points) {
-    const tpSaving = p.TP + p.Sparing;
-    if (tpSaving > 1) {
-      hadTpOrSaving = true;
-      continue;
-    }
-    if (hadTpOrSaving && tpSaving <= 1) {
-      return p.age;
+  for (let i = 1; i < points.length; i++) {
+    const prev = points[i - 1]!;
+    const curr = points[i]!;
+    const prevSum = prev.TP + prev.Sparing;
+    const currSum = curr.TP + curr.Sparing;
+    // Cliff: lose ≥15% of prior TP+sparing and at least 5k kr
+    if (prevSum > 5000 && currSum < prevSum * 0.85 && prevSum - currSum >= 5000) {
+      return curr.age;
     }
   }
   return null;
@@ -57,7 +59,7 @@ export function TimelineChart({ data }: { data: TimelinePoint[] }) {
   }));
 
   const ticks = ageTicksEveryFive(chartData.map((d) => d.age));
-  const dropAge = findTpSavingEndAge(chartData);
+  const dropAge = findFirstTpSavingDropAge(chartData);
 
   return (
     <ChartFrame aria-label="Områdediagram over årlig pensjon over tid (basis-scenario)">
@@ -98,7 +100,7 @@ export function TimelineChart({ data }: { data: TimelinePoint[] }) {
                 strokeDasharray="4 4"
                 strokeOpacity={0.7}
                 label={{
-                  value: "TP/sparing slutt",
+                  value: "TP/sparing avtar",
                   position: "insideTopRight",
                   fill: palette.slate,
                   fontSize: 10,
