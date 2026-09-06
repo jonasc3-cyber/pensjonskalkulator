@@ -25,6 +25,11 @@ const PERSIST_DEBOUNCE_MS = 250;
 export function Calculator() {
   const [values, setValues] = useState<CalculatorInputs>(() => defaultInputs());
   const [assumptionsOpen, setAssumptionsOpen] = useState(false);
+  /** Prefill Spar for mål from timeline gap CTA (nivå før fall, monthly). */
+  const [goalPrefillMonthly, setGoalPrefillMonthly] = useState<number | null>(
+    null,
+  );
+  const [goalPrefillToken, setGoalPrefillToken] = useState(0);
   const [hydrated, setHydrated] = useState(false);
   /** Vises til bruker endrer noe (eller har lagret/delt tilstand). */
   const [isExampleData, setIsExampleData] = useState(true);
@@ -121,6 +126,20 @@ export function Calculator() {
     }, 50);
   }
 
+  /** Scroll to Spar for mål and prefill ønsket pensjon = nivå før timeline-fall. */
+  function closeTimelineGapWithSaving(targetMonthly: number) {
+    setGoalPrefillMonthly(targetMonthly);
+    setGoalPrefillToken((t) => t + 1);
+    window.setTimeout(() => {
+      const el = document.getElementById("spar-for-mal");
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const input = document.getElementById("goal-target");
+      if (input instanceof HTMLElement) {
+        input.focus({ preventScroll: true });
+      }
+    }, 50);
+  }
+
   function toggleAssumptions() {
     setAssumptionsOpen((v) => !v);
     if (!assumptionsOpen) {
@@ -160,8 +179,14 @@ export function Calculator() {
             showNet={values.showNet}
             inputs={values}
             onOpenPayoutSettings={openPayoutSettings}
+            onCloseTimelineGap={closeTimelineGapWithSaving}
           />
-          <GoalSeekPanel values={values} result={result} />
+          <GoalSeekPanel
+            values={values}
+            result={result}
+            prefillTargetMonthly={goalPrefillMonthly}
+            prefillToken={goalPrefillToken}
+          />
           <StickyMiniResult baseMonthly={result.scenarios.base.totalMonthly} />
         </>
       ) : (

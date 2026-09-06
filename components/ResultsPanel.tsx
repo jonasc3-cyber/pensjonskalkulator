@@ -1,6 +1,8 @@
 "use client";
 
+import { useMemo } from "react";
 import type { CalculationResult, CalculatorInputs } from "@/lib/pension/types";
+import { findFirstTpSavingDrop } from "@/lib/pension/timelineDrop";
 import {
   AFP_NOT_INCLUDED_LABEL,
   formatNOK,
@@ -26,16 +28,26 @@ export function ResultsPanel({
   showNet,
   inputs,
   onOpenPayoutSettings,
+  onCloseTimelineGap,
 }: {
   result: CalculationResult;
   showNet: boolean;
   inputs: CalculatorInputs;
   onOpenPayoutSettings?: () => void;
+  /**
+   * Prefill Spar for mål with desired monthly (nivå før fall) and scroll there.
+   */
+  onCloseTimelineGap?: (targetMonthly: number) => void;
 }) {
   const { low, base, high } = result.scenarios;
   const unit = showNet ? "netto (anslag)" : "brutto";
   const breakdown = base.savingBreakdown ?? [];
   const tpBreakdown = base.tpBreakdown ?? [];
+
+  const timelineDrop = useMemo(
+    () => findFirstTpSavingDrop(result.timeline),
+    [result.timeline],
+  );
 
   const scenarios = [
     {
@@ -271,6 +283,46 @@ export function ResultsPanel({
               >
                 Åpne utbetalingsinnstillinger
               </button>
+            ) : null}
+
+            {timelineDrop && timelineDrop.gapMonthly > 0 ? (
+              <div
+                className="space-y-2 border-t border-info-border/60 pt-2"
+                data-testid="timeline-gap-cta"
+              >
+                <p>
+                  Gap når TP/sparing avtar (ca. {timelineDrop.dropAge} år):{" "}
+                  <strong
+                    className="tabular-nums"
+                    data-testid="timeline-gap-monthly"
+                  >
+                    {formatNOK(Math.round(timelineDrop.gapMonthly))}
+                  </strong>
+                  /mnd i dagens kroner (basis) — nivå før fall{" "}
+                  <span className="tabular-nums">
+                    {formatNOK(Math.round(timelineDrop.beforeMonthly))}
+                  </span>
+                  /mnd minus etter fall{" "}
+                  <span className="tabular-nums">
+                    {formatNOK(Math.round(timelineDrop.afterMonthly))}
+                  </span>
+                  /mnd.
+                </p>
+                {onCloseTimelineGap ? (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      onCloseTimelineGap(
+                        Math.round(timelineDrop.beforeMonthly),
+                      )
+                    }
+                    className="inline-flex items-center rounded-md border border-primary/30 bg-primary-soft px-3 py-1.5 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary/10"
+                    data-testid="close-timeline-gap"
+                  >
+                    Beregn sparing for å tette gapet
+                  </button>
+                ) : null}
+              </div>
             ) : null}
           </div>
         </div>

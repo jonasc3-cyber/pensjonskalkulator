@@ -8,3 +8,4 @@ export * from "./calculate";
 export * from "./goalSeek";
 export * from "./persistence";
 export * from "./withdrawalAgeComparison";
+export * from "./timelineDrop";

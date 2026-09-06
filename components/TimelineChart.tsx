@@ -12,31 +12,12 @@ import {
   YAxis,
 } from "recharts";
 import type { TimelinePoint } from "@/lib/pension/types";
+import { findFirstTpSavingDrop } from "@/lib/pension/timelineDrop";
 import { chartSeries, palette } from "@/lib/theme";
 import { ChartFrame } from "./ChartFrame";
 import { ChartLegendContent } from "./ChartLegend";
 import { ChartTableToggle } from "./ChartTableToggle";
 import { ChartTooltip } from "./ChartTooltip";
-
-/**
- * First age where TP+sparing fall meaningfully (e.g. TP ends ~77 while
- * sparing continues) — not only when both hit ~0 (~82).
- */
-function findFirstTpSavingDropAge(
-  points: { age: number; TP: number; Sparing: number }[],
-): number | null {
-  for (let i = 1; i < points.length; i++) {
-    const prev = points[i - 1]!;
-    const curr = points[i]!;
-    const prevSum = prev.TP + prev.Sparing;
-    const currSum = curr.TP + curr.Sparing;
-    // Cliff: lose ≥15% of prior TP+sparing and at least 5k kr
-    if (prevSum > 5000 && currSum < prevSum * 0.85 && prevSum - currSum >= 5000) {
-      return curr.age;
-    }
-  }
-  return null;
-}
 
 /** X-ticks every 5 years from first age (e.g. 67, 72, 77, …). */
 function ageTicksEveryFive(ages: number[]): number[] {
@@ -60,7 +41,7 @@ export function TimelineChart({ data }: { data: TimelinePoint[] }) {
   }));
 
   const ticks = ageTicksEveryFive(chartData.map((d) => d.age));
-  const dropAge = findFirstTpSavingDropAge(chartData);
+  const dropAge = findFirstTpSavingDrop(data)?.dropAge ?? null;
 
   // Compact table: every 5 years (+ last) so mobile a11y stays readable
   const tickSet = new Set(ticks);
