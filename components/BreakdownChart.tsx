@@ -11,9 +11,10 @@ import {
   YAxis,
 } from "recharts";
 import type { ScenarioResult } from "@/lib/pension/types";
-import { formatNOK } from "@/lib/format";
-import { palette } from "@/lib/theme";
+import { chartSeries, palette } from "@/lib/theme";
 import { ChartFrame } from "./ChartFrame";
+import { ChartLegendContent } from "./ChartLegend";
+import { ChartTooltip } from "./ChartTooltip";
 
 export function BreakdownChart({
   scenarios,
@@ -44,24 +45,21 @@ export function BreakdownChart({
                 }).format(v)
               }
             />
-            <Tooltip
-              formatter={(value) => formatNOK(Number(value ?? 0))}
-              contentStyle={{
-                fontSize: 12,
-                borderRadius: 8,
-                borderColor: palette.border,
-              }}
-            />
-            <Legend wrapperStyle={{ fontSize: 12 }} />
-            <Bar dataKey="Folketrygd" stackId="a" fill={palette.chart.folketrygd} />
-            <Bar dataKey="TP" stackId="a" fill={palette.chart.tp} />
-            <Bar dataKey="AFP" stackId="a" fill={palette.chart.afp} />
-            <Bar
-              dataKey="Sparing"
-              stackId="a"
-              fill={palette.chart.sparing}
-              radius={[4, 4, 0, 0]}
-            />
+            <Tooltip content={<ChartTooltip />} />
+            <Legend content={<ChartLegendContent />} />
+            {chartSeries.map((series, index) => (
+              <Bar
+                key={series.key}
+                dataKey={series.key}
+                stackId="a"
+                fill={series.color}
+                radius={
+                  index === chartSeries.length - 1
+                    ? ([4, 4, 0, 0] as [number, number, number, number])
+                    : undefined
+                }
+              />
+            ))}
           </BarChart>
         </ResponsiveContainer>
       )}

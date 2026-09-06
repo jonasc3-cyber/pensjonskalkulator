@@ -210,19 +210,18 @@ export function ResultsPanel({
           <BreakdownChart scenarios={[low, base, high]} />
         </div>
 
-        <div className="mt-6 min-w-0 w-full">
+        <div className="mt-10 min-w-0 w-full sm:mt-12">
           <h3 className="mb-2 text-sm font-semibold text-slate-800">
             Årlig pensjon over tid (basis)
           </h3>
           <TimelineChart data={result.timeline} />
           <p
-            className="mt-3 rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs leading-relaxed text-info-text"
+            className="mt-2 rounded-md border border-info-border bg-info-bg px-2.5 py-1 text-[11px] leading-snug text-info-text"
             role="note"
             data-testid="timeline-payout-callout"
           >
-            Tjenestepensjon og egen sparing er ofte tidsbegrenset. Når
-            utbetalingsperioden er over, kan grafen vise bare folketrygd (og
-            eventuell AFP) — det er forventet, ikke en feil i prognosen.
+            TP og sparing er ofte tidsbegrenset — etter utbetalingsperioden kan
+            grafen vise bare folketrygd (og AFP). Det er forventet.
           </p>
         </div>
       </div>
