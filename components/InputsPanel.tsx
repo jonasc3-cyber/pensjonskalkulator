@@ -156,6 +156,27 @@ export function InputsPanel({
           </select>
         </Field>
 
+        <Field
+          id="sivilstatus"
+          label="Sivilstand"
+          hint="Påvirker garantipensjonsgulvet (enslig har høyere sats enn gift/samboer)."
+        >
+          <select
+            id="sivilstatus"
+            className={selectClass}
+            value={values.sivilstatus}
+            onChange={(e) =>
+              onChange(
+                "sivilstatus",
+                e.target.value as CalculatorInputs["sivilstatus"],
+              )
+            }
+          >
+            <option value="enslig">Enslig</option>
+            <option value="gift">Gift / samboer</option>
+          </select>
+        </Field>
+
         <Field id="showNet" label="Visning">
           <label className="flex items-center gap-2 text-sm text-slate-700">
             <input
@@ -204,23 +225,6 @@ export function InputsPanel({
                 placeholder="Estimeres automatisk"
                 onChange={(v) => onChange("folketrygdBalance", v)}
               />
-            </Field>
-
-            <Field id="sivilstatus" label="Sivilstatus (garantipensjon)">
-              <select
-                id="sivilstatus"
-                className={selectClass}
-                value={values.sivilstatus}
-                onChange={(e) =>
-                  onChange(
-                    "sivilstatus",
-                    e.target.value as CalculatorInputs["sivilstatus"],
-                  )
-                }
-              >
-                <option value="enslig">Enslig</option>
-                <option value="gift">Gift / samboer</option>
-              </select>
             </Field>
 
             <Field

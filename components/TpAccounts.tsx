@@ -11,6 +11,7 @@ import {
 } from "@/lib/pension/tp";
 import type { TpAccount, TpKind } from "@/lib/pension/types";
 import { EmptyAccountsState } from "./EmptyAccountsState";
+import { NorskPensjonHint } from "./NorskPensjonHint";
 
 const KINDS: TpKind[] = ["innskudd", "ytelse", "hybrid", "offentlig", "annet"];
 
@@ -166,7 +167,7 @@ export function TpAccounts({ accounts, onChange }: Props) {
                   <Field
                     id={`tp-balance-${account.id}`}
                     label="Eksisterende saldo (kr)"
-                    hint="Fra pensjonskapitalbevis / Norsk Pensjon"
+                    hint={<NorskPensjonHint />}
                   >
                     <CurrencyInput
                       id={`tp-balance-${account.id}`}

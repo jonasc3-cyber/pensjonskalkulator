@@ -10,6 +10,7 @@ import {
 } from "@/lib/pension/saving";
 import type { SavingAccount, SavingKind } from "@/lib/pension/types";
 import { EmptyAccountsState } from "./EmptyAccountsState";
+import { NorskPensjonHint } from "./NorskPensjonHint";
 
 const KINDS: SavingKind[] = ["ips", "ask", "fond", "bank", "annet"];
 
@@ -159,6 +160,7 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                   <Field
                     id={`saving-balance-${account.id}`}
                     label="Eksisterende saldo (kr)"
+                    hint={<NorskPensjonHint />}
                   >
                     <CurrencyInput
                       id={`saving-balance-${account.id}`}
