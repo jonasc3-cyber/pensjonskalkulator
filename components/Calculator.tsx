@@ -124,7 +124,10 @@ export function Calculator() {
   }
 
   return (
-    <div className="space-y-6 pb-16 sm:pb-0">
+    <div
+      className="space-y-6 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] sm:pb-0"
+      data-testid="calculator-root"
+    >
       <InputsPanel
         values={values}
         advanced={advanced}

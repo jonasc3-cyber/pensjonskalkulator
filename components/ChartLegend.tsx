@@ -20,21 +20,23 @@ export function ChartLegendContent({ payload }: DefaultLegendContentProps) {
     .filter((e): e is NonNullable<typeof e> => Boolean(e));
 
   return (
-    <ul
-      className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-1"
-      style={{ fontSize: 12 }}
-    >
+    <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 pt-1 text-[13px] sm:gap-x-4 sm:text-xs">
       {ordered.map((entry) => {
         const key = String(entry.value) as ChartSeriesKey;
         const fill = colorByKey[key] ?? String(entry.color ?? "#64748B");
+        const label =
+          chartSeries.find((s) => s.key === key)?.label ?? key;
         return (
-          <li key={key} className="inline-flex items-center gap-1.5 text-slate-600">
+          <li
+            key={key}
+            className="inline-flex items-center gap-1.5 font-medium text-slate-700"
+          >
             <span
               className="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px]"
               style={{ backgroundColor: fill }}
               aria-hidden
             />
-            <span>{key}</span>
+            <span>{label}</span>
           </li>
         );
       })}

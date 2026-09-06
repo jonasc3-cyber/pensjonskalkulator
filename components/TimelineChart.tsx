@@ -15,6 +15,7 @@ import type { TimelinePoint } from "@/lib/pension/types";
 import { chartSeries, palette } from "@/lib/theme";
 import { ChartFrame } from "./ChartFrame";
 import { ChartLegendContent } from "./ChartLegend";
+import { ChartTableToggle } from "./ChartTableToggle";
 import { ChartTooltip } from "./ChartTooltip";
 
 /**
@@ -61,7 +62,27 @@ export function TimelineChart({ data }: { data: TimelinePoint[] }) {
   const ticks = ageTicksEveryFive(chartData.map((d) => d.age));
   const dropAge = findFirstTpSavingDropAge(chartData);
 
-  return (
+  // Compact table: every 5 years (+ last) so mobile a11y stays readable
+  const tickSet = new Set(ticks);
+  const lastAge = chartData[chartData.length - 1]?.age;
+  const tableRows = chartData
+    .filter((row) => tickSet.has(row.age) || row.age === lastAge)
+    .map((row) => ({
+      label: `${row.age} år`,
+      values: {
+        Folketrygd: row.Folketrygd,
+        TP: row.TP,
+        AFP: row.AFP,
+        Sparing: row.Sparing,
+      },
+    }));
+
+  const columns = chartSeries.map((s) => ({
+    key: s.key,
+    header: s.label,
+  }));
+
+  const chart = (
     <ChartFrame aria-label="Områdediagram over årlig pensjon over tid (basis-scenario)">
       {({ width, height }) => (
         <ResponsiveContainer width={width} height={height} debounce={50}>
@@ -73,17 +94,17 @@ export function TimelineChart({ data }: { data: TimelinePoint[] }) {
             <XAxis
               dataKey="age"
               ticks={ticks}
-              tick={{ fontSize: 12, fill: palette.slate }}
+              tick={{ fontSize: 13, fill: palette.slate }}
               label={{
                 value: "Alder",
                 position: "insideBottom",
                 offset: -2,
-                fontSize: 11,
+                fontSize: 12,
                 fill: palette.slate,
               }}
             />
             <YAxis
-              tick={{ fontSize: 11, fill: palette.slate }}
+              tick={{ fontSize: 12, fill: palette.slate }}
               tickFormatter={(v) =>
                 new Intl.NumberFormat("nb-NO", {
                   notation: "compact",
@@ -103,7 +124,7 @@ export function TimelineChart({ data }: { data: TimelinePoint[] }) {
                   value: "TP/sparing avtar",
                   position: "insideTopRight",
                   fill: palette.slate,
-                  fontSize: 10,
+                  fontSize: 11,
                 }}
               />
             ) : null}
@@ -122,5 +143,14 @@ export function TimelineChart({ data }: { data: TimelinePoint[] }) {
         </ResponsiveContainer>
       )}
     </ChartFrame>
+  );
+
+  return (
+    <ChartTableToggle
+      chart={chart}
+      columns={columns}
+      rows={tableRows}
+      caption="Årlig pensjon over tid (basis-scenario, kr)"
+    />
   );
 }

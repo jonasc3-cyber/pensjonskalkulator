@@ -149,25 +149,39 @@ export function ResultsPanel({
               ["AFP", base.afp.yearly, palette.chart.afp],
               ["Egen sparing", base.saving.yearly, palette.chart.sparing],
             ] as const
-          ).map(([label, value, color]) => (
-            <li
-              key={label}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1.5 text-sm"
-            >
-              <span
-                className="h-2 w-2 shrink-0 rounded-full"
-                style={{ backgroundColor: color }}
-                aria-hidden
-              />
-              <span className="text-muted-foreground">{label}</span>
-              <span className="font-medium tabular-nums text-primary">
-                {formatNOK(value)}
-              </span>
-              <span className="text-xs text-muted-foreground">
-                ({formatNOK(value / 12)}/mnd)
-              </span>
-            </li>
-          ))}
+          ).map(([label, value, color]) => {
+            const isAfpZero = label === "AFP" && Math.round(value) === 0;
+            return (
+              <li
+                key={label}
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-2 text-[13px] sm:py-1.5 sm:text-sm"
+              >
+                <span
+                  className="h-2.5 w-2.5 shrink-0 rounded-full sm:h-2 sm:w-2"
+                  style={{ backgroundColor: color }}
+                  aria-hidden
+                />
+                <span className="font-medium text-slate-700">{label}</span>
+                {isAfpZero ? (
+                  <span
+                    className="font-medium text-muted-foreground"
+                    data-testid="afp-not-included"
+                  >
+                    Ikke inkludert
+                  </span>
+                ) : (
+                  <>
+                    <span className="font-medium tabular-nums text-primary">
+                      {formatNOK(value)}
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      ({formatNOK(value / 12)}/mnd)
+                    </span>
+                  </>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         {tpBreakdown.length > 1 ? (
