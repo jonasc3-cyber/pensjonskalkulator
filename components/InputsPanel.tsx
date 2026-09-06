@@ -207,7 +207,10 @@ export function InputsPanel({
       </div>
 
       {advanced ? (
-        <div className="mt-6 space-y-4 border-t border-border pt-5">
+        <div
+          id="avansert"
+          className="mt-6 scroll-mt-4 space-y-4 border-t border-border pt-5"
+        >
           <h3 className="text-sm font-semibold text-primary">Avansert</h3>
           <div className="grid gap-5 sm:grid-cols-2">
             <Field

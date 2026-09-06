@@ -25,6 +25,7 @@ const PERSIST_DEBOUNCE_MS = 250;
 export function Calculator() {
   const [values, setValues] = useState<CalculatorInputs>(() => defaultInputs());
   const [advanced, setAdvanced] = useState(false);
+  const [assumptionsOpen, setAssumptionsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   /** Vises til bruker endrer noe (eller har lagret/delt tilstand). */
   const [isExampleData, setIsExampleData] = useState(true);
@@ -110,6 +111,18 @@ export function Calculator() {
     skipNextPersist.current = true;
   }
 
+  function openPayoutSettings() {
+    setAdvanced(true);
+    setAssumptionsOpen(true);
+    // Vent til Antagelser (details) og Avansert er ekspandert før scroll
+    window.setTimeout(() => {
+      const target =
+        document.getElementById("utbetaling") ??
+        document.getElementById("antagelser");
+      target?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }
+
   return (
     <div className="space-y-6 pb-16 sm:pb-0">
       <InputsPanel
@@ -120,12 +133,22 @@ export function Calculator() {
         onToggleAdvanced={() => setAdvanced((v) => !v)}
         onReset={onReset}
       />
-      <AssumptionsPanel values={values} onChange={onChange} />
+      <AssumptionsPanel
+        values={values}
+        onChange={onChange}
+        open={assumptionsOpen}
+        onOpenChange={setAssumptionsOpen}
+      />
       <CohortWarning birthYear={values.birthYear} alert={false} />
       <SectionDivider src="/divider-home.webp" />
       {result ? (
         <>
-          <ResultsPanel result={result} showNet={values.showNet} inputs={values} />
+          <ResultsPanel
+            result={result}
+            showNet={values.showNet}
+            inputs={values}
+            onOpenPayoutSettings={openPayoutSettings}
+          />
           <GoalSeekPanel values={values} result={result} />
           <StickyMiniResult baseMonthly={result.scenarios.base.totalMonthly} />
         </>

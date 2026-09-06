@@ -1,5 +1,6 @@
 "use client";
 
+import type { SyntheticEvent } from "react";
 import { Field, inputClass } from "./Field";
 import type { CalculatorInputs } from "@/lib/pension/types";
 
@@ -9,11 +10,32 @@ type Props = {
     key: K,
     value: CalculatorInputs[K],
   ) => void;
+  /** Controlled open state for the collapsible Antagelser panel. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
-export function AssumptionsPanel({ values, onChange }: Props) {
+export function AssumptionsPanel({
+  values,
+  onChange,
+  open,
+  onOpenChange,
+}: Props) {
+  const controlled = open !== undefined;
+
   return (
-    <details className="group rounded-2xl border border-border bg-muted/70 shadow-sm open:bg-muted/80">
+    <details
+      id="antagelser"
+      className="group scroll-mt-4 rounded-2xl border border-border bg-muted/70 shadow-sm open:bg-muted/80"
+      {...(controlled
+        ? {
+            open,
+            onToggle: (e: SyntheticEvent<HTMLDetailsElement>) => {
+              onOpenChange?.(e.currentTarget.open);
+            },
+          }
+        : {})}
+    >
       <summary className="cursor-pointer list-none rounded-2xl px-4 py-3.5 marker:content-none sm:px-5 sm:py-4 [&::-webkit-details-marker]:hidden">
         <div className="flex items-center justify-between gap-3">
           <div>
@@ -95,40 +117,55 @@ export function AssumptionsPanel({ values, onChange }: Props) {
               }
             />
           </Field>
-          <Field
-            id="assumptions-tp-years"
-            label="TP utbetalingsår"
-            hint="Brukes når TP-utbetaling er «Over N år»"
-          >
-            <input
+        </div>
+
+        <div
+          id="utbetaling"
+          className="mt-5 scroll-mt-4 rounded-xl border border-border bg-card/60 p-3 sm:p-4"
+        >
+          <h3 className="text-sm font-semibold text-primary">
+            Utbetalingsperiode
+          </h3>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Antall år TP og egen sparing betales ut når utbetalingsmodus er «Over
+            N år» (settes under Avansert).
+          </p>
+          <div className="mt-3 grid gap-5 sm:grid-cols-2">
+            <Field
               id="assumptions-tp-years"
-              type="number"
-              min={5}
-              max={25}
-              className={inputClass}
-              value={values.tpPayoutYears}
-              onChange={(e) =>
-                onChange("tpPayoutYears", Number(e.target.value))
-              }
-            />
-          </Field>
-          <Field
-            id="assumptions-save-years"
-            label="Sparing utbetalingsår"
-            hint="Brukes når sparing-utbetaling er «Over N år»"
-          >
-            <input
+              label="TP utbetalingsår"
+              hint="Brukes når TP-utbetaling er «Over N år»"
+            >
+              <input
+                id="assumptions-tp-years"
+                type="number"
+                min={5}
+                max={25}
+                className={inputClass}
+                value={values.tpPayoutYears}
+                onChange={(e) =>
+                  onChange("tpPayoutYears", Number(e.target.value))
+                }
+              />
+            </Field>
+            <Field
               id="assumptions-save-years"
-              type="number"
-              min={5}
-              max={30}
-              className={inputClass}
-              value={values.savingPayoutYears}
-              onChange={(e) =>
-                onChange("savingPayoutYears", Number(e.target.value))
-              }
-            />
-          </Field>
+              label="Sparing utbetalingsår"
+              hint="Brukes når sparing-utbetaling er «Over N år»"
+            >
+              <input
+                id="assumptions-save-years"
+                type="number"
+                min={5}
+                max={30}
+                className={inputClass}
+                value={values.savingPayoutYears}
+                onChange={(e) =>
+                  onChange("savingPayoutYears", Number(e.target.value))
+                }
+              />
+            </Field>
+          </div>
         </div>
       </div>
     </details>

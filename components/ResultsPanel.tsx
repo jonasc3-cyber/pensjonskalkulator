@@ -8,14 +8,23 @@ import { TimelineChart } from "./TimelineChart";
 import { HowWeCalculated } from "./HowWeCalculated";
 import { WithdrawalAgeComparison } from "./WithdrawalAgeComparison";
 
+function payoutLabel(
+  mode: CalculatorInputs["tpPayoutMode"],
+  years: number,
+): string {
+  return mode === "livsvarig" ? "livsvarig" : `${years} år`;
+}
+
 export function ResultsPanel({
   result,
   showNet,
   inputs,
+  onOpenPayoutSettings,
 }: {
   result: CalculationResult;
   showNet: boolean;
   inputs: CalculatorInputs;
+  onOpenPayoutSettings?: () => void;
 }) {
   const { low, base, high } = result.scenarios;
   const unit = showNet ? "netto (anslag)" : "brutto";
@@ -215,14 +224,35 @@ export function ResultsPanel({
             Årlig pensjon over tid (basis)
           </h3>
           <TimelineChart data={result.timeline} />
-          <p
-            className="mt-2 rounded-md border border-info-border bg-info-bg px-2.5 py-1 text-[11px] leading-snug text-info-text"
+          <div
+            className="mt-2 space-y-2 rounded-md border border-info-border bg-info-bg px-2.5 py-2 text-[11px] leading-snug text-info-text"
             role="note"
             data-testid="timeline-payout-callout"
           >
-            TP og sparing er ofte tidsbegrenset — etter utbetalingsperioden kan
-            grafen vise bare folketrygd (og AFP). Det er forventet.
-          </p>
+            <p>
+              TP og egen sparing betales ut over et begrenset antall år (fra
+              Antagelser) — fallet markert «TP/sparing avtar» er forventet, ikke
+              en feil. Med dine innstillinger: TP{" "}
+              {payoutLabel(inputs.tpPayoutMode, inputs.tpPayoutYears)}, egen
+              sparing{" "}
+              {payoutLabel(inputs.savingPayoutMode, inputs.savingPayoutYears)}.
+              Etter perioden kan grafen vise bare folketrygd (og AFP).
+            </p>
+            <p>
+              Vil du unngå eller jevne ut fallet? Velg «livsvarig» under Avansert,
+              eller øk utbetalingsår under Antagelser.
+            </p>
+            {onOpenPayoutSettings ? (
+              <button
+                type="button"
+                onClick={onOpenPayoutSettings}
+                className="inline-flex items-center rounded-md border border-info-border bg-card px-2.5 py-1 text-[11px] font-medium text-info-text shadow-sm transition-colors hover:bg-muted"
+                data-testid="open-payout-settings"
+              >
+                Åpne utbetalingsinnstillinger
+              </button>
+            ) : null}
+          </div>
         </div>
       </div>
 
