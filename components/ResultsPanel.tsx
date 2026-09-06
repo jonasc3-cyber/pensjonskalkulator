@@ -245,28 +245,28 @@ export function ResultsPanel({
           </h3>
           <TimelineChart data={result.timeline} />
           <div
-            className="mt-2 space-y-2 rounded-md border border-info-border bg-info-bg px-2.5 py-2 text-[11px] leading-snug text-info-text"
+            className="mt-2 space-y-2 rounded-md border border-info-border bg-info-bg px-3 py-2 text-sm leading-snug text-info-text"
             role="note"
             data-testid="timeline-payout-callout"
           >
             <p>
               TP og egen sparing betales ut over et begrenset antall år (fra
-              Antagelser) — fallet markert «TP/sparing avtar» er forventet, ikke
-              en feil. Med dine innstillinger: TP{" "}
+              Avansert og antagelser) — fallet markert «TP/sparing avtar» er
+              forventet, ikke en feil. Med dine innstillinger: TP{" "}
               {payoutLabel(inputs.tpPayoutMode, inputs.tpPayoutYears)}, egen
               sparing{" "}
               {payoutLabel(inputs.savingPayoutMode, inputs.savingPayoutYears)}.
               Etter perioden kan grafen vise bare folketrygd (og AFP).
             </p>
             <p>
-              Vil du unngå eller jevne ut fallet? Velg «livsvarig» under Avansert,
-              eller øk utbetalingsår under Antagelser.
+              Vil du unngå eller jevne ut fallet? Velg «livsvarig» eller øk
+              utbetalingsår under Avansert og antagelser.
             </p>
             {onOpenPayoutSettings ? (
               <button
                 type="button"
                 onClick={onOpenPayoutSettings}
-                className="inline-flex items-center rounded-md border border-info-border bg-card px-2.5 py-1 text-[11px] font-medium text-info-text shadow-sm transition-colors hover:bg-muted"
+                className="inline-flex items-center rounded-md border border-info-border bg-card px-3 py-1.5 text-sm font-medium text-info-text shadow-sm transition-colors hover:bg-muted"
                 data-testid="open-payout-settings"
               >
                 Åpne utbetalingsinnstillinger

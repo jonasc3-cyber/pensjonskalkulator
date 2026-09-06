@@ -1,7 +1,8 @@
 "use client";
 
 import type { SyntheticEvent } from "react";
-import { Field, inputClass } from "./Field";
+import { Field, inputClass, selectClass } from "./Field";
+import { CurrencyInput } from "./CurrencyInput";
 import type { CalculatorInputs } from "@/lib/pension/types";
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
     key: K,
     value: CalculatorInputs[K],
   ) => void;
-  /** Controlled open state for the collapsible Antagelser panel. */
+  /** Controlled open state for the collapsible panel. */
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 };
@@ -36,17 +37,17 @@ export function AssumptionsPanel({
           }
         : {})}
     >
-      <summary className="cursor-pointer list-none rounded-2xl px-4 py-3.5 marker:content-none sm:px-5 sm:py-4 [&::-webkit-details-marker]:hidden">
+      <summary className="cursor-pointer list-none rounded-2xl px-4 py-4 marker:content-none sm:px-5 [&::-webkit-details-marker]:hidden">
         <div className="flex items-center justify-between gap-3">
           <div>
             <h2
               id="assumptions-heading"
               className="text-base font-semibold text-primary"
             >
-              Antagelser (redigerbare)
+              Avansert og antagelser
             </h2>
-            <p className="mt-0.5 text-xs text-muted-foreground group-open:hidden">
-              Trykk for å vise lønnsvekst, G-vekst, inflasjon m.m.
+            <p className="mt-1 text-sm text-muted-foreground group-open:hidden">
+              Pensjonsbeholdning, lønnsvekst, utbetalingsperiode m.m.
             </p>
           </div>
           <span
@@ -69,102 +70,170 @@ export function AssumptionsPanel({
         </div>
       </summary>
 
-      <div className="border-t border-border px-4 pb-4 pt-3 sm:px-5 sm:pb-5">
-        <p className="text-xs text-muted-foreground">
+      <div className="space-y-6 border-t border-border px-4 pb-4 pt-4 sm:px-5 sm:pb-5">
+        <p className="text-sm text-muted-foreground">
           Endringer oppdaterer prognosen med én gang. Scenarioene justerer i
           tillegg avkastning og vekst automatisk. Avkastning for tjenestepensjon
           og egen sparing settes per konto under «Tjenestepensjon» / «Egen
           sparing».
         </p>
 
-        <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <Field id="assumptions-wage" label="Lønnsvekst %">
-            <input
-              id="assumptions-wage"
-              type="number"
-              step={0.1}
-              className={inputClass}
-              value={Number((values.wageGrowth * 100).toFixed(1))}
-              onChange={(e) =>
-                onChange("wageGrowth", Number(e.target.value) / 100)
-              }
-            />
-          </Field>
-          <Field id="assumptions-g" label="G-vekst %">
-            <input
-              id="assumptions-g"
-              type="number"
-              step={0.1}
-              className={inputClass}
-              value={Number((values.gGrowth * 100).toFixed(1))}
-              onChange={(e) => onChange("gGrowth", Number(e.target.value) / 100)}
-            />
-          </Field>
+        <div id="avansert" className="scroll-mt-4 space-y-4">
+          <h3 className="text-sm font-semibold text-primary">
+            Pensjonsbeholdning
+          </h3>
           <Field
-            id="assumptions-inflation"
-            label="Inflasjon %"
-            hint="Deflaterer resultatet til dagens kroneverdi"
+            id="folketrygdBalance"
+            label="Pensjonsbeholdning (folketrygd)"
+            hint="Fra NAV / Din pensjon — la stå tom for estimat"
           >
-            <input
-              id="assumptions-inflation"
-              type="number"
-              step={0.1}
+            <CurrencyInput
+              id="folketrygdBalance"
+              value={values.folketrygdBalance}
               min={0}
-              className={inputClass}
-              value={Number((values.inflation * 100).toFixed(1))}
-              onChange={(e) =>
-                onChange("inflation", Number(e.target.value) / 100)
-              }
+              step={10000}
+              allowEmpty
+              emptyValue={0}
+              placeholder="Estimeres automatisk"
+              onChange={(v) => onChange("folketrygdBalance", v)}
             />
           </Field>
         </div>
 
+        <div className="space-y-4">
+          <h3 className="text-sm font-semibold text-primary">
+            Vekst og inflasjon
+          </h3>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Field id="assumptions-wage" label="Lønnsvekst %">
+              <input
+                id="assumptions-wage"
+                type="number"
+                step={0.1}
+                className={inputClass}
+                value={Number((values.wageGrowth * 100).toFixed(1))}
+                onChange={(e) =>
+                  onChange("wageGrowth", Number(e.target.value) / 100)
+                }
+              />
+            </Field>
+            <Field id="assumptions-g" label="G-vekst %">
+              <input
+                id="assumptions-g"
+                type="number"
+                step={0.1}
+                className={inputClass}
+                value={Number((values.gGrowth * 100).toFixed(1))}
+                onChange={(e) =>
+                  onChange("gGrowth", Number(e.target.value) / 100)
+                }
+              />
+            </Field>
+            <Field
+              id="assumptions-inflation"
+              label="Inflasjon %"
+              hint="Deflaterer resultatet til dagens kroneverdi"
+            >
+              <input
+                id="assumptions-inflation"
+                type="number"
+                step={0.1}
+                min={0}
+                className={inputClass}
+                value={Number((values.inflation * 100).toFixed(1))}
+                onChange={(e) =>
+                  onChange("inflation", Number(e.target.value) / 100)
+                }
+              />
+            </Field>
+          </div>
+        </div>
+
         <div
           id="utbetaling"
-          className="mt-5 scroll-mt-4 rounded-xl border border-border bg-card/60 p-3 sm:p-4"
+          className="scroll-mt-4 space-y-4 rounded-xl border border-border bg-card/60 p-4"
         >
-          <h3 className="text-sm font-semibold text-primary">
-            Utbetalingsperiode
-          </h3>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Antall år TP og egen sparing betales ut når utbetalingsmodus er «Over
-            N år» (settes under Avansert).
-          </p>
-          <div className="mt-3 grid gap-5 sm:grid-cols-2">
+          <div>
+            <h3 className="text-sm font-semibold text-primary">
+              Utbetalingsperiode
+            </h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Velg om TP og egen sparing betales ut over et fast antall år eller
+              livsvarig (forenklet). Antall år vises bare når «Over N år» er
+              valgt.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
             <Field
-              id="assumptions-tp-years"
-              label="TP utbetalingsår"
-              hint="Brukes når TP-utbetaling er «Over N år»"
+              id="tpPayoutMode"
+              label="TP-utbetaling"
+              hint="Gjelder alle TP-kontoer"
             >
-              <input
-                id="assumptions-tp-years"
-                type="number"
-                min={5}
-                max={25}
-                className={inputClass}
-                value={values.tpPayoutYears}
+              <select
+                id="tpPayoutMode"
+                className={selectClass}
+                value={values.tpPayoutMode}
                 onChange={(e) =>
-                  onChange("tpPayoutYears", Number(e.target.value))
+                  onChange(
+                    "tpPayoutMode",
+                    e.target.value as CalculatorInputs["tpPayoutMode"],
+                  )
                 }
-              />
+              >
+                <option value="aar">Over N år</option>
+                <option value="livsvarig">Livsvarig (forenklet)</option>
+              </select>
             </Field>
-            <Field
-              id="assumptions-save-years"
-              label="Sparing utbetalingsår"
-              hint="Brukes når sparing-utbetaling er «Over N år»"
-            >
-              <input
-                id="assumptions-save-years"
-                type="number"
-                min={5}
-                max={30}
-                className={inputClass}
-                value={values.savingPayoutYears}
+
+            {values.tpPayoutMode === "aar" ? (
+              <Field id="assumptions-tp-years" label="TP utbetalingsår">
+                <input
+                  id="assumptions-tp-years"
+                  type="number"
+                  min={5}
+                  max={25}
+                  className={inputClass}
+                  value={values.tpPayoutYears}
+                  onChange={(e) =>
+                    onChange("tpPayoutYears", Number(e.target.value))
+                  }
+                />
+              </Field>
+            ) : null}
+
+            <Field id="savingPayoutMode" label="Sparing-utbetaling">
+              <select
+                id="savingPayoutMode"
+                className={selectClass}
+                value={values.savingPayoutMode}
                 onChange={(e) =>
-                  onChange("savingPayoutYears", Number(e.target.value))
+                  onChange(
+                    "savingPayoutMode",
+                    e.target.value as CalculatorInputs["savingPayoutMode"],
+                  )
                 }
-              />
+              >
+                <option value="aar">Over N år</option>
+                <option value="livsvarig">Livsvarig (forenklet)</option>
+              </select>
             </Field>
+
+            {values.savingPayoutMode === "aar" ? (
+              <Field id="assumptions-save-years" label="Sparing utbetalingsår">
+                <input
+                  id="assumptions-save-years"
+                  type="number"
+                  min={5}
+                  max={30}
+                  className={inputClass}
+                  value={values.savingPayoutYears}
+                  onChange={(e) =>
+                    onChange("savingPayoutYears", Number(e.target.value))
+                  }
+                />
+              </Field>
+            ) : null}
           </div>
         </div>
       </div>

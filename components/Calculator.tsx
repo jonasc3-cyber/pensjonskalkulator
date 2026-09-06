@@ -24,7 +24,6 @@ const PERSIST_DEBOUNCE_MS = 250;
 
 export function Calculator() {
   const [values, setValues] = useState<CalculatorInputs>(() => defaultInputs());
-  const [advanced, setAdvanced] = useState(false);
   const [assumptionsOpen, setAssumptionsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   /** Vises til bruker endrer noe (eller har lagret/delt tilstand). */
@@ -112,15 +111,25 @@ export function Calculator() {
   }
 
   function openPayoutSettings() {
-    setAdvanced(true);
     setAssumptionsOpen(true);
-    // Vent til Antagelser (details) og Avansert er ekspandert før scroll
+    // Vent til Avansert/Antagelser (details) er ekspandert før scroll
     window.setTimeout(() => {
       const target =
         document.getElementById("utbetaling") ??
         document.getElementById("antagelser");
       target?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
+  }
+
+  function toggleAssumptions() {
+    setAssumptionsOpen((v) => !v);
+    if (!assumptionsOpen) {
+      window.setTimeout(() => {
+        document
+          .getElementById("antagelser")
+          ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 50);
+    }
   }
 
   return (
@@ -130,10 +139,10 @@ export function Calculator() {
     >
       <InputsPanel
         values={values}
-        advanced={advanced}
+        assumptionsOpen={assumptionsOpen}
         isExampleData={isExampleData}
         onChange={onChange}
-        onToggleAdvanced={() => setAdvanced((v) => !v)}
+        onToggleAssumptions={toggleAssumptions}
         onReset={onReset}
       />
       <AssumptionsPanel

@@ -76,6 +76,7 @@ function EmptyIllustration({ variant }: { variant: "tp" | "saving" }) {
   );
 }
 
+/** Shared empty state after deleting (or never adding) TP / sparing accounts. */
 export function EmptyAccountsState({
   title,
   description,
@@ -84,16 +85,20 @@ export function EmptyAccountsState({
   illustration = "saving",
 }: Props) {
   return (
-    <div className="flex flex-col items-center rounded-xl border border-dashed border-border bg-primary-soft/40 px-4 py-8 text-center sm:px-6">
+    <div
+      className="flex flex-col items-center rounded-xl border border-dashed border-border bg-primary-soft/40 px-4 py-8 text-center sm:px-6"
+      data-testid={`empty-accounts-${illustration}`}
+      role="status"
+    >
       <EmptyIllustration variant={illustration} />
-      <p className="mt-3 text-sm font-medium text-primary">{title}</p>
-      <p className="mt-1 max-w-sm text-sm leading-relaxed text-muted-foreground">
+      <p className="mt-4 text-sm font-medium text-primary">{title}</p>
+      <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
         {description}
       </p>
       <button
         type="button"
         onClick={onAdd}
-        className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         <span aria-hidden className="text-base leading-none">
           +

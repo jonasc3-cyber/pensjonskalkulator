@@ -68,10 +68,10 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
   }
 
   return (
-    <div className="space-y-3 sm:col-span-2">
+    <div className="space-y-4 sm:col-span-2">
       <div>
         <h3 className="text-sm font-semibold text-primary">Egen sparing</h3>
-        <p className="mt-0.5 text-xs text-muted-foreground">
+        <p className="mt-1 text-sm text-muted-foreground">
           Legg til IPS, ASK, fond, bankinnskudd eller annet. Hver konto
           fremskrives med egen avkastning.
         </p>
@@ -79,7 +79,7 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
 
       {accounts.some((a) => a.kind === "ips") ? (
         <p
-          className="rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs leading-relaxed text-info-text"
+          className="rounded-lg border border-info-border bg-info-bg px-3 py-2 text-sm leading-relaxed text-info-text"
           role="note"
         >
           Minst én konto er IPS. Estimatet viser kun saldo/avkastning — den
@@ -92,11 +92,11 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
           illustration="saving"
           title="Ingen sparekontoer ennå"
           description="Legg til IPS, ASK, fond eller bank for å få med egen sparing i estimatet."
-          ctaLabel="Legg til"
+          ctaLabel="Legg til sparing"
           onAdd={addAccount}
         />
       ) : (
-        <ul className="space-y-3" aria-label="Sparekontoer">
+        <ul className="space-y-4" aria-label="Sparekontoer">
           {accounts.map((account, index) => {
             const selectValue = providerSelectValue(account.provider);
             const showCustom =
@@ -137,7 +137,7 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
                   <Field id={`saving-kind-${account.id}`} label="Type">
                     <select
                       id={`saving-kind-${account.id}`}
@@ -193,7 +193,7 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                   <summary className="cursor-pointer select-none px-3 py-2.5 text-sm font-medium text-primary marker:text-muted-foreground hover:bg-primary-soft/40">
                     Flere detaljer
                   </summary>
-                  <div className="grid grid-cols-1 gap-5 border-t border-border p-3 sm:grid-cols-2 sm:p-4">
+                  <div className="grid grid-cols-1 gap-4 border-t border-border p-4 sm:grid-cols-2 sm:gap-6">
                     <Field
                       id={`saving-label-${account.id}`}
                       label="Navn / etikett (valgfritt)"
@@ -295,7 +295,7 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
 
                     {account.kind === "ips" ? (
                       <p
-                        className="rounded-lg border border-info-border bg-info-bg px-3 py-2 text-xs leading-relaxed text-info-text sm:col-span-2"
+                        className="rounded-lg border border-info-border bg-info-bg px-3 py-2 text-sm leading-relaxed text-info-text sm:col-span-2"
                         role="note"
                         data-testid="ips-tax-disclaimer"
                       >

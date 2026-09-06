@@ -16,23 +16,24 @@ import { CohortWarning } from "./CohortWarning";
 
 type Props = {
   values: CalculatorInputs;
-  advanced: boolean;
+  /** True when the consolidated Avansert/Antagelser panel is open. */
+  assumptionsOpen: boolean;
   /** True while defaults are shown and brukeren ikke har endret noe. */
   isExampleData?: boolean;
   onChange: <K extends keyof CalculatorInputs>(
     key: K,
     value: CalculatorInputs[K],
   ) => void;
-  onToggleAdvanced: () => void;
+  onToggleAssumptions: () => void;
   onReset?: () => void;
 };
 
 export function InputsPanel({
   values,
-  advanced,
+  assumptionsOpen,
   isExampleData = false,
   onChange,
-  onToggleAdvanced,
+  onToggleAssumptions,
   onReset,
 }: Props) {
   const age = CURRENT_YEAR - values.birthYear;
@@ -44,7 +45,7 @@ export function InputsPanel({
       className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
       aria-labelledby="inputs-heading"
     >
-      <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+      <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h2 id="inputs-heading" className="text-lg font-semibold text-primary">
@@ -73,23 +74,24 @@ export function InputsPanel({
             <button
               type="button"
               onClick={onReset}
-              className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-muted"
+              className="rounded-lg border border-border bg-card px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-muted"
             >
               Nullstill
             </button>
           ) : null}
           <button
             type="button"
-            onClick={onToggleAdvanced}
-            className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary-soft"
-            aria-pressed={advanced}
+            onClick={onToggleAssumptions}
+            className="rounded-lg border border-border bg-card px-3 py-2 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary-soft"
+            aria-pressed={assumptionsOpen}
+            aria-controls="antagelser"
           >
-            {advanced ? "Skjul avansert" : "Avansert"}
+            {assumptionsOpen ? "Skjul avansert" : "Avansert"}
           </button>
         </div>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
         <Field id="birthYear" label="Fødselsår" hint={`Alder i ${CURRENT_YEAR}: ${age} år`}>
           <input
             id="birthYear"
@@ -205,76 +207,6 @@ export function InputsPanel({
           onChange={(savings) => onChange("savings", savings)}
         />
       </div>
-
-      {advanced ? (
-        <div
-          id="avansert"
-          className="mt-6 scroll-mt-4 space-y-4 border-t border-border pt-5"
-        >
-          <h3 className="text-sm font-semibold text-primary">Avansert</h3>
-          <div className="grid gap-5 sm:grid-cols-2">
-            <Field
-              id="folketrygdBalance"
-              label="Pensjonsbeholdning (folketrygd)"
-              hint="Fra NAV / Din pensjon — lar stå tom for estimat"
-            >
-              <CurrencyInput
-                id="folketrygdBalance"
-                value={values.folketrygdBalance}
-                min={0}
-                step={10000}
-                allowEmpty
-                emptyValue={0}
-                placeholder="Estimeres automatisk"
-                onChange={(v) => onChange("folketrygdBalance", v)}
-              />
-            </Field>
-
-            <Field
-              id="tpPayoutMode"
-              label="TP-utbetaling"
-              hint="Gjelder alle TP-kontoer. Antall år justeres under Antagelser."
-            >
-              <select
-                id="tpPayoutMode"
-                className={selectClass}
-                value={values.tpPayoutMode}
-                onChange={(e) =>
-                  onChange(
-                    "tpPayoutMode",
-                    e.target.value as CalculatorInputs["tpPayoutMode"],
-                  )
-                }
-              >
-                <option value="aar">Over N år</option>
-                <option value="livsvarig">Livsvarig (forenklet)</option>
-              </select>
-            </Field>
-
-            <Field
-              id="savingPayoutMode"
-              label="Sparing-utbetaling"
-              hint="Antall år justeres under Antagelser."
-            >
-              <select
-                id="savingPayoutMode"
-                className={selectClass}
-                value={values.savingPayoutMode}
-                onChange={(e) =>
-                  onChange(
-                    "savingPayoutMode",
-                    e.target.value as CalculatorInputs["savingPayoutMode"],
-                  )
-                }
-              >
-                <option value="aar">Over N år</option>
-                <option value="livsvarig">Livsvarig (forenklet)</option>
-              </select>
-            </Field>
-
-          </div>
-        </div>
-      ) : null}
     </section>
   );
 }

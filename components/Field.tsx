@@ -14,7 +14,7 @@ export function Field({
   children: ReactNode;
 }) {
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-2">
       <label htmlFor={id} className="block text-sm font-medium text-slate-800">
         {label}
       </label>
@@ -22,14 +22,14 @@ export function Field({
       {error ? (
         <p
           id={`${id}-error`}
-          className="text-xs font-medium text-red-700"
+          className="text-sm font-medium text-red-700"
           role="alert"
           data-testid={`${id}-error`}
         >
           {error}
         </p>
       ) : hint ? (
-        <p className="text-xs text-muted-foreground">{hint}</p>
+        <p className="text-sm text-muted-foreground">{hint}</p>
       ) : null}
     </div>
   );

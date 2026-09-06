@@ -79,10 +79,10 @@ export function TpAccounts({ accounts, onChange }: Props) {
   }
 
   return (
-    <div className="space-y-3 sm:col-span-2">
+    <div className="space-y-4 sm:col-span-2">
       <div>
         <h3 className="text-sm font-semibold text-primary">Tjenestepensjon</h3>
-        <p className="mt-0.5 text-xs text-muted-foreground">
+        <p className="mt-1 text-sm text-muted-foreground">
           Legg til én eller flere ordninger (innskudd, ytelse, hybrid, offentlig).
           Kun én kan være «aktiv ordning» med pågående innskudd av lønn — øvrige
           er frosne saldoer som fortsatt får avkastning.
@@ -94,11 +94,11 @@ export function TpAccounts({ accounts, onChange }: Props) {
           illustration="tp"
           title="Ingen tjenestepensjon ennå"
           description="Legg til ordningen din for å få med innskudd og saldo i estimatet."
-          ctaLabel="Legg til"
+          ctaLabel="Legg til tjenestepensjon"
           onAdd={addAccount}
         />
       ) : (
-        <ul className="space-y-3" aria-label="Tjenestepensjonskontoer">
+        <ul className="space-y-4" aria-label="Tjenestepensjonskontoer">
           {accounts.map((account, index) => {
             const selectValue = providerSelectValue(account.provider);
             const showCustom =
@@ -144,7 +144,7 @@ export function TpAccounts({ accounts, onChange }: Props) {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
                   <Field id={`tp-kind-${account.id}`} label="Type">
                     <select
                       id={`tp-kind-${account.id}`}
@@ -231,7 +231,7 @@ export function TpAccounts({ accounts, onChange }: Props) {
                   <summary className="cursor-pointer select-none px-3 py-2.5 text-sm font-medium text-primary marker:text-muted-foreground hover:bg-primary-soft/40">
                     Flere detaljer
                   </summary>
-                  <div className="grid grid-cols-1 gap-5 border-t border-border p-3 sm:grid-cols-2 sm:p-4">
+                  <div className="grid grid-cols-1 gap-4 border-t border-border p-4 sm:grid-cols-2 sm:gap-6">
                     <Field
                       id={`tp-label-${account.id}`}
                       label="Navn / etikett (valgfritt)"
@@ -338,7 +338,7 @@ export function TpAccounts({ accounts, onChange }: Props) {
                           <span className="font-medium text-primary">
                             Aktiv ordning (pågående innskudd)
                           </span>
-                          <span className="mt-0.5 block text-xs text-muted-foreground">
+                          <span className="mt-1 block text-sm text-muted-foreground">
                             Kun én konto får innskudd = sats × lønn (opp til 12 G).
                             Bytt hit hvis dette er din nåværende arbeidsgiverordning.
                           </span>
