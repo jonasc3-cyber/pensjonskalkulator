@@ -1,5 +1,6 @@
 import { defaultInputs } from "./calculate";
 import { ensureSingleActiveContribution } from "./tp";
+import { ANNUAL_SALARY_MAX } from "../salaryValidation";
 import type {
   AfpType,
   CalculatorInputs,
@@ -147,7 +148,7 @@ export function mergePersistedInputs(
     next.birthYear = clampNumber(Math.round(o.birthYear), 1940, 2010);
   }
   if (isFiniteNumber(o.annualSalary)) {
-    next.annualSalary = Math.max(0, o.annualSalary);
+    next.annualSalary = clampNumber(o.annualSalary, 0, ANNUAL_SALARY_MAX);
   }
   if (isFiniteNumber(o.wageGrowth)) {
     next.wageGrowth = clampNumber(o.wageGrowth, 0, 0.15);

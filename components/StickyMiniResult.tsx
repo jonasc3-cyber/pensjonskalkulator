@@ -3,15 +3,15 @@
 import { useEffect, useState } from "react";
 import { formatNOK } from "@/lib/format";
 
-type Props = {
-  baseMonthly: number;
-};
+type Props =
+  | { baseMonthly: number; invalid?: false }
+  | { invalid: true; baseMonthly?: never };
 
 /**
  * Mobil-only sticky mini-resultat nederst mens man scroller skjemaet.
  * Skjules når #results er synlig (IntersectionObserver).
  */
-export function StickyMiniResult({ baseMonthly }: Props) {
+export function StickyMiniResult(props: Props) {
   const [resultsInView, setResultsInView] = useState(false);
 
   useEffect(() => {
@@ -33,6 +33,27 @@ export function StickyMiniResult({ baseMonthly }: Props) {
   }, []);
 
   if (resultsInView) return null;
+
+  if (props.invalid) {
+    return (
+      <div
+        className="fixed inset-x-0 bottom-0 z-30 border-t border-red-200 bg-card/95 px-3 py-2 shadow-[0_-4px_16px_rgba(11,42,74,0.08)] backdrop-blur supports-[backdrop-filter]:bg-card/90 sm:hidden"
+        role="status"
+        aria-live="polite"
+      >
+        <a
+          href="#annualSalary"
+          className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-lg px-1 py-1 text-sm text-red-800 transition-colors hover:text-red-900"
+        >
+          <span className="min-w-0 truncate font-medium">
+            Oppgi årslønn for å se estimat
+          </span>
+        </a>
+      </div>
+    );
+  }
+
+  const { baseMonthly } = props;
 
   return (
     <div

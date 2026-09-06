@@ -9,12 +9,15 @@ type Props = {
   value: number;
   onChange: (value: number) => void;
   min?: number;
+  max?: number;
   step?: number;
   placeholder?: string;
   allowEmpty?: boolean;
   emptyValue?: number;
   className?: string;
   "aria-label"?: string;
+  "aria-invalid"?: boolean;
+  "aria-describedby"?: string;
 };
 
 /** Parse nb-NO / free-form currency text into a non-negative number. */
@@ -30,6 +33,13 @@ export function parseCurrencyInput(raw: string): number | null {
   return Math.max(0, Math.round(n));
 }
 
+function clamp(value: number, min?: number, max?: number): number {
+  let next = value;
+  if (min !== undefined) next = Math.max(min, next);
+  if (max !== undefined) next = Math.min(max, next);
+  return next;
+}
+
 /**
  * NOK input with nb-NO thousand separators when blurred.
  * Stores a number; does not change calculation logic.
@@ -39,12 +49,15 @@ export function CurrencyInput({
   value,
   onChange,
   min = 0,
+  max,
   step,
   placeholder,
   allowEmpty = false,
   emptyValue = 0,
   className,
   "aria-label": ariaLabel,
+  "aria-invalid": ariaInvalid,
+  "aria-describedby": ariaDescribedBy,
 }: Props) {
   const [focused, setFocused] = useState(false);
   const [text, setText] = useState(() =>
@@ -63,7 +76,7 @@ export function CurrencyInput({
       setText(allowEmpty ? "" : formatNumber(emptyValue));
       return;
     }
-    const next = min !== undefined ? Math.max(min, parsed) : parsed;
+    const next = clamp(parsed, min, max);
     onChange(next);
     setText(allowEmpty && next === emptyValue ? "" : formatNumber(next));
   }
@@ -84,6 +97,8 @@ export function CurrencyInput({
       }
       placeholder={placeholder}
       aria-label={ariaLabel}
+      aria-invalid={ariaInvalid}
+      aria-describedby={ariaDescribedBy}
       data-step={step}
       onFocus={(e) => {
         setFocused(true);
@@ -101,7 +116,7 @@ export function CurrencyInput({
         setText(raw);
         const parsed = parseCurrencyInput(raw);
         if (parsed !== null) {
-          onChange(min !== undefined ? Math.max(min, parsed) : parsed);
+          onChange(clamp(parsed, min, max));
         } else if (raw.trim() === "") {
           onChange(emptyValue);
         }

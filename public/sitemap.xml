@@ -11,6 +11,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://sjekkpensjon.no/personvern</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://sjekkpensjon.no/satser</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://sjekkpensjon.no/guider</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

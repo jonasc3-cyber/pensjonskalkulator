@@ -48,6 +48,18 @@ export function Footer() {
           >
             Om modell, kilder og personvern
           </Link>
+          <Link
+            href="/personvern"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            Personvern
+          </Link>
+          <Link
+            href="/satser"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            Satser
+          </Link>
           <a
             href="https://github.com/jonasc3-cyber/pensjonskalkulator/issues"
             className="underline underline-offset-2 hover:text-white"

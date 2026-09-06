@@ -23,13 +23,18 @@ export const metadata: Metadata = {
 
 function OmCard({
   title,
+  id,
   children,
 }: {
   title: string;
+  id?: string;
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">
+    <section
+      id={id}
+      className="scroll-mt-20 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
+    >
       <h2 className="text-lg font-semibold text-primary">{title}</h2>
       <div className="mt-4 space-y-4">{children}</div>
     </section>
@@ -79,7 +84,7 @@ export default function OmPage() {
       </p>
 
       <div className="mt-8 space-y-5">
-        <OmCard title="Personvern">
+        <OmCard id="personvern" title="Personvern">
           <p className="text-slate-600 leading-relaxed">
             Alle tall du skriver inn brukes kun til beregning i nettleseren din. Vi
             har ingen innlogging, ingen database for dine data, og ingen
@@ -243,7 +248,7 @@ export default function OmPage() {
           </div>
         </OmCard>
 
-        <OmCard title="Kilder">
+        <OmCard id="satser" title="Kilder">
           <div className="space-y-3">
             <SubHeading>Satser sist kontrollert</SubHeading>
             <p className="text-slate-600 leading-relaxed">

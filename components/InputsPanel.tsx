@@ -1,12 +1,17 @@
 "use client";
 
-import { Field, inputClass, selectClass } from "./Field";
+import { Field, inputClass, inputErrorClass, selectClass } from "./Field";
 import { CurrencyInput } from "./CurrencyInput";
 import { SectionDivider } from "./SectionDivider";
 import { SavingsAccounts } from "./SavingsAccounts";
 import { TpAccounts } from "./TpAccounts";
 import type { CalculatorInputs } from "@/lib/pension/types";
 import { CURRENT_YEAR } from "@/lib/constants";
+import {
+  ANNUAL_SALARY_MAX,
+  ANNUAL_SALARY_MIN,
+  validateAnnualSalary,
+} from "@/lib/salaryValidation";
 import { CohortWarning } from "./CohortWarning";
 
 type Props = {
@@ -31,6 +36,8 @@ export function InputsPanel({
   onReset,
 }: Props) {
   const age = CURRENT_YEAR - values.birthYear;
+  const salaryCheck = validateAnnualSalary(values.annualSalary);
+  const salaryError = salaryCheck.ok ? undefined : salaryCheck.message;
 
   return (
     <section
@@ -95,12 +102,21 @@ export function InputsPanel({
           />
         </Field>
 
-        <Field id="annualSalary" label="Årslønn brutto (kr)">
+        <Field
+          id="annualSalary"
+          label="Årslønn brutto (kr)"
+          hint={`Mellom ${ANNUAL_SALARY_MIN.toLocaleString("nb-NO")} og ${ANNUAL_SALARY_MAX.toLocaleString("nb-NO")} kr`}
+          error={salaryError}
+        >
           <CurrencyInput
             id="annualSalary"
             value={values.annualSalary}
             min={0}
+            max={ANNUAL_SALARY_MAX}
             step={10000}
+            className={`${salaryError ? inputErrorClass : inputClass} tabular-nums`}
+            aria-invalid={Boolean(salaryError)}
+            aria-describedby={salaryError ? "annualSalary-error" : undefined}
             onChange={(v) => onChange("annualSalary", v)}
           />
         </Field>

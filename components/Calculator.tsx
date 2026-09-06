@@ -11,6 +11,7 @@ import {
   saveInputsToLocalStorage,
   writeInputsToUrl,
 } from "@/lib/pension/persistence";
+import { isValidAnnualSalary } from "@/lib/salaryValidation";
 import { InputsPanel } from "./InputsPanel";
 import { AssumptionsPanel } from "./AssumptionsPanel";
 import { ResultsPanel } from "./ResultsPanel";
@@ -86,7 +87,11 @@ export function Calculator() {
     };
   }, [hydrated]);
 
-  const result = useMemo(() => calculatePension(values), [values]);
+  const salaryOk = isValidAnnualSalary(values.annualSalary);
+  const result = useMemo(
+    () => (salaryOk ? calculatePension(values) : null),
+    [values, salaryOk],
+  );
 
   function onChange<K extends keyof CalculatorInputs>(
     key: K,
@@ -118,9 +123,39 @@ export function Calculator() {
       <AssumptionsPanel values={values} onChange={onChange} />
       <CohortWarning birthYear={values.birthYear} alert={false} />
       <SectionDivider src="/divider-home.webp" />
-      <ResultsPanel result={result} showNet={values.showNet} inputs={values} />
-      <GoalSeekPanel values={values} result={result} />
-      <StickyMiniResult baseMonthly={result.scenarios.base.totalMonthly} />
+      {result ? (
+        <>
+          <ResultsPanel result={result} showNet={values.showNet} inputs={values} />
+          <GoalSeekPanel values={values} result={result} />
+          <StickyMiniResult baseMonthly={result.scenarios.base.totalMonthly} />
+        </>
+      ) : (
+        <SalaryInvalidResults />
+      )}
     </div>
+  );
+}
+
+function SalaryInvalidResults() {
+  return (
+    <>
+      <section
+        id="results"
+        className="scroll-mt-4"
+        aria-labelledby="results-heading"
+        data-testid="salary-invalid-results"
+      >
+        <div className="rounded-2xl border border-red-200 bg-red-50/60 p-4 shadow-sm sm:p-6">
+          <h2 id="results-heading" className="text-lg font-semibold text-primary">
+            Estimert pensjon
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-red-800" role="alert">
+            Oppgi en gyldig årslønn (større enn 0 kr) for å se estimatet. Uten
+            lønn viser modellens garantipensjonsgulv et misvisende bilde.
+          </p>
+        </div>
+      </section>
+      <StickyMiniResult invalid />
+    </>
   );
 }
