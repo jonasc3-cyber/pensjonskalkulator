@@ -93,10 +93,7 @@ export function Hero() {
               Pensjonskalkulator uten BankID
             </h1>
             <p className="mt-3 text-base leading-relaxed text-primary-foreground/90 sm:mt-4">
-              Få et raskt estimat på hva du kan få i pensjon – helt uten
-              innlogging. Alt beregnes{" "}
-              <strong className="font-semibold text-white">lokalt</strong> i
-              nettleseren din. Enkelt, privat og uten sporing.
+              Intervallanslag i nettleseren. Ingen innlogging.
             </p>
           </div>
         </div>

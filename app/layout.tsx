@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 const siteTitle =
-  "Pensjonskalkulator uten innlogging | Folketrygd, TP, AFP og sparing";
+  "Pensjonskalkulator uten BankID | Folketrygd, TP, AFP og sparing";
 const siteDescription =
   "Estimer pensjonen din uten BankID. Folketrygd, tjenestepensjon, AFP og egen sparing — som intervall, lokalt i nettleseren. Gratis på sjekkpensjon.no.";
 
