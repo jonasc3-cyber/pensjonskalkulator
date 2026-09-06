@@ -6,11 +6,11 @@ import { useEffect, useId, useRef, useState } from "react";
 
 function navClass(active: boolean): string {
   const base =
-    "rounded-full px-2.5 py-1.5 text-sm font-medium transition-colors sm:px-3";
+    "rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors sm:px-3";
   if (active) {
-    return `${base} bg-primary-soft text-primary shadow-sm ring-1 ring-primary/15`;
+    return `${base} bg-white/15 text-white`;
   }
-  return `${base} text-slate-700 hover:bg-primary-soft/70 hover:text-primary`;
+  return `${base} text-white/85 hover:bg-white/10 hover:text-white`;
 }
 
 function menuItemClass(active: boolean): string {
@@ -22,11 +22,34 @@ function menuItemClass(active: boolean): string {
   return `${base} text-slate-700 hover:bg-muted`;
 }
 
+function CheckMarkIcon() {
+  return (
+    <span
+      className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[#2563eb] sm:h-8 sm:w-8"
+      aria-hidden
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="white"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M5 13l4 4L19 7" />
+      </svg>
+    </span>
+  );
+}
+
 export function Header() {
   const pathname = usePathname();
-  const onKalkulator = pathname === "/";
-  const onOm = pathname === "/om" || pathname.startsWith("/om/");
   const onGuider = pathname === "/guider" || pathname.startsWith("/guider/");
+  const onOm = pathname === "/om" || pathname.startsWith("/om/");
+  const onPersonvern =
+    pathname === "/personvern" || pathname.startsWith("/personvern/");
   const [menuOpen, setMenuOpen] = useState(false);
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -65,66 +88,51 @@ export function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/90">
-      <div className="mx-auto flex h-12 max-w-6xl items-center justify-between gap-2 px-4 sm:h-14 sm:gap-4 sm:px-6">
+    <header className="sticky top-0 z-40 bg-primary shadow-sm">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-2 px-4 sm:h-16 sm:gap-4 sm:px-6">
         <Link
           href="/"
-          className="group flex min-w-0 items-center gap-2 sm:gap-3"
-          aria-label="Pensjonskalkulator — forsiden"
+          className="group flex min-w-0 items-center gap-2 sm:gap-2.5"
+          aria-label="sjekkpensjon.no — forsiden"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/pk-mark.svg"
-            alt=""
-            width={36}
-            height={36}
-            className="h-8 w-8 shrink-0 sm:h-9 sm:w-9"
-          />
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-primary group-hover:text-primary-mid sm:text-base">
-              Pensjonskalkulator
-            </p>
-            <p className="hidden text-xs text-muted-foreground sm:block">
-              Forenklet modell · personvern først
-            </p>
-          </div>
+          <CheckMarkIcon />
+          <span className="truncate text-sm font-semibold tracking-tight text-white sm:text-base">
+            sjekkpensjon.no
+          </span>
         </Link>
 
-        {/* Inline nav — from ~420px so ~390px phones use the menu */}
         <nav
-          className="hidden min-[420px]:flex shrink-0 items-center gap-0.5 text-sm sm:gap-1"
+          className="hidden min-[480px]:flex shrink-0 items-center gap-0.5 text-sm sm:gap-1"
           aria-label="Hovednavigasjon"
         >
-          <Link
-            href="/"
-            className={navClass(onKalkulator)}
-            aria-current={onKalkulator ? "page" : undefined}
-          >
-            Kalkulator
-          </Link>
           <Link
             href="/guider"
             className={navClass(onGuider)}
             aria-current={onGuider ? "page" : undefined}
           >
-            Guider
+            Slik fungerer det
           </Link>
           <Link
             href="/om"
             className={navClass(onOm)}
             aria-current={onOm ? "page" : undefined}
           >
-            Om
-            <span className="hidden sm:inline"> modellen</span>
+            Om pensjon
+          </Link>
+          <Link
+            href="/personvern"
+            className={navClass(onPersonvern)}
+            aria-current={onPersonvern ? "page" : undefined}
+          >
+            Personvern
           </Link>
         </nav>
 
-        {/* Compact menu — narrow phones (~390px) */}
-        <div className="relative min-[420px]:hidden">
+        <div className="relative min-[480px]:hidden">
           <button
             ref={buttonRef}
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-primary shadow-sm transition-colors hover:bg-muted"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/15"
             aria-label={menuOpen ? "Lukk meny" : "Åpne meny"}
             aria-expanded={menuOpen}
             aria-controls={menuId}
@@ -164,17 +172,8 @@ export function Header() {
               id={menuId}
               role="menu"
               aria-label="Navigasjon"
-              className="absolute right-0 top-full z-50 mt-1.5 w-44 overflow-hidden rounded-xl border border-border bg-card py-1 shadow-lg"
+              className="absolute right-0 top-full z-50 mt-1.5 w-52 overflow-hidden rounded-xl border border-border bg-card py-1 shadow-lg"
             >
-              <Link
-                href="/"
-                role="menuitem"
-                className={menuItemClass(onKalkulator)}
-                aria-current={onKalkulator ? "page" : undefined}
-                onClick={() => setMenuOpen(false)}
-              >
-                Kalkulator
-              </Link>
               <Link
                 href="/guider"
                 role="menuitem"
@@ -182,7 +181,7 @@ export function Header() {
                 aria-current={onGuider ? "page" : undefined}
                 onClick={() => setMenuOpen(false)}
               >
-                Guider
+                Slik fungerer det
               </Link>
               <Link
                 href="/om"
@@ -191,7 +190,16 @@ export function Header() {
                 aria-current={onOm ? "page" : undefined}
                 onClick={() => setMenuOpen(false)}
               >
-                Om
+                Om pensjon
+              </Link>
+              <Link
+                href="/personvern"
+                role="menuitem"
+                className={menuItemClass(onPersonvern)}
+                aria-current={onPersonvern ? "page" : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                Personvern
               </Link>
             </div>
           ) : null}

@@ -35,18 +35,11 @@ const chips = [
           strokeWidth="2"
           strokeLinejoin="round"
         />
-        <path
-          d="M9 12l2 2 4-4"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
       </svg>
     ),
   },
   {
-    title: "Intervall, ikke fasit",
+    title: "Intervall ikke fasit",
     text: "Resultatet er et estimat basert på forenklede satser og forutsetninger.",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -72,7 +65,7 @@ export function Hero() {
         className="relative isolate overflow-hidden"
         aria-labelledby="hero-heading"
       >
-        <div className="relative h-[220px] sm:h-[280px] lg:h-[320px]">
+        <div className="relative h-[200px] sm:h-[280px] lg:h-[320px]">
           <Image
             src="/hero-couple-b-bright.webp"
             alt=""
@@ -82,28 +75,22 @@ export function Hero() {
             className="object-cover object-[55%_30%] sm:object-[60%_28%]"
           />
           <div
-            className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/75 to-transparent"
+            className="absolute inset-0 bg-gradient-to-r from-primary via-primary/85 to-transparent"
             aria-hidden
           />
-          <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-center px-4 py-6 sm:px-6 sm:py-8">
+          <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-center px-4 py-8 sm:px-6 sm:py-10 lg:py-12">
             <div className="max-w-xl text-primary-foreground">
               <h1
                 id="hero-heading"
-                className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl"
+                className="text-[28px] font-bold leading-tight tracking-tight sm:text-4xl lg:text-[40px]"
               >
                 Pensjonskalkulator uten BankID
               </h1>
-              <p className="mt-2 text-sm leading-snug text-primary-foreground/90 sm:mt-3 sm:text-base sm:leading-relaxed">
-                Raskt intervallanslag. Ingen BankID. Ingenting lagres på server.
-              </p>
-              <p className="mt-4 sm:mt-5">
-                <a
-                  href="#skjema"
-                  className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-primary shadow-sm transition-colors hover:bg-primary-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  Se estimat
-                  <span aria-hidden>→</span>
-                </a>
+              <p className="mt-3 text-base leading-relaxed text-primary-foreground/90 sm:mt-4">
+                Få et raskt estimat på hva du kan få i pensjon – helt uten
+                innlogging. Alt beregnes{" "}
+                <strong className="font-semibold text-white">lokalt</strong> i
+                nettleseren din. Enkelt, privat og uten sporing.
               </p>
             </div>
           </div>
@@ -111,14 +98,14 @@ export function Hero() {
       </section>
 
       <section
-        className="border-b border-border/60 bg-muted/60"
+        className="border-b border-border/60 bg-[#F3F5F8]"
         aria-label="Hvorfor sjekkpensjon.no"
       >
-        <ul className="mx-auto grid max-w-6xl gap-3 px-4 py-5 sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-6">
+        <ul className="mx-auto grid max-w-6xl gap-4 px-4 py-6 sm:grid-cols-3 sm:gap-5 sm:px-6 sm:py-8">
           {chips.map((chip) => (
             <li
               key={chip.title}
-              className="flex gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm"
+              className="flex gap-3 rounded-xl border border-border bg-card p-5 shadow-sm"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-soft text-primary">
                 {chip.icon}
