@@ -42,7 +42,8 @@ export function InputsPanel({
 
   return (
     <section
-      className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
+      id="skjema"
+      className="scroll-mt-20 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
       aria-labelledby="inputs-heading"
     >
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
