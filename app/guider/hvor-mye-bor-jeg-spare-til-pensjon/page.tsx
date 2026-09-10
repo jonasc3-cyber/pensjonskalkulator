@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { MdGuidePage } from "@/components/MdGuidePage";
 
-const path = "/guider/pensjonskalkulator-uten-innlogging";
-const title = "Pensjonskalkulator uten innlogging | Uten BankID";
+const path = "/guider/hvor-mye-bor-jeg-spare-til-pensjon";
+const title = "Hvor mye bør jeg spare til pensjon? Enkel tommelfingerregel";
 const description =
-  "Finn en pensjonskalkulator uten BankID eller innlogging. Se hvordan sjekkpensjon.no skiller seg fra Nav og bankene — privat, raskt og med intervallestimat.";
+  "Finn pensjonsgapet ditt og en enkel tommelfingerregel for sparing. Knytt til Spar for mål på sjekkpensjon.no — uten BankID, uten produktpress.";
 
 export const metadata: Metadata = {
   title,
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <MdGuidePage
-      slug="pensjonskalkulator-uten-innlogging"
+      slug="hvor-mye-bor-jeg-spare-til-pensjon"
       path={path}
-      h1="Pensjonskalkulator uten innlogging (uten BankID)"
+      h1="Hvor mye bør jeg spare til pensjon? Enkel tommelfingerregel"
     />
   );
 }

@@ -56,6 +56,28 @@ export const GUIDES: readonly GuideMeta[] = [
     lastmod: "2026-09-10",
   },
   {
+    slug: "nar-ta-ut-pensjon",
+    path: "/guider/nar-ta-ut-pensjon",
+    title: "Når ta ut pensjon?",
+    description:
+      "Når ta ut alderspensjon — 62, 67 eller senere? Delingstall og levealdersjustering forklart enkelt, pluss hvordan du tester scenarier uten BankID.",
+    blurb:
+      "62, 67 eller senere: delingstall, levealdersjustering og hvordan du tester scenarier uten BankID.",
+    group: "forsta",
+    lastmod: "2026-09-10",
+  },
+  {
+    slug: "afp-privat",
+    path: "/guider/afp-privat",
+    title: "AFP privat",
+    description:
+      "Hva er AFP i privat sektor? Vilkår (7 av 9 år), uttak fra 62, kronetillegg og hvordan AFP påvirker estimater i en pensjonskalkulator uten BankID.",
+    blurb:
+      "Vilkår (7 av 9 år), uttak fra 62, kronetillegg — og hvordan AFP påvirker estimatet.",
+    group: "forsta",
+    lastmod: "2026-09-10",
+  },
+  {
     slug: "ips-eller-ask",
     path: "/guider/ips-eller-ask",
     title: "IPS eller aksjesparekonto (ASK)?",
@@ -63,6 +85,17 @@ export const GUIDES: readonly GuideMeta[] = [
       "IPS vs aksjesparekonto for pensjonssparing: skattefordeler, binding, risiko og når hvilken passer. Oppdatert med IPS-grense 25 000 kr i 2026.",
     blurb:
       "IPS-tak 25 000 kr i 2026, binding vs fleksibilitet, og når ASK er smartere.",
+    group: "sparing",
+    lastmod: "2026-09-10",
+  },
+  {
+    slug: "hvor-mye-bor-jeg-spare-til-pensjon",
+    path: "/guider/hvor-mye-bor-jeg-spare-til-pensjon",
+    title: "Hvor mye bør jeg spare til pensjon?",
+    description:
+      "Finn pensjonsgapet ditt og en enkel tommelfingerregel for sparing. Knytt til Spar for mål på sjekkpensjon.no — uten BankID, uten produktpress.",
+    blurb:
+      "Pensjonsgap, tommelfingerregel for sparing, og «Spar for mål» uten BankID.",
     group: "sparing",
     lastmod: "2026-09-10",
   },

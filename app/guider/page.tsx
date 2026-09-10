@@ -2,18 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { GUIDE_GROUPS, GUIDES } from "@/lib/guides";
 
+const guiderTitle = "Guider | Sjekkpensjon";
+const guiderDescription =
+  "Korte guider om pensjon — folketrygd, tjenestepensjon, AFP og sparing. Lenker til uinnlogget kalkulator på sjekkpensjon.no.";
+
 export const metadata: Metadata = {
-  title: "Guider | Sjekkpensjon",
-  description:
-    "Korte guider om pensjon — folketrygd, tjenestepensjon, AFP og sparing. Lenker til uinnlogget kalkulator på sjekkpensjon.no.",
+  title: guiderTitle,
+  description: guiderDescription,
   alternates: { canonical: "/guider" },
   openGraph: {
-    title: "Guider | Sjekkpensjon",
-    description:
-      "Korte guider om pensjon — folketrygd, tjenestepensjon, AFP og sparing. Lenker til uinnlogget kalkulator på sjekkpensjon.no.",
+    title: guiderTitle,
+    description: guiderDescription,
     url: "https://sjekkpensjon.no/guider",
     locale: "nb_NO",
     type: "website",
+  },
+  twitter: {
+    title: guiderTitle,
+    description: guiderDescription,
   },
 };
 

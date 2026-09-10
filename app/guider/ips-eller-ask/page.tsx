@@ -17,6 +17,10 @@ export const metadata: Metadata = {
     locale: "nb_NO",
     type: "article",
   },
+  twitter: {
+    title,
+    description,
+  },
 };
 
 export default function Page() {

@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+const personvernTitle = "Personvern | Pensjonskalkulator";
+const personvernDescription =
+  "Personvern for sjekkpensjon.no: alle tall beregnes lokalt i nettleseren. Ingen innlogging, ingen serverlagring av lønn eller alder.";
+
 export const metadata: Metadata = {
-  title: "Personvern | Pensjonskalkulator",
-  description:
-    "Personvern for sjekkpensjon.no: alle tall beregnes lokalt i nettleseren. Ingen innlogging, ingen serverlagring av lønn eller alder.",
+  title: personvernTitle,
+  description: personvernDescription,
   alternates: { canonical: "/personvern" },
   openGraph: {
-    title: "Personvern | Pensjonskalkulator",
-    description:
-      "Personvern for sjekkpensjon.no: alle tall beregnes lokalt i nettleseren. Ingen innlogging, ingen serverlagring av lønn eller alder.",
+    title: personvernTitle,
+    description: personvernDescription,
     url: "https://sjekkpensjon.no/personvern",
     locale: "nb_NO",
     type: "website",
+  },
+  twitter: {
+    title: personvernTitle,
+    description: personvernDescription,
   },
 };
 

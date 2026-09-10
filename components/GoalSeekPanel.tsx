@@ -85,7 +85,13 @@ export function GoalSeekPanel({ values, result }: Props) {
           <p className="mt-1 text-sm text-muted-foreground">
             Oppgi ønsket pensjon per måned i dagens kroneverdi. Vi regner ut
             hvor mye du må spare for å lukke gapet mot folketrygd, TP, AFP og
-            øvrig sparing.
+            øvrig sparing. Se også{" "}
+            <Link
+              href="/guider/hvor-mye-bor-jeg-spare-til-pensjon"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              hvor mye bør jeg spare til pensjon?
+            </Link>
           </p>
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import Link from "next/link";
 import type { CalculatorInputs } from "@/lib/pension/types";
 import {
   compareWithdrawalAges,
@@ -50,7 +51,14 @@ export function WithdrawalAgeComparison({
       </h3>
       <p className="mt-1 text-sm text-muted-foreground">
         Samme forutsetninger · månedlig pensjon ({unit}) ved 62, 67 og 70 år ·
-        basis-scenario · dagens kroneverdi
+        basis-scenario · dagens kroneverdi. Mer om{" "}
+        <Link
+          href="/guider/nar-ta-ut-pensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          når ta ut pensjon
+        </Link>
+        .
       </p>
 
       {!anyAvailable ? (

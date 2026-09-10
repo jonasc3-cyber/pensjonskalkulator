@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { MdGuidePage } from "@/components/MdGuidePage";
 
-const path = "/guider/pensjonskalkulator-uten-innlogging";
-const title = "Pensjonskalkulator uten innlogging | Uten BankID";
+const path = "/guider/afp-privat";
+const title = "AFP privat: krav, uttak og hva det betyr for pensjonen";
 const description =
-  "Finn en pensjonskalkulator uten BankID eller innlogging. Se hvordan sjekkpensjon.no skiller seg fra Nav og bankene — privat, raskt og med intervallestimat.";
+  "Hva er AFP i privat sektor? Vilkår (7 av 9 år), uttak fra 62, kronetillegg og hvordan AFP påvirker estimater i en pensjonskalkulator uten BankID.";
 
 export const metadata: Metadata = {
   title,
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <MdGuidePage
-      slug="pensjonskalkulator-uten-innlogging"
+      slug="afp-privat"
       path={path}
-      h1="Pensjonskalkulator uten innlogging (uten BankID)"
+      h1="Hva er AFP privat?"
     />
   );
 }

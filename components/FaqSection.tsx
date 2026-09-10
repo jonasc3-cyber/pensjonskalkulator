@@ -24,14 +24,27 @@ const FAQ_ITEMS: FaqItem[] = [
     q: "Hva dekker estimatet?",
     a: (
       <>
-        Folketrygd (forenklet ny modell), tjenestepensjon, AFP (forenklet) og
-        egen sparing (IPS, ASK, fond, bank). Du får et intervall (pessimistisk /
-        basis / optimistisk), ikke ett fasitsvar. Se også{" "}
+        Folketrygd (forenklet ny modell), tjenestepensjon,{" "}
+        <Link
+          href="/guider/afp-privat"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          AFP
+        </Link>{" "}
+        (forenklet) og egen sparing (IPS, ASK, fond, bank). Du får et intervall
+        (pessimistisk / basis / optimistisk), ikke ett fasitsvar. Se også{" "}
         <Link
           href="/guider/hvor-mye-far-jeg-i-pensjon"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
           hvor mye får jeg i pensjon?
+        </Link>
+        ,{" "}
+        <Link
+          href="/guider/nar-ta-ut-pensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          når ta ut pensjon?
         </Link>{" "}
         og{" "}
         <Link
@@ -71,7 +84,19 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: "Hva er «Spar for mål»?",
-    a: "Du oppgir ønsket pensjon per måned, så regner vi ut hvor mye du må spare for å lukke gapet mot folketrygd, tjenestepensjon, AFP og øvrig sparing.",
+    a: (
+      <>
+        Du oppgir ønsket pensjon per måned, så regner vi ut hvor mye du må spare
+        for å lukke gapet mot folketrygd, tjenestepensjon, AFP og øvrig sparing.
+        Les mer:{" "}
+        <Link
+          href="/guider/hvor-mye-bor-jeg-spare-til-pensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          hvor mye bør jeg spare til pensjon?
+        </Link>
+      </>
+    ),
   },
   {
     q: "Kan jeg stole på satser og regler?",
@@ -159,6 +184,27 @@ export function FaqSection() {
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
           hvor mye i pensjon
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/nar-ta-ut-pensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          uttaksalder
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/afp-privat"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          AFP privat
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/hvor-mye-bor-jeg-spare-til-pensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          spare til pensjon
         </Link>
         .
       </p>

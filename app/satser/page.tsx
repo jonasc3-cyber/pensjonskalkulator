@@ -12,18 +12,24 @@ import {
 } from "@/lib/constants";
 import { formatNOK, formatPercent } from "@/lib/format";
 
+const satserTitle = "Satser og kilder | Pensjonskalkulator";
+const satserDescription =
+  "Satser sist kontrollert for sjekkpensjon.no: G, garantipensjon, OTP og lenker til offisielle kilder.";
+
 export const metadata: Metadata = {
-  title: "Satser og kilder | Pensjonskalkulator",
-  description:
-    "Satser sist kontrollert for sjekkpensjon.no: G, garantipensjon, OTP og lenker til offisielle kilder.",
+  title: satserTitle,
+  description: satserDescription,
   alternates: { canonical: "/satser" },
   openGraph: {
-    title: "Satser og kilder | Pensjonskalkulator",
-    description:
-      "Satser sist kontrollert for sjekkpensjon.no: G, garantipensjon, OTP og lenker til offisielle kilder.",
+    title: satserTitle,
+    description: satserDescription,
     url: "https://sjekkpensjon.no/satser",
     locale: "nb_NO",
     type: "website",
+  },
+  twitter: {
+    title: satserTitle,
+    description: satserDescription,
   },
 };
 

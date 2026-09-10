@@ -5,18 +5,24 @@ import { articleJsonLd } from "@/lib/jsonld";
 import { G_NOK } from "@/lib/constants";
 import { formatNOK } from "@/lib/format";
 
+const guideTitle = "Hvor mye får jeg i pensjon? | Enkel oversikt + kalkulator";
+const guideDescription =
+  "Se hva som bestemmer pensjonen din — folketrygd, tjenestepensjon, AFP og egen sparing. Estimer uten innlogging på sjekkpensjon.no.";
+
 export const metadata: Metadata = {
-  title: "Hvor mye får jeg i pensjon? | Enkel oversikt + kalkulator",
-  description:
-    "Se hva som bestemmer pensjonen din — folketrygd, tjenestepensjon, AFP og egen sparing. Estimer uten innlogging på sjekkpensjon.no.",
+  title: guideTitle,
+  description: guideDescription,
   alternates: { canonical: "/guider/hvor-mye-far-jeg-i-pensjon" },
   openGraph: {
-    title: "Hvor mye får jeg i pensjon? | Enkel oversikt + kalkulator",
-    description:
-      "Se hva som bestemmer pensjonen din — folketrygd, tjenestepensjon, AFP og egen sparing. Estimer uten innlogging på sjekkpensjon.no.",
+    title: guideTitle,
+    description: guideDescription,
     url: "https://sjekkpensjon.no/guider/hvor-mye-far-jeg-i-pensjon",
     locale: "nb_NO",
     type: "article",
+  },
+  twitter: {
+    title: guideTitle,
+    description: guideDescription,
   },
 };
 

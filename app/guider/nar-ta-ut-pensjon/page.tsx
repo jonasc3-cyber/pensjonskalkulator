@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { MdGuidePage } from "@/components/MdGuidePage";
 
-const path = "/guider/pensjonskalkulator-uten-innlogging";
-const title = "Pensjonskalkulator uten innlogging | Uten BankID";
+const path = "/guider/nar-ta-ut-pensjon";
+const title = "Når ta ut pensjon? 62, 67 eller 70 – slik tenker du";
 const description =
-  "Finn en pensjonskalkulator uten BankID eller innlogging. Se hvordan sjekkpensjon.no skiller seg fra Nav og bankene — privat, raskt og med intervallestimat.";
+  "Når ta ut alderspensjon — 62, 67 eller senere? Delingstall og levealdersjustering forklart enkelt, pluss hvordan du tester scenarier uten BankID.";
 
 export const metadata: Metadata = {
   title,
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <MdGuidePage
-      slug="pensjonskalkulator-uten-innlogging"
+      slug="nar-ta-ut-pensjon"
       path={path}
-      h1="Pensjonskalkulator uten innlogging (uten BankID)"
+      h1="Når lønner det seg å ta ut pensjon?"
     />
   );
 }

@@ -3,18 +3,24 @@ import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { articleJsonLd } from "@/lib/jsonld";
 
+const guideTitle = "Uinnlogget pensjonskalkulator vs Nav | Når bruke hva";
+const guideDescription =
+  "Forskjellen på uinnlogget anslag og Navs innloggede pensjonskalkulator — og når du bør bruke hvilken.";
+
 export const metadata: Metadata = {
-  title: "Uinnlogget pensjonskalkulator vs Nav | Når bruke hva",
-  description:
-    "Forskjellen på uinnlogget anslag og Navs innloggede pensjonskalkulator — og når du bør bruke hvilken.",
+  title: guideTitle,
+  description: guideDescription,
   alternates: { canonical: "/guider/uinnlogget-vs-nav" },
   openGraph: {
-    title: "Uinnlogget pensjonskalkulator vs Nav | Når bruke hva",
-    description:
-      "Forskjellen på uinnlogget anslag og Navs innloggede pensjonskalkulator — og når du bør bruke hvilken.",
+    title: guideTitle,
+    description: guideDescription,
     url: "https://sjekkpensjon.no/guider/uinnlogget-vs-nav",
     locale: "nb_NO",
     type: "article",
+  },
+  twitter: {
+    title: guideTitle,
+    description: guideDescription,
   },
 };
 

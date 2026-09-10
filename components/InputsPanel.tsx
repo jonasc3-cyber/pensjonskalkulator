@@ -159,7 +159,17 @@ export function InputsPanel({
               <Field
                 id="retirementAge"
                 label="Planlagt pensjonsalder"
-                hint="Fra 62 til 75 år"
+                hint={
+                  <>
+                    Fra 62 til 75 år. Les mer:{" "}
+                    <Link
+                      href="/guider/nar-ta-ut-pensjon"
+                      className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+                    >
+                      når ta ut pensjon?
+                    </Link>
+                  </>
+                }
               >
                 <select
                   id="retirementAge"
@@ -273,7 +283,17 @@ export function InputsPanel({
               <Field
                 id="afpType"
                 label="AFP"
-                hint="Forenklet anslag — ikke offisielle regler"
+                hint={
+                  <>
+                    Forenklet anslag — ikke offisielle regler.{" "}
+                    <Link
+                      href="/guider/afp-privat"
+                      className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+                    >
+                      AFP privat forklart
+                    </Link>
+                  </>
+                }
               >
                 <select
                   id="afpType"

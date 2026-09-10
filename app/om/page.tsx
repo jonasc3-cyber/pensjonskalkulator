@@ -17,18 +17,24 @@ import { listDelingstall } from "@/lib/pension/delingstall";
 import { JsonLd } from "@/components/JsonLd";
 import { organizationJsonLd } from "@/lib/jsonld";
 
+const omTitle = "Om sjekkpensjon.no | Hvem, metode og begrensninger";
+const omDescription =
+  "Jonas Sætre eier og utvikler sjekkpensjon.no — en gratis uinnlogget pensjonskalkulator. Metode, kilder, begrensninger, kontakt og personvern.";
+
 export const metadata: Metadata = {
-  title: "Om sjekkpensjon.no | Hvem, metode og begrensninger",
-  description:
-    "Jonas Sætre eier og utvikler sjekkpensjon.no — en gratis uinnlogget pensjonskalkulator. Metode, kilder, begrensninger, kontakt og personvern.",
+  title: omTitle,
+  description: omDescription,
   alternates: { canonical: "/om" },
   openGraph: {
-    title: "Om sjekkpensjon.no | Hvem, metode og begrensninger",
-    description:
-      "Jonas Sætre eier og utvikler sjekkpensjon.no — en gratis uinnlogget pensjonskalkulator. Metode, kilder, begrensninger, kontakt og personvern.",
+    title: omTitle,
+    description: omDescription,
     url: "https://sjekkpensjon.no/om",
     locale: "nb_NO",
     type: "website",
+  },
+  twitter: {
+    title: omTitle,
+    description: omDescription,
   },
 };
 
