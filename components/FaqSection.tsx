@@ -24,7 +24,22 @@ const FAQ_ITEMS: FaqItem[] = [
     q: "Hva dekker estimatet?",
     a: (
       <>
-        Folketrygd (forenklet ny modell), tjenestepensjon,{" "}
+        Folketrygd (forenklet ny modell),{" "}
+        <Link
+          href="/guider/hva-er-tjenestepensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          tjenestepensjon
+        </Link>
+        {" "}
+        (inkl.{" "}
+        <Link
+          href="/guider/fripolise"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          fripolise
+        </Link>
+        ),{" "}
         <Link
           href="/guider/afp-privat"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
@@ -95,6 +110,15 @@ const FAQ_ITEMS: FaqItem[] = [
         >
           hvor mye bør jeg spare til pensjon?
         </Link>
+        {" "}
+        Selvstendig?{" "}
+        <Link
+          href="/guider/pensjon-selvstendig-naringsdrivende"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          pensjon for selvstendig næringsdrivende
+        </Link>
+        .
       </>
     ),
   },
@@ -201,10 +225,24 @@ export function FaqSection() {
         </Link>
         {" · "}
         <Link
+          href="/guider/fripolise"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          fripolise
+        </Link>
+        {" · "}
+        <Link
           href="/guider/hvor-mye-bor-jeg-spare-til-pensjon"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
           spare til pensjon
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/pensjon-selvstendig-naringsdrivende"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          selvstendig
         </Link>
         .
       </p>

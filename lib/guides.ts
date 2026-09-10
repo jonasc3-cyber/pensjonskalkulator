@@ -78,6 +78,17 @@ export const GUIDES: readonly GuideMeta[] = [
     lastmod: "2026-09-10",
   },
   {
+    slug: "fripolise",
+    path: "/guider/fripolise",
+    title: "Fripolise: hva det er, og hva du gjør med den",
+    description:
+      "Hva er en fripolise? Forskjellen mot pensjonskapitalbevis, hvordan du finner den via Norsk Pensjon, og hvordan du tar den med i en pensjonskalkulator uten BankID.",
+    blurb:
+      "Fripolise vs pensjonskapitalbevis, Norsk Pensjon, og hvordan du tar den med i estimatet.",
+    group: "forsta",
+    lastmod: "2026-09-10",
+  },
+  {
     slug: "ips-eller-ask",
     path: "/guider/ips-eller-ask",
     title: "IPS eller aksjesparekonto (ASK)?",
@@ -96,6 +107,17 @@ export const GUIDES: readonly GuideMeta[] = [
       "Finn pensjonsgapet ditt og en enkel tommelfingerregel for sparing. Knytt til Spar for mål på sjekkpensjon.no — uten BankID, uten produktpress.",
     blurb:
       "Pensjonsgap, tommelfingerregel for sparing, og «Spar for mål» uten BankID.",
+    group: "sparing",
+    lastmod: "2026-09-10",
+  },
+  {
+    slug: "pensjon-selvstendig-naringsdrivende",
+    path: "/guider/pensjon-selvstendig-naringsdrivende",
+    title: "Pensjon for selvstendig næringsdrivende: OTP, IPS og sparing",
+    description:
+      "Pensjon som ENK eller AS-eier: ingen automatisk OTP, frivillig innskuddspensjon, IPS og hvordan du modellerer det i en pensjonskalkulator uten BankID.",
+    blurb:
+      "ENK/AS uten automatisk OTP: frivillig innskudd, IPS og hvordan du modellerer gapet.",
     group: "sparing",
     lastmod: "2026-09-10",
   },
