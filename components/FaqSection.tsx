@@ -1,15 +1,65 @@
-const FAQ_ITEMS = [
+import Link from "next/link";
+import type { ReactNode } from "react";
+
+type FaqItem = { q: string; a: ReactNode };
+
+const FAQ_ITEMS: FaqItem[] = [
   {
     q: "Må jeg logge inn for å bruke kalkulatoren?",
-    a: "Nei. sjekkpensjon.no er uinnlogget. Du fyller inn tallene selv, og alt regnes i nettleseren din. Ingenting sendes til server.",
+    a: (
+      <>
+        Nei. sjekkpensjon.no er uinnlogget. Du fyller inn tallene selv, og alt
+        regnes i nettleseren din. Ingenting sendes til server. Les mer i{" "}
+        <Link
+          href="/guider/pensjonskalkulator-uten-innlogging"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          pensjonskalkulator uten innlogging
+        </Link>
+        .
+      </>
+    ),
   },
   {
     q: "Hva dekker estimatet?",
-    a: "Folketrygd (forenklet ny modell), tjenestepensjon, AFP (forenklet) og egen sparing (IPS, ASK, fond, bank). Du får et intervall (pessimistisk / basis / optimistisk), ikke ett fasitsvar.",
+    a: (
+      <>
+        Folketrygd (forenklet ny modell), tjenestepensjon, AFP (forenklet) og
+        egen sparing (IPS, ASK, fond, bank). Du får et intervall (pessimistisk /
+        basis / optimistisk), ikke ett fasitsvar. Se også{" "}
+        <Link
+          href="/guider/hvor-mye-far-jeg-i-pensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          hvor mye får jeg i pensjon?
+        </Link>{" "}
+        og{" "}
+        <Link
+          href="/guider/ips-eller-ask"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          IPS eller ASK?
+        </Link>
+        .
+      </>
+    ),
   },
   {
     q: "Er dette det samme som Navs pensjonskalkulator?",
-    a: "Nei. Navs innloggede kalkulator henter dine offisielle tall. Vår er et raskt, uinnlogget anslag med flere kilder samlet. Bruk alltid Din pensjon hos Nav for offisielle tall.",
+    a: (
+      <>
+        Nei. Navs innloggede kalkulator henter dine offisielle tall. Vår er et
+        raskt, uinnlogget anslag med flere kilder samlet. Bruk alltid Din pensjon
+        hos Nav for offisielle tall. Sammenligning:{" "}
+        <Link
+          href="/guider/uinnlogget-vs-nav"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          uinnlogget vs Nav
+        </Link>
+        .
+      </>
+    ),
   },
   {
     q: "Lagres tallene mine?",
@@ -31,7 +81,7 @@ const FAQ_ITEMS = [
     q: "Fungerer kalkulatoren hvis jeg er født før 1963?",
     a: "Ja, men merk banneret om eldre regelverk. For offisiell beregning, spesielt ved overgangsregler, bruk Nav.",
   },
-] as const;
+];
 
 function faqJsonLd() {
   return {
@@ -42,10 +92,26 @@ function faqJsonLd() {
       name: item.q,
       acceptedAnswer: {
         "@type": "Answer",
-        text: item.a,
+        text:
+          typeof item.a === "string"
+            ? item.a
+            : // Flatten simple link answers for schema (readable bokmål without JSX)
+              stripForSchema(item.q),
       },
     })),
   };
+}
+
+function stripForSchema(q: string): string {
+  const plain: Record<string, string> = {
+    "Må jeg logge inn for å bruke kalkulatoren?":
+      "Nei. sjekkpensjon.no er uinnlogget. Du fyller inn tallene selv, og alt regnes i nettleseren din. Ingenting sendes til server.",
+    "Hva dekker estimatet?":
+      "Folketrygd (forenklet ny modell), tjenestepensjon, AFP (forenklet) og egen sparing (IPS, ASK, fond, bank). Du får et intervall (pessimistisk / basis / optimistisk), ikke ett fasitsvar.",
+    "Er dette det samme som Navs pensjonskalkulator?":
+      "Nei. Navs innloggede kalkulator henter dine offisielle tall. Vår er et raskt, uinnlogget anslag med flere kilder samlet. Bruk alltid Din pensjon hos Nav for offisielle tall.",
+  };
+  return plain[q] ?? "";
 }
 
 export function FaqSection() {
@@ -66,7 +132,35 @@ export function FaqSection() {
       </h2>
       <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
         Kort om hvordan sjekkpensjon.no fungerer — uten innlogging og uten
-        lagring på server.
+        lagring på server. Guider:{" "}
+        <Link
+          href="/guider/pensjonskalkulator-uten-innlogging"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          uten BankID
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/uinnlogget-vs-nav"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          vs Nav
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/ips-eller-ask"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          IPS eller ASK
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/hvor-mye-far-jeg-i-pensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          hvor mye i pensjon
+        </Link>
+        .
       </p>
       <div className="mt-5 divide-y divide-border rounded-2xl border border-border bg-card">
         {FAQ_ITEMS.map((item) => (

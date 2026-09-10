@@ -1,27 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { GUIDE_GROUPS, GUIDES } from "@/lib/guides";
 
 export const metadata: Metadata = {
   title: "Guider | Sjekkpensjon",
   description:
     "Korte guider om pensjon — folketrygd, tjenestepensjon, AFP og sparing. Lenker til uinnlogget kalkulator på sjekkpensjon.no.",
   alternates: { canonical: "/guider" },
+  openGraph: {
+    title: "Guider | Sjekkpensjon",
+    description:
+      "Korte guider om pensjon — folketrygd, tjenestepensjon, AFP og sparing. Lenker til uinnlogget kalkulator på sjekkpensjon.no.",
+    url: "https://sjekkpensjon.no/guider",
+    locale: "nb_NO",
+    type: "website",
+  },
 };
-
-const GUIDES = [
-  {
-    href: "/guider/hvor-mye-far-jeg-i-pensjon",
-    title: "Hvor mye får jeg i pensjon?",
-    blurb:
-      "Tre pilarer + AFP, hvorfor tall spriker, og hvordan du får et raskt anslag uten BankID.",
-  },
-  {
-    href: "/guider/uinnlogget-vs-nav",
-    title: "Uinnlogget pensjonskalkulator vs Nav",
-    blurb:
-      "Når uinnlogget anslag er nok — og når du bør bruke Navs innloggede kalkulator.",
-  },
-] as const;
 
 export default function GuiderIndexPage() {
   return (
@@ -41,19 +35,40 @@ export default function GuiderIndexPage() {
         Korte forklaringer som peker tilbake til kalkulatoren — uten innlogging
         og uten affiliate.
       </p>
-      <ul className="mt-6 space-y-3">
-        {GUIDES.map((g) => (
-          <li key={g.href}>
-            <Link
-              href={g.href}
-              className="block rounded-2xl border border-border bg-card p-4 shadow-sm transition-colors hover:border-primary/30 hover:bg-primary-soft/40 sm:p-5"
-            >
-              <span className="font-semibold text-primary">{g.title}</span>
-              <span className="mt-1 block text-sm text-slate-600">{g.blurb}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+
+      <div className="mt-8 space-y-8">
+        {GUIDE_GROUPS.map((group) => {
+          const items = GUIDES.filter((g) => g.group === group.id);
+          if (items.length === 0) return null;
+          return (
+            <section key={group.id} aria-labelledby={`group-${group.id}`}>
+              <h2
+                id={`group-${group.id}`}
+                className="text-sm font-semibold uppercase tracking-wide text-muted-foreground"
+              >
+                {group.title}
+              </h2>
+              <ul className="mt-3 space-y-3">
+                {items.map((g) => (
+                  <li key={g.path}>
+                    <Link
+                      href={g.path}
+                      className="block rounded-2xl border border-border bg-card p-4 shadow-sm transition-colors hover:border-primary/30 hover:bg-primary-soft/40 sm:p-5"
+                    >
+                      <span className="font-semibold text-primary">
+                        {g.title}
+                      </span>
+                      <span className="mt-1 block text-sm text-slate-600">
+                        {g.blurb}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        })}
+      </div>
     </div>
   );
 }

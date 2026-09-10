@@ -19,6 +19,15 @@ export const metadata: Metadata = {
   title: "Om modellen | Pensjonskalkulator",
   description:
     "Forklaring av forenklet pensjonsmodell, kilder, begrensninger og personvern.",
+  alternates: { canonical: "/om" },
+  openGraph: {
+    title: "Om modellen | Pensjonskalkulator",
+    description:
+      "Forklaring av forenklet pensjonsmodell, kilder, begrensninger og personvern.",
+    url: "https://sjekkpensjon.no/om",
+    locale: "nb_NO",
+    type: "website",
+  },
 };
 
 function OmCard({

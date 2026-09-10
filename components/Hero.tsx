@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const chips = [
   {
@@ -94,6 +95,22 @@ export function Hero() {
             </h1>
             <p className="mt-3 text-base leading-relaxed text-primary-foreground/90 sm:mt-4">
               Intervallanslag i nettleseren. Ingen innlogging.
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-primary-foreground/80">
+              Les mer:{" "}
+              <Link
+                href="/guider/pensjonskalkulator-uten-innlogging"
+                className="font-medium text-primary-foreground underline underline-offset-2 hover:text-white"
+              >
+                pensjonskalkulator uten BankID
+              </Link>
+              {" · "}
+              <Link
+                href="/guider/hvor-mye-far-jeg-i-pensjon"
+                className="font-medium text-primary-foreground underline underline-offset-2 hover:text-white"
+              >
+                hvor mye får jeg i pensjon?
+              </Link>
             </p>
           </div>
         </div>

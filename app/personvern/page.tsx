@@ -6,6 +6,14 @@ export const metadata: Metadata = {
   description:
     "Personvern for sjekkpensjon.no: alle tall beregnes lokalt i nettleseren. Ingen innlogging, ingen serverlagring av lønn eller alder.",
   alternates: { canonical: "/personvern" },
+  openGraph: {
+    title: "Personvern | Pensjonskalkulator",
+    description:
+      "Personvern for sjekkpensjon.no: alle tall beregnes lokalt i nettleseren. Ingen innlogging, ingen serverlagring av lønn eller alder.",
+    url: "https://sjekkpensjon.no/personvern",
+    locale: "nb_NO",
+    type: "website",
+  },
 };
 
 export default function PersonvernPage() {

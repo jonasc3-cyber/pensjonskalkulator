@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/JsonLd";
+import { articleJsonLd } from "@/lib/jsonld";
 import { G_NOK } from "@/lib/constants";
 import { formatNOK } from "@/lib/format";
 
@@ -34,6 +36,13 @@ function Cta({ children }: { children: React.ReactNode }) {
 export default function GuideHvorMyePage() {
   return (
     <article className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+      <JsonLd
+        data={articleJsonLd({
+          headline: 'Hvor mye får jeg i pensjon?',
+          description: 'Se hva som bestemmer pensjonen din — folketrygd, tjenestepensjon, AFP og egen sparing. Estimer uten innlogging på sjekkpensjon.no.',
+          url: "https://sjekkpensjon.no/guider/hvor-mye-far-jeg-i-pensjon",
+        })}
+      />
       <p className="text-sm text-muted-foreground">
         <Link
           href="/"

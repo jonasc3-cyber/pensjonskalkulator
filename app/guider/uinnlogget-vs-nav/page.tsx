@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/JsonLd";
+import { articleJsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Uinnlogget pensjonskalkulator vs Nav | Når bruke hva",
@@ -32,6 +34,13 @@ function Cta({ children }: { children: React.ReactNode }) {
 export default function GuideUinnloggetVsNavPage() {
   return (
     <article className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+      <JsonLd
+        data={articleJsonLd({
+          headline: 'Uinnlogget pensjonskalkulator vs Nav',
+          description: 'Forskjellen på uinnlogget anslag og Navs innloggede pensjonskalkulator — og når du bør bruke hvilken.',
+          url: "https://sjekkpensjon.no/guider/uinnlogget-vs-nav",
+        })}
+      />
       <p className="text-sm text-muted-foreground">
         <Link
           href="/"

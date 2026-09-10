@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   description:
     "Satser sist kontrollert for sjekkpensjon.no: G, garantipensjon, OTP og lenker til offisielle kilder.",
   alternates: { canonical: "/satser" },
+  openGraph: {
+    title: "Satser og kilder | Pensjonskalkulator",
+    description:
+      "Satser sist kontrollert for sjekkpensjon.no: G, garantipensjon, OTP og lenker til offisielle kilder.",
+    url: "https://sjekkpensjon.no/satser",
+    locale: "nb_NO",
+    type: "website",
+  },
 };
 
 export default function SatserPage() {
