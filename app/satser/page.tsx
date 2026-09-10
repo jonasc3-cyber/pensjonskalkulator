@@ -48,7 +48,7 @@ export default function SatserPage() {
           href="/om#satser"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
-          Om modellen → Satser / kilder
+          Om → Metode og kilder
         </Link>
         .
       </p>

@@ -36,7 +36,7 @@ export default function PersonvernPage() {
           href="/om#personvern"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
-          Om modellen → Personvern
+          Om → Personvern
         </Link>
         .
       </p>

@@ -1,3 +1,22 @@
+export function organizationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://sjekkpensjon.no/#organization",
+    name: "sjekkpensjon.no",
+    url: "https://sjekkpensjon.no",
+    logo: "https://sjekkpensjon.no/icon.png",
+    email: "sjekkpensjon@outlook.com",
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      email: "sjekkpensjon@outlook.com",
+      availableLanguage: ["Norwegian", "nb"],
+    },
+    sameAs: ["https://github.com/jonasc3-cyber/pensjonskalkulator"],
+  };
+}
+
 export function webApplicationJsonLd() {
   return {
     "@context": "https://schema.org",
@@ -7,6 +26,15 @@ export function webApplicationJsonLd() {
         "@id": "https://sjekkpensjon.no/#organization",
         name: "sjekkpensjon.no",
         url: "https://sjekkpensjon.no",
+        logo: "https://sjekkpensjon.no/icon.png",
+        email: "sjekkpensjon@outlook.com",
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          email: "sjekkpensjon@outlook.com",
+          availableLanguage: ["Norwegian", "nb"],
+        },
+        sameAs: ["https://github.com/jonasc3-cyber/pensjonskalkulator"],
       },
       {
         "@type": "WebApplication",
@@ -52,6 +80,7 @@ export function articleJsonLd(opts: {
       "@type": "Organization",
       name: "sjekkpensjon.no",
       url: "https://sjekkpensjon.no",
+      logo: "https://sjekkpensjon.no/icon.png",
     },
   };
 }

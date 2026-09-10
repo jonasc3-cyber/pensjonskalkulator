@@ -37,16 +37,22 @@ export function Footer() {
         </p>
         <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-300">
           <Link
+            href="/om"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            Om
+          </Link>
+          <Link
+            href="/om#hvem"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            Hvem står bak
+          </Link>
+          <Link
             href="/guider"
             className="underline underline-offset-2 hover:text-white"
           >
             Guider
-          </Link>
-          <Link
-            href="/om"
-            className="underline underline-offset-2 hover:text-white"
-          >
-            Om modell, kilder og personvern
           </Link>
           <Link
             href="/personvern"
@@ -60,6 +66,12 @@ export function Footer() {
           >
             Satser
           </Link>
+          <a
+            href="mailto:sjekkpensjon@outlook.com"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            Kontakt
+          </a>
           <a
             href="https://github.com/jonasc3-cyber/pensjonskalkulator/issues"
             className="underline underline-offset-2 hover:text-white"
@@ -86,15 +98,20 @@ export function Footer() {
           </a>
         </div>
         <p className="mt-4 max-w-3xl text-xs leading-relaxed text-slate-400">
-          Uavhengig indie-prototype for personlig bruk — ikke tilknyttet NAV, bank
-          eller pensjonsleverandør. Tilbakemelding via{" "}
-          <a
-            href="https://github.com/jonasc3-cyber/pensjonskalkulator/issues"
+          Uavhengig side drevet av Jonas Sætre — ikke tilknyttet NAV, bank eller
+          forsikringsselskap.{" "}
+          <Link
+            href="/om"
             className="underline underline-offset-2 hover:text-white"
-            target="_blank"
-            rel="noopener noreferrer"
           >
-            GitHub issues
+            Om sjekkpensjon.no
+          </Link>
+          {" · "}
+          <a
+            href="mailto:sjekkpensjon@outlook.com"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            sjekkpensjon@outlook.com
           </a>
           .
         </p>

@@ -117,7 +117,7 @@ export function Header() {
             className={navClass(onOm)}
             aria-current={onOm ? "page" : undefined}
           >
-            Om pensjon
+            Om
           </Link>
           <Link
             href="/personvern"
@@ -190,7 +190,7 @@ export function Header() {
                 aria-current={onOm ? "page" : undefined}
                 onClick={() => setMenuOpen(false)}
               >
-                Om pensjon
+                Om
               </Link>
               <Link
                 href="/personvern"

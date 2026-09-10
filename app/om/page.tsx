@@ -14,16 +14,18 @@ import {
 } from "@/lib/constants";
 import { formatNOK, formatPercent } from "@/lib/format";
 import { listDelingstall } from "@/lib/pension/delingstall";
+import { JsonLd } from "@/components/JsonLd";
+import { organizationJsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  title: "Om modellen | Pensjonskalkulator",
+  title: "Om sjekkpensjon.no | Hvem, metode og begrensninger",
   description:
-    "Forklaring av forenklet pensjonsmodell, kilder, begrensninger og personvern.",
+    "Jonas Sætre eier og utvikler sjekkpensjon.no — en gratis uinnlogget pensjonskalkulator. Metode, kilder, begrensninger, kontakt og personvern.",
   alternates: { canonical: "/om" },
   openGraph: {
-    title: "Om modellen | Pensjonskalkulator",
+    title: "Om sjekkpensjon.no | Hvem, metode og begrensninger",
     description:
-      "Forklaring av forenklet pensjonsmodell, kilder, begrensninger og personvern.",
+      "Jonas Sætre eier og utvikler sjekkpensjon.no — en gratis uinnlogget pensjonskalkulator. Metode, kilder, begrensninger, kontakt og personvern.",
     url: "https://sjekkpensjon.no/om",
     locale: "nb_NO",
     type: "website",
@@ -63,6 +65,7 @@ export default function OmPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+      <JsonLd data={organizationJsonLd()} />
       <p className="text-sm text-muted-foreground">
         <Link
           href="/"
@@ -72,15 +75,16 @@ export default function OmPage() {
         </Link>
       </p>
       <h1 className="mt-4 text-2xl font-bold text-primary sm:text-3xl">
-        Om modellen
+        Om sjekkpensjon.no
       </h1>
       <p className="mt-3 text-slate-600 leading-relaxed">
-        Denne siden forklarer hvordan den forenklede pensjonskalkulatoren fungerer,
-        hvilke antagelser som er gjort, og hva du bør sjekke andre steder.
+        Ærlig verktøy og forklaring — ikke personlig pensjonsrådgivning. Her finner
+        du hvem som står bak, hva kalkulatoren gjør, metode og kilder, begrensninger
+        og hvordan du tar kontakt.
       </p>
       <p className="mt-3 rounded-lg border border-border bg-muted/40 px-3 py-2 text-sm text-slate-600">
-        Uavhengig indie-prototype for personlig bruk — ikke tilknyttet NAV, bank
-        eller pensjonsleverandør. Tilbakemelding via{" "}
+        Uavhengig side — ikke tilknyttet NAV, bank eller forsikringsselskap. Tilbakemelding
+        også via{" "}
         <a
           href="https://github.com/jonasc3-cyber/pensjonskalkulator/issues"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
@@ -93,20 +97,204 @@ export default function OmPage() {
       </p>
 
       <div className="mt-8 space-y-5">
-        <OmCard id="personvern" title="Personvern">
+        <OmCard id="hvem" title="Hvem står bak">
           <p className="text-slate-600 leading-relaxed">
-            Alle tall du skriver inn brukes kun til beregning i nettleseren din. Vi
-            har ingen innlogging, ingen database for dine data, og ingen
-            serverlagring av lønn eller alder. Data sendes aldri til en server.
+            <strong>Jonas Sætre</strong> — eier og utvikler av sjekkpensjon.no. Jeg
+            bygger og vedlikeholder kalkulatoren og forklaringene på siden.
           </p>
           <p className="text-slate-600 leading-relaxed">
-            For at du ikke skal miste alt når du lukker fanen, lagres inndata{" "}
-            <strong>lokalt</strong> i nettleserens localStorage. URL-en kan også
-            inneholde en komprimert kopi av inndataene (query-parameter), slik at
-            du kan bokmerke eller dele en lenke — da følger tallene med i lenken
-            du selv velger å sende. Bruk «Nullstill» i kalkulatoren for å tømme
-            lokal lagring og fjerne tilstanden fra URL-en. Behandle delte lenker
-            som personlige opplysninger.
+            Dette er <strong>ikke</strong> personlig pensjonsrådgivning. Jeg gir ikke
+            råd om din individuelle pensjon, og siden er ikke godkjent av NAV eller
+            et forsikringsselskap.
+          </p>
+        </OmCard>
+
+        <OmCard id="hva" title="Hva er sjekkpensjon.no">
+          <p className="text-slate-600 leading-relaxed">
+            En <strong>gratis, uinnlogget</strong> pensjonskalkulator som estimerer
+            folketrygd, tjenestepensjon, AFP og egen sparing som{" "}
+            <strong>intervallanslag i nettleseren</strong>. Ingen BankID, ingen
+            innlogging, og ingen serverlagring av lønn eller andre inndata.
+          </p>
+        </OmCard>
+
+        <OmCard id="metode" title="Metode og kilder">
+          <p className="text-slate-600 leading-relaxed">
+            Satser sist kontrollert:{" "}
+            <strong>{CONSTANTS_UPDATED_LABEL}</strong> ({CONSTANTS_UPDATED}). Se
+            også den dedikerte oversikten på{" "}
+            <Link
+              href="/satser"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              /satser
+            </Link>
+            .
+          </p>
+          <div className="space-y-3">
+            <SubHeading>Offisielle kilder</SubHeading>
+            <ul className="list-disc space-y-2 pl-5 text-slate-600">
+              {CONSTANTS_SOURCE_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a
+                    className="underline underline-offset-2 hover:text-primary"
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a
+                  className="underline underline-offset-2 hover:text-primary"
+                  href="https://www.nav.no"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  nav.no
+                </a>
+              </li>
+              <li>
+                <a
+                  className="underline underline-offset-2 hover:text-primary"
+                  href="https://www.skatteetaten.no"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  skatteetaten.no
+                </a>
+              </li>
+              <li>
+                <a
+                  className="underline underline-offset-2 hover:text-primary"
+                  href="https://www.afp.no"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  afp.no
+                </a>
+              </li>
+              <li>
+                <a
+                  className="underline underline-offset-2 hover:text-primary"
+                  href="https://lovdata.no"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  lovdata.no
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="space-y-3">
+            <SubHeading>Personlige tall andre steder</SubHeading>
+            <ul className="list-disc space-y-2 pl-5 text-slate-600">
+              <li>
+                <a
+                  className="underline underline-offset-2 hover:text-primary"
+                  href="https://www.nav.no/dinpensjon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Din pensjon (NAV)
+                </a>
+              </li>
+              <li>
+                <a
+                  className="underline underline-offset-2 hover:text-primary"
+                  href="https://www.norskpensjon.no"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Norsk Pensjon
+                </a>
+              </li>
+              <li>
+                <a
+                  className="underline underline-offset-2 hover:text-primary"
+                  href="https://www.finansportalen.no"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  finansportalen.no
+                </a>
+              </li>
+            </ul>
+          </div>
+        </OmCard>
+
+        <OmCard id="begrensninger" title="Begrensninger">
+          <p className="text-slate-600 leading-relaxed">
+            Estimatene er <strong>ikke fasit</strong>. Bruk{" "}
+            <a
+              className="underline underline-offset-2 hover:text-primary"
+              href="https://www.nav.no/dinpensjon"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Din pensjon (NAV)
+            </a>{" "}
+            og{" "}
+            <a
+              className="underline underline-offset-2 hover:text-primary"
+              href="https://www.norskpensjon.no"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Norsk Pensjon
+            </a>{" "}
+            for personlige tall. Uten BankID får du mindre presisjon — og mer
+            personvern, fordi ingenting sendes til en server.
+          </p>
+          <ul className="list-disc space-y-2 pl-5 text-slate-600 leading-relaxed">
+            <li>Ikke full kohort × uttaksalder-matrise fra NAV for alle aldre.</li>
+            <li>
+              Ikke gammel opptjeningsmodell (før 1963) i detalj — kohort-advarsel
+              vises i kalkulatoren når fødselsår &lt; 1963.
+            </li>
+            <li>
+              IPS-skattefradrag (ca. 22&nbsp;%) og øvrig skatt er ikke modellert.
+            </li>
+            <li>Ikke BankID, Altinn eller Norsk Pensjon-API.</li>
+            <li>
+              Ikke full AFP-regelverk eller offentlig tjenestepensjon
+              (bruttoordninger) — ytelse/offentlig TP er merket forenkling.
+            </li>
+            <li>Nettoanslag er svært grovt og erstatter ikke skattereglene.</li>
+            <li>
+              Historisk opptjening anslås fra dagens lønn — ikke faktisk
+              inntektshistorikk.
+            </li>
+          </ul>
+        </OmCard>
+
+        <OmCard id="kontakt" title="Kontakt">
+          <p className="text-slate-600 leading-relaxed">
+            Spørsmål, feil eller forslag:{" "}
+            <a
+              href="mailto:sjekkpensjon@outlook.com"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              sjekkpensjon@outlook.com
+            </a>
+            .
+          </p>
+        </OmCard>
+
+        <OmCard id="personvern" title="Personvern">
+          <p className="text-slate-600 leading-relaxed">
+            Alle beregninger skjer i nettleseren din. Vi har ingen innlogging og
+            lagrer ikke lønn eller andre inndata på server. Inndata kan lagres
+            lokalt (localStorage) og i URL hvis du deler en lenke. Les mer på{" "}
+            <Link
+              href="/personvern"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              /personvern
+            </Link>
+            .
           </p>
         </OmCard>
 
@@ -165,11 +353,18 @@ export default function OmPage() {
             <p className="text-slate-600 leading-relaxed">
               Øvrige konstanter ligger i{" "}
               <code className="rounded bg-muted px-1 text-sm">lib/constants.ts</code>{" "}
-              med kildekommentarer.
+              med kildekommentarer. Satstabell:{" "}
+              <Link
+                href="/satser"
+                className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+              >
+                /satser
+              </Link>
+              .
             </p>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3" id="satser">
             <SubHeading>Delingstall @ 67 (NAV-utvalg)</SubHeading>
             <div className="overflow-x-auto rounded-xl border border-border">
               <table className="min-w-full text-left text-sm">
@@ -255,67 +450,6 @@ export default function OmPage() {
               avkastning. Poenget er å vise usikkerhet — ikke å predikere markedet.
             </p>
           </div>
-        </OmCard>
-
-        <OmCard id="satser" title="Kilder">
-          <div className="space-y-3">
-            <SubHeading>Satser sist kontrollert</SubHeading>
-            <p className="text-slate-600 leading-relaxed">
-              Satser sist kontrollert:{" "}
-              <strong>{CONSTANTS_UPDATED_LABEL}</strong> ({CONSTANTS_UPDATED}).
-              Verifisert mot offisielle kilder — se lenker under.
-            </p>
-            <ul className="list-disc space-y-2 pl-5 text-slate-600">
-              {CONSTANTS_SOURCE_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a
-                    className="underline underline-offset-2 hover:text-primary"
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <SubHeading>Kilder å sjekke</SubHeading>
-            <ul className="list-disc space-y-2 pl-5 text-slate-600">
-              <li>
-                <a
-                  className="underline underline-offset-2 hover:text-primary"
-                  href="https://www.nav.no/pensjon"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  nav.no/pensjon
-                </a>
-              </li>
-              <li>
-                <a
-                  className="underline underline-offset-2 hover:text-primary"
-                  href="https://www.norskpensjon.no"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  norskpensjon.no
-                </a>
-              </li>
-              <li>
-                <a
-                  className="underline underline-offset-2 hover:text-primary"
-                  href="https://www.finansportalen.no"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  finansportalen.no
-                </a>
-              </li>
-            </ul>
-          </div>
 
           <div className="space-y-3">
             <SubHeading>Bilder</SubHeading>
@@ -328,35 +462,10 @@ export default function OmPage() {
                 rel="noopener noreferrer"
               >
                 Unsplash
-              </a>
-              {" "}
+              </a>{" "}
               (ouXNRL9DW8E).
             </p>
           </div>
-
-        </OmCard>
-
-        <OmCard title="Begrensninger">
-          <ul className="list-disc space-y-2 pl-5 text-slate-600 leading-relaxed">
-            <li>Ikke full kohort × uttaksalder-matrise fra NAV for alle aldre.</li>
-            <li>
-              Ikke gammel opptjeningsmodell (før 1963) i detalj — kohort-advarsel
-              vises i kalkulatoren når fødselsår &lt; 1963.
-            </li>
-            <li>
-              IPS-skattefradrag (ca. 22&nbsp;%) og øvrig skatt er ikke modellert.
-            </li>
-            <li>Ikke BankID, Altinn eller Norsk Pensjon-API.</li>
-            <li>
-              Ikke full AFP-regelverk eller offentlig tjenestepensjon
-              (bruttoordninger) — ytelse/offentlig TP er merket forenkling.
-            </li>
-            <li>Nettoanslag er svært grovt og erstatter ikke skattereglene.</li>
-            <li>
-              Historisk opptjening anslås fra dagens lønn — ikke faktisk
-              inntektshistorikk.
-            </li>
-          </ul>
         </OmCard>
       </div>
     </div>
