@@ -3,6 +3,7 @@ import { defaultInputs } from "./calculate";
 import { createSavingAccount } from "./saving";
 import {
   NEW_FOLKETRYGD_FROM_YEAR,
+  buildAbsoluteShareUrl,
   buildShareSearch,
   deserializeInputs,
   hasIpsAccount,
@@ -113,5 +114,24 @@ describe("parseStateFromLocationParts", () => {
   it("returns null when neither present", () => {
     expect(parseStateFromLocationParts("", "")).toBeNull();
     expect(parseStateFromLocationParts("?foo=1", "#bar=2")).toBeNull();
+  });
+});
+
+describe("buildAbsoluteShareUrl", () => {
+  it("builds origin + path + ?s= that round-trips", () => {
+    const inputs = defaultInputs();
+    inputs.birthYear = 1988;
+    inputs.annualSalary = 650_000;
+    const absolute = buildAbsoluteShareUrl(
+      inputs,
+      "https://sjekkpensjon.no/?foo=1#old",
+    );
+    expect(absolute.startsWith("https://sjekkpensjon.no/?")).toBe(true);
+    expect(absolute).toContain(`${URL_STATE_PARAM}=`);
+    expect(absolute).not.toContain("#");
+    const url = new URL(absolute);
+    const restored = deserializeInputs(url.searchParams.get(URL_STATE_PARAM)!);
+    expect(restored?.birthYear).toBe(1988);
+    expect(restored?.annualSalary).toBe(650_000);
   });
 });

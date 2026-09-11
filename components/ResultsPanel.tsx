@@ -13,6 +13,7 @@ import { BreakdownChart } from "./BreakdownChart";
 import { TimelineChart } from "./TimelineChart";
 import { HowWeCalculated } from "./HowWeCalculated";
 import { WithdrawalAgeComparison } from "./WithdrawalAgeComparison";
+import { CopyResultLink } from "./CopyResultLink";
 
 function payoutLabel(
   mode: CalculatorInputs["tpPayoutMode"],
@@ -136,6 +137,8 @@ export function ResultsPanel({
             Garantipensjonsgulv er brukt i minst ett scenario (forenklet sats).
           </p>
         ) : null}
+
+        <CopyResultLink inputs={inputs} />
       </div>
 
       <WithdrawalAgeComparison inputs={inputs} showNet={showNet} />

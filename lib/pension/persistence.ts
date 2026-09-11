@@ -382,3 +382,15 @@ export function resolveInitialInputs(
 ): CalculatorInputs {
   return readInputsFromUrl() ?? loadInputsFromLocalStorage() ?? defaults;
 }
+
+/** Absolutt delbar URL (origin + path + ?s=…) som gjenoppretter anslaget. */
+export function buildAbsoluteShareUrl(
+  inputs: CalculatorInputs,
+  href: string = typeof window !== "undefined" ? window.location.href : "",
+): string {
+  const url = new URL(href);
+  url.search = "";
+  url.searchParams.set(URL_STATE_PARAM, serializeInputs(inputs));
+  url.hash = "";
+  return url.toString();
+}
