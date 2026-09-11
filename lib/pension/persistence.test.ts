@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { defaultInputs } from "./calculate";
 import { createSavingAccount } from "./saving";
 import {
@@ -114,6 +114,25 @@ describe("parseStateFromLocationParts", () => {
   it("returns null when neither present", () => {
     expect(parseStateFromLocationParts("", "")).toBeNull();
     expect(parseStateFromLocationParts("?foo=1", "#bar=2")).toBeNull();
+  });
+});
+
+describe("toBase64Url browser Buffer polyfill", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("never asks Buffer for base64url (polyfill often lacks it)", () => {
+    const spy = vi.spyOn(Buffer.prototype, "toString");
+    const inputs = defaultInputs();
+    inputs.birthYear = 1991;
+    const encoded = serializeInputs(inputs);
+    const usedBase64url = spy.mock.calls.some(
+      (args) => args[0] === "base64url",
+    );
+    expect(usedBase64url).toBe(false);
+    expect(encoded).not.toMatch(/[+/=]/);
+    expect(deserializeInputs(encoded)?.birthYear).toBe(1991);
   });
 });
 

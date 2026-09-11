@@ -24,7 +24,9 @@ async function copyText(text: string): Promise<boolean> {
     ta.style.left = "-9999px";
     ta.style.top = "0";
     document.body.appendChild(ta);
+    ta.focus();
     ta.select();
+    ta.setSelectionRange(0, ta.value.length);
     const ok = document.execCommand("copy");
     document.body.removeChild(ta);
     return ok;
@@ -33,8 +35,10 @@ async function copyText(text: string): Promise<boolean> {
   }
 }
 
+type Feedback = "copied" | "failed" | null;
+
 export function CopyResultLink({ inputs }: { inputs: CalculatorInputs }) {
-  const [copied, setCopied] = useState(false);
+  const [feedback, setFeedback] = useState<Feedback>(null);
   const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -43,14 +47,27 @@ export function CopyResultLink({ inputs }: { inputs: CalculatorInputs }) {
     };
   }, []);
 
-  async function handleCopy() {
-    const shareUrl = buildAbsoluteShareUrl(inputs);
-    writeInputsToUrl(inputs);
-    const ok = await copyText(shareUrl);
-    if (!ok) return;
-    setCopied(true);
+  function showFeedback(next: Feedback) {
+    setFeedback(next);
     if (timerRef.current != null) window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(() => setCopied(false), 2000);
+    if (next) {
+      timerRef.current = window.setTimeout(() => setFeedback(null), 2500);
+    }
+  }
+
+  async function handleCopy() {
+    // Sync address bar first so ?s= is visible even if clipboard fails.
+    let shareUrl: string;
+    try {
+      writeInputsToUrl(inputs);
+      shareUrl = buildAbsoluteShareUrl(inputs);
+    } catch {
+      showFeedback("failed");
+      return;
+    }
+
+    const ok = await copyText(shareUrl);
+    showFeedback(ok ? "copied" : "failed");
   }
 
   return (
@@ -70,12 +87,19 @@ export function CopyResultLink({ inputs }: { inputs: CalculatorInputs }) {
         role="status"
         aria-live="polite"
         className={
-          copied
+          feedback === "copied"
             ? "rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent"
-            : "sr-only"
+            : feedback === "failed"
+              ? "rounded-full bg-red-50 px-3 py-1 text-sm font-medium text-red-800"
+              : "sr-only"
         }
+        data-testid="copy-result-link-status"
       >
-        {copied ? "Kopiert" : ""}
+        {feedback === "copied"
+          ? "Kopiert"
+          : feedback === "failed"
+            ? "Kunne ikke kopiere — lenken er i adressefeltet"
+            : ""}
       </span>
     </div>
   );

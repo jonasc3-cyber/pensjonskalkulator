@@ -27,9 +27,18 @@ type PersistedPayload = {
   v: number;
 } & Partial<CalculatorInputs>;
 
+/**
+ * Base64url without relying on Buffer "base64url" encoding.
+ * Next/webpack injects a Buffer polyfill in the browser that often lacks
+ * that encoding ("Unknown encoding: base64url"), which broke share URLs.
+ */
 function toBase64Url(utf8: string): string {
   if (typeof Buffer !== "undefined") {
-    return Buffer.from(utf8, "utf8").toString("base64url");
+    return Buffer.from(utf8, "utf8")
+      .toString("base64")
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
   }
   const bytes = new TextEncoder().encode(utf8);
   let binary = "";
