@@ -39,6 +39,16 @@ Da er [sjekkpensjon.no](https://sjekkpensjon.no) laget for deg: forenklet modell
 
 Start her: [Din pensjon hos Nav](https://www.nav.no/dinpensjon).
 
+## Vi er ikke Norsk Pensjon
+
+**sjekkpensjon.no er ikke Norsk Pensjon** — og vi later ikke som om vi er det. [Norsk Pensjon](https://www.norskpensjon.no) samler oversikt over **private pensjonsavtaler** (tjenestepensjon, fripolise, pensjonskapitalbevis m.m.), typisk med innlogging. Det er nyttig når du skal hente *faktiske* saldoer og avtaler.
+
+Vi er et **uinnlogget estimat**: du skriver inn tallene selv (eller limer inn det du har sett hos Norsk Pensjon / leverandør), og alt regnes lokalt i nettleseren. Ingen Norsk Pensjon-API, ingen BankID hos oss.
+
+- **Norsk Pensjon** — oversikt over private avtaler (innlogging)
+- **Nav** — offisiell folketrygd / AFP (innlogging for fulle tall)
+- **sjekkpensjon.no** — samlet intervallanslag uten innlogging
+
 ## Anbefalt rekkefølge
 
 1. **Uinnlogget** — få oversikt og still spørsmålene («når kan jeg gå av?», «hvor mye må jeg spare?»)
@@ -51,6 +61,7 @@ Les mer om vår modell og begrensninger på [Om kalkulatoren](https://sjekkpensj
 
 - Uinnlogget = raskt, samlet bilde, med forenklinger
 - Nav = offisielt og personlig — bruk det før store beslutninger
+- Norsk Pensjon = private avtaler med innlogging — vi er **ikke** dem
 - De erstatter ikke hverandre; de **utfyller** hverandre
 
 **[Estimer uten innlogging →](https://sjekkpensjon.no)**

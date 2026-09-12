@@ -1,7 +1,9 @@
 import { Calculator } from "@/components/Calculator";
 import { FaqSection } from "@/components/FaqSection";
+import { GuideLinksBlock } from "@/components/GuideLinksBlock";
 import { Hero } from "@/components/Hero";
 import { JsonLd } from "@/components/JsonLd";
+import { NorskPensjonClarification } from "@/components/NorskPensjonClarification";
 import { webApplicationJsonLd } from "@/lib/jsonld";
 
 export default function HomePage() {
@@ -11,6 +13,8 @@ export default function HomePage() {
       <Hero />
       <div className="mx-auto mt-2 max-w-6xl px-4 py-6 sm:mt-0 sm:px-6 sm:py-8">
         <Calculator />
+        <NorskPensjonClarification />
+        <GuideLinksBlock />
         <FaqSection />
       </div>
     </>

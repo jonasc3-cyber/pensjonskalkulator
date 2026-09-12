@@ -90,6 +90,23 @@ const FAQ_ITEMS: FaqItem[] = [
     ),
   },
   {
+    q: "Er dette det samme som Norsk Pensjon?",
+    a: (
+      <>
+        Nei. sjekkpensjon.no er ikke Norsk Pensjon. Norsk Pensjon samler private
+        pensjonsavtaler (ofte med innlogging). Vi gir et uinnlogget estimat
+        basert på tallene du oppgir. Mer:{" "}
+        <Link
+          href="/guider/uinnlogget-vs-nav"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          uinnlogget vs Nav og Norsk Pensjon
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
     q: "Lagres tallene mine?",
     a: "Nei på server. Tall kan bli liggende i nettleseren din (localStorage) eller i en lenke du selv deler — du styrer det.",
   },
@@ -159,6 +176,8 @@ function stripForSchema(q: string): string {
       "Folketrygd (forenklet ny modell), tjenestepensjon, AFP (forenklet) og egen sparing (IPS, ASK, fond, bank). Du får et intervall (pessimistisk / basis / optimistisk), ikke ett fasitsvar.",
     "Er dette det samme som Navs pensjonskalkulator?":
       "Nei. Navs innloggede kalkulator henter dine offisielle tall. Vår er et raskt, uinnlogget anslag med flere kilder samlet. Bruk alltid Din pensjon hos Nav for offisielle tall.",
+    "Er dette det samme som Norsk Pensjon?":
+      "Nei. sjekkpensjon.no er ikke Norsk Pensjon. Norsk Pensjon samler private pensjonsavtaler (ofte med innlogging). Vi gir et uinnlogget estimat basert på tallene du oppgir.",
   };
   return plain[q] ?? "";
 }

@@ -232,6 +232,53 @@ export default function GuideUinnloggetVsNavPage() {
         </p>
       </section>
 
+
+      <section className="mt-8 space-y-3">
+        <h2 className="text-lg font-semibold text-primary">
+          Vi er ikke Norsk Pensjon
+        </h2>
+        <p className="text-slate-600 leading-relaxed">
+          <strong className="text-foreground">sjekkpensjon.no er ikke Norsk
+          Pensjon</strong> — og vi later ikke som om vi er det.{" "}
+          <a
+            href="https://www.norskpensjon.no"
+            className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Norsk Pensjon
+          </a>{" "}
+          er en tjeneste som{" "}
+          <strong className="text-foreground">
+            samler oversikt over private pensjonsavtaler
+          </strong>{" "}
+          (tjenestepensjon, fripolise, pensjonskapitalbevis m.m.), typisk med
+          innlogging. Det er nyttig når du skal hente{" "}
+          <em>faktiske</em> saldoer og avtaler.
+        </p>
+        <p className="text-slate-600 leading-relaxed">
+          Vi er et{" "}
+          <strong className="text-foreground">uinnlogget estimat</strong>: du
+          skriver inn tallene selv (eller limer inn det du har sett hos Norsk
+          Pensjon / leverandør), og alt regnes lokalt i nettleseren. Ingen
+          Norsk Pensjon-API, ingen BankID hos oss.
+        </p>
+        <ul className="list-disc space-y-2 pl-5 text-slate-600 leading-relaxed">
+          <li>
+            <strong className="text-foreground">Norsk Pensjon</strong> —
+            oversikt over private avtaler (innlogging)
+          </li>
+          <li>
+            <strong className="text-foreground">Nav</strong> — offisiell
+            folketrygd / AFP (innlogging for fulle tall)
+          </li>
+          <li>
+            <strong className="text-foreground">sjekkpensjon.no</strong> —
+            samlet intervallanslag uten innlogging
+          </li>
+        </ul>
+      </section>
+
       <section className="mt-8 space-y-3">
         <h2 className="text-lg font-semibold text-primary">
           Anbefalt rekkefølge
@@ -284,6 +331,10 @@ export default function GuideUinnloggetVsNavPage() {
           <li>Uinnlogget = raskt, samlet bilde, med forenklinger</li>
           <li>
             Nav = offisielt og personlig — bruk det før store beslutninger
+          </li>
+          <li>
+            Norsk Pensjon = private avtaler med innlogging — vi er{" "}
+            <strong className="text-foreground">ikke</strong> dem
           </li>
           <li>
             De erstatter ikke hverandre; de{" "}

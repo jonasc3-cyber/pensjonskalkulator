@@ -42,7 +42,7 @@ export const GUIDES: readonly GuideMeta[] = [
     blurb:
       "Når uinnlogget anslag er nok — og når du bør bruke Navs innloggede kalkulator.",
     group: "start",
-    lastmod: "2026-09-10",
+    lastmod: "2026-09-12",
   },
   {
     slug: "hva-er-tjenestepensjon",
