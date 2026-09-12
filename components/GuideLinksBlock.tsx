@@ -22,6 +22,16 @@ const GUIDES = [
     blurb: "62, 67 eller senere: delingstall og hvordan du tester scenarier.",
   },
   {
+    href: "/guider/delingstall",
+    title: "Delingstall",
+    blurb: "Beholdning ÷ delingstall — slik påvirker levealdersjustering årlig pensjon.",
+  },
+  {
+    href: "/guider/garantipensjon",
+    title: "Garantipensjon",
+    blurb: "Ordinær vs høy sats, trygdetid og avkortning i ny alderspensjon.",
+  },
+  {
     href: "/guider/pensjonskapitalbevis",
     title: "Pensjonskapitalbevis",
     blurb: "PKB vs fripolise, Norsk Pensjon, og hvordan du tar saldoen med i estimatet.",

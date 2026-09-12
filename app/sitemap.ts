@@ -26,7 +26,7 @@ const CORE: {
   },
   {
     path: "/guider",
-    lastmod: "2026-09-10",
+    lastmod: "2026-09-12",
     changeFrequency: "weekly",
     priority: 0.7,
   },

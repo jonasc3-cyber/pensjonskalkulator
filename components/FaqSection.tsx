@@ -68,6 +68,13 @@ const FAQ_ITEMS: FaqItem[] = [
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
           når ta ut pensjon?
+        </Link>
+        ,{" "}
+        <Link
+          href="/guider/delingstall"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          delingstall
         </Link>{" "}
         og{" "}
         <Link
@@ -165,7 +172,34 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: "Kan jeg stole på satser og regler?",
-    a: "Vi bruker offisielle satser (blant annet G) og viser når de sist ble kontrollert. Modellen er forenklet — blant annet AFP og garantipensjon — så resultatet er veiledende.",
+    a: (
+      <>
+        Vi bruker offisielle satser (blant annet G) og viser når de sist ble
+        kontrollert. Modellen er forenklet — blant annet AFP og garantipensjon —
+        så resultatet er veiledende. Mer:{" "}
+        <Link
+          href="/satser"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          satser
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/garantipensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          garantipensjon
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/delingstall"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          delingstall
+        </Link>
+        .
+      </>
+    ),
   },
   {
     q: "Fungerer kalkulatoren hvis jeg er født før 1963?",
@@ -302,6 +336,20 @@ export function FaqSection() {
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
           selvstendig
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/delingstall"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          delingstall
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/garantipensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          garantipensjon
         </Link>
         .
       </p>

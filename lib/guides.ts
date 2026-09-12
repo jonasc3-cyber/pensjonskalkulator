@@ -78,6 +78,28 @@ export const GUIDES: readonly GuideMeta[] = [
     lastmod: "2026-09-10",
   },
   {
+    slug: "delingstall",
+    path: "/guider/delingstall",
+    title: "Delingstall i pensjon: slik påvirker det hva du får utbetalt",
+    description:
+      "Hva er delingstall? Enkel formel (beholdning ÷ delingstall), tidligere vs senere uttak, årskull og levealdersjustering — med intervallanslag uten BankID.",
+    blurb:
+      "Beholdning ÷ delingstall, tidligere vs senere uttak, og levealdersjustering forklart enkelt.",
+    group: "forsta",
+    lastmod: "2026-09-12",
+  },
+  {
+    slug: "garantipensjon",
+    path: "/guider/garantipensjon",
+    title: "Garantipensjon: hva det er, satser og hvem det gjelder",
+    description:
+      "Hva er garantipensjon? Ordinær vs høy sats 2026, trygdetid, avkortning mot inntektspensjon — og hvordan du ser et intervallanslag uten BankID.",
+    blurb:
+      "Ordinær vs høy sats, trygdetid og avkortning — bunnsikringen i ny alderspensjon.",
+    group: "forsta",
+    lastmod: "2026-09-12",
+  },
+  {
     slug: "afp-privat",
     path: "/guider/afp-privat",
     title: "AFP privat",
