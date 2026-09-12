@@ -39,6 +39,14 @@ const FAQ_ITEMS: FaqItem[] = [
         >
           fripolise
         </Link>
+        {" "}
+        og{" "}
+        <Link
+          href="/guider/pensjonskapitalbevis"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          pensjonskapitalbevis
+        </Link>
         ),{" "}
         <Link
           href="/guider/afp-privat"
@@ -140,6 +148,22 @@ const FAQ_ITEMS: FaqItem[] = [
     ),
   },
   {
+    q: "Kan jeg jobbe ved siden av pensjonen?",
+    a: (
+      <>
+        For alderspensjon fra folketrygden kan du normalt jobbe så mye du vil
+        uten at pensjonen avkortes. AFP privat og skatt har egne regler. Les mer:{" "}
+        <Link
+          href="/guider/jobbe-ved-siden-av-pensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          jobbe ved siden av pensjon
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
     q: "Kan jeg stole på satser og regler?",
     a: "Vi bruker offisielle satser (blant annet G) og viser når de sist ble kontrollert. Modellen er forenklet — blant annet AFP og garantipensjon — så resultatet er veiledende.",
   },
@@ -178,6 +202,8 @@ function stripForSchema(q: string): string {
       "Nei. Navs innloggede kalkulator henter dine offisielle tall. Vår er et raskt, uinnlogget anslag med flere kilder samlet. Bruk alltid Din pensjon hos Nav for offisielle tall.",
     "Er dette det samme som Norsk Pensjon?":
       "Nei. sjekkpensjon.no er ikke Norsk Pensjon. Norsk Pensjon samler private pensjonsavtaler (ofte med innlogging). Vi gir et uinnlogget estimat basert på tallene du oppgir.",
+    "Kan jeg jobbe ved siden av pensjonen?":
+      "For alderspensjon fra folketrygden kan du normalt jobbe så mye du vil uten at pensjonen avkortes. AFP privat og skatt har egne regler.",
   };
   return plain[q] ?? "";
 }
@@ -248,6 +274,20 @@ export function FaqSection() {
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
           fripolise
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/pensjonskapitalbevis"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          pensjonskapitalbevis
+        </Link>
+        {" · "}
+        <Link
+          href="/guider/jobbe-ved-siden-av-pensjon"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          jobb + pensjon
         </Link>
         {" · "}
         <Link

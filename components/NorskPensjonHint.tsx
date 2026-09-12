@@ -4,7 +4,14 @@ import Link from "next/link";
 export function NorskPensjonHint() {
   return (
     <>
-      Du kan slå opp og lime inn saldo fra pensjonskapitalbevis /{" "}
+      Du kan slå opp og lime inn saldo fra{" "}
+      <Link
+        href="/guider/pensjonskapitalbevis"
+        className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+      >
+        pensjonskapitalbevis
+      </Link>{" "}
+      /{" "}
       <Link
         href="/guider/fripolise"
         className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"

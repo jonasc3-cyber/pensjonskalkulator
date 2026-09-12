@@ -45,6 +45,17 @@ export const GUIDES: readonly GuideMeta[] = [
     lastmod: "2026-09-12",
   },
   {
+    slug: "jobbe-ved-siden-av-pensjon",
+    path: "/guider/jobbe-ved-siden-av-pensjon",
+    title: "Jobbe ved siden av pensjon: alderspensjon, AFP og skatt — kort forklart",
+    description:
+      "Kan du jobbe ved siden av pensjonen? Alderspensjon avkortes normalt ikke av jobb (Nav), pluss gradert uttak, AFP privat og skatt — uten BankID-estimat.",
+    blurb:
+      "Alderspensjon avkortes normalt ikke av jobb — pluss gradert uttak, AFP privat og skatt.",
+    group: "start",
+    lastmod: "2026-09-12",
+  },
+  {
     slug: "hva-er-tjenestepensjon",
     path: "/guider/hva-er-tjenestepensjon",
     title: "Hva er tjenestepensjon?",
@@ -87,6 +98,17 @@ export const GUIDES: readonly GuideMeta[] = [
       "Fripolise vs pensjonskapitalbevis, Norsk Pensjon, og hvordan du tar den med i estimatet.",
     group: "forsta",
     lastmod: "2026-09-10",
+  },
+  {
+    slug: "pensjonskapitalbevis",
+    path: "/guider/pensjonskapitalbevis",
+    title: "Pensjonskapitalbevis: hva det er, og hvordan det skiller seg fra fripolise",
+    description:
+      "Hva er et pensjonskapitalbevis? Forskjellen mot fripolise, hvordan du finner det via Norsk Pensjon, og hvordan du legger saldoen inn i en pensjonskalkulator uten BankID.",
+    blurb:
+      "PKB vs fripolise, Norsk Pensjon, og hvordan du legger saldoen inn i estimatet.",
+    group: "forsta",
+    lastmod: "2026-09-12",
   },
   {
     slug: "ips-eller-ask",

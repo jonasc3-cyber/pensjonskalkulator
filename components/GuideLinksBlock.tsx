@@ -22,9 +22,14 @@ const GUIDES = [
     blurb: "62, 67 eller senere: delingstall og hvordan du tester scenarier.",
   },
   {
-    href: "/guider/hvor-mye-bor-jeg-spare-til-pensjon",
-    title: "Hvor mye bør jeg spare?",
-    blurb: "Pensjonsgap, tommelfingerregel og «Spar for mål» uten BankID.",
+    href: "/guider/pensjonskapitalbevis",
+    title: "Pensjonskapitalbevis",
+    blurb: "PKB vs fripolise, Norsk Pensjon, og hvordan du tar saldoen med i estimatet.",
+  },
+  {
+    href: "/guider/jobbe-ved-siden-av-pensjon",
+    title: "Jobbe ved siden av pensjon",
+    blurb: "Alderspensjon avkortes normalt ikke av jobb — pluss AFP og skatt.",
   },
 ] as const;
 
