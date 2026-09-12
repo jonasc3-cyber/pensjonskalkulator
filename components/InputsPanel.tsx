@@ -7,7 +7,7 @@ import { SectionDivider } from "./SectionDivider";
 import { SavingsAccounts } from "./SavingsAccounts";
 import { TpAccounts } from "./TpAccounts";
 import type { CalculatorInputs } from "@/lib/pension/types";
-import { CURRENT_YEAR } from "@/lib/constants";
+import { CURRENT_YEAR, PROFILE_STARTERS } from "@/lib/constants";
 import {
   ANNUAL_SALARY_MAX,
   ANNUAL_SALARY_MIN,
@@ -27,6 +27,8 @@ type Props = {
   ) => void;
   onToggleAssumptions: () => void;
   onReset?: () => void;
+  /** Sett årslønn via profil-starter uten å fjerne «Eksempeldata». */
+  onApplyProfileStarter?: (annualSalary: number) => void;
 };
 
 const BIRTH_YEARS = Array.from(
@@ -43,6 +45,7 @@ export function InputsPanel({
   onChange,
   onToggleAssumptions,
   onReset,
+  onApplyProfileStarter,
 }: Props) {
   const age = CURRENT_YEAR - values.birthYear;
   const salaryCheck = validateAnnualSalary(values.annualSalary);
@@ -87,6 +90,39 @@ export function InputsPanel({
               ? "Tallene under er eksempeldata — bytt dem til dine egne for et personlig estimat."
               : "Fyll inn informasjonen under så beregner vi et estimat på din fremtidige pensjon."}
           </p>
+          {isExampleData && onApplyProfileStarter ? (
+            <div
+              className="mt-3 flex flex-wrap items-center gap-2"
+              data-testid="profile-starters"
+              role="group"
+              aria-label="Prøv eksempelprofiler for årslønn"
+            >
+              <span className="text-xs font-medium text-muted-foreground">
+                Prøv
+              </span>
+              {PROFILE_STARTERS.map((starter) => {
+                const selected = values.annualSalary === starter.annualSalary;
+                return (
+                  <button
+                    key={starter.annualSalary}
+                    type="button"
+                    onClick={() =>
+                      onApplyProfileStarter(starter.annualSalary)
+                    }
+                    aria-pressed={selected}
+                    aria-label={`Sett årslønn til ${starter.annualSalary.toLocaleString("nb-NO")} kr`}
+                    className={
+                      selected
+                        ? "rounded-full border border-primary/40 bg-primary-soft px-3 py-1.5 text-sm font-semibold text-primary shadow-sm"
+                        : "rounded-full border border-border bg-card px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:border-primary/30 hover:bg-primary-soft/70 hover:text-primary"
+                    }
+                  >
+                    {starter.label}
+                  </button>
+                );
+              })}
+            </div>
+          ) : null}
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {onReset ? (

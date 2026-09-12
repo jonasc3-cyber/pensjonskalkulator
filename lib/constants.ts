@@ -137,3 +137,17 @@ export const CONSTANTS_SOURCE_LINKS = [
   },
   { label: "NAV pensjon", href: "https://www.nav.no/pensjon" },
 ] as const;
+
+/**
+ * Profil-startere under «Eksempeldata»: ett klikk setter årslønn.
+ * Holdes bevisst som eksempelprofiler — ikke brukerens egne tall.
+ */
+export const PROFILE_STARTERS: ReadonlyArray<{
+  annualSalary: number;
+  /** Kort etikett på chip (f.eks. «450k»). */
+  label: string;
+}> = [
+  { annualSalary: 450_000, label: "450k" },
+  { annualSalary: 650_000, label: "650k" },
+  { annualSalary: 900_000, label: "900k" },
+];

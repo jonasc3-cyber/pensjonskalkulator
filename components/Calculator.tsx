@@ -110,6 +110,13 @@ export function Calculator() {
     skipNextPersist.current = true;
   }
 
+  /** Profil-starter: bytt årslønn, behold «Eksempeldata» (ikke brukerens egne tall). */
+  function onApplyProfileStarter(annualSalary: number) {
+    setValues((prev) => ({ ...prev, annualSalary }));
+    setIsExampleData(true);
+    skipNextPersist.current = true;
+  }
+
   function openPayoutSettings() {
     setAssumptionsOpen(true);
     // Vent til Avansert/Antagelser (details) er ekspandert før scroll
@@ -144,6 +151,7 @@ export function Calculator() {
         onChange={onChange}
         onToggleAssumptions={toggleAssumptions}
         onReset={onReset}
+        onApplyProfileStarter={onApplyProfileStarter}
       />
       <AssumptionsPanel
         values={values}
