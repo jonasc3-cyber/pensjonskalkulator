@@ -14,6 +14,7 @@ import {
   validateAnnualSalary,
 } from "@/lib/salaryValidation";
 import { CohortWarning } from "./CohortWarning";
+import { track } from "@/lib/ga";
 
 type Props = {
   values: CalculatorInputs;
@@ -106,9 +107,10 @@ export function InputsPanel({
                   <button
                     key={starter.annualSalary}
                     type="button"
-                    onClick={() =>
-                      onApplyProfileStarter(starter.annualSalary)
-                    }
+                    onClick={() => {
+                      track("scenario_change", { profile: starter.label });
+                      onApplyProfileStarter(starter.annualSalary);
+                    }}
                     aria-pressed={selected}
                     aria-label={`Sett årslønn til ${starter.annualSalary.toLocaleString("nb-NO")} kr`}
                     className={
@@ -211,9 +213,11 @@ export function InputsPanel({
                   id="retirementAge"
                   className={selectClass}
                   value={values.retirementAge}
-                  onChange={(e) =>
-                    onChange("retirementAge", Number(e.target.value))
-                  }
+                  onChange={(e) => {
+                    const age = Number(e.target.value);
+                    track("withdrawal_age_change", { age });
+                    onChange("retirementAge", age);
+                  }}
                 >
                   {RETIREMENT_AGES.map((a) => (
                     <option key={a} value={a}>

@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Banner } from "@/components/Banner";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -91,6 +92,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <Analytics />
+        <GoogleAnalytics />
       </body>
     </html>
   );

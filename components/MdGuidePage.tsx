@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GuideCtaLink } from "@/components/GuideCtaLink";
 import { GuideMarkdown } from "@/components/GuideMarkdown";
 import { JsonLd } from "@/components/JsonLd";
 import {
@@ -41,12 +42,13 @@ export function MdGuidePage({
       />
       {faq && faq.length > 0 ? <JsonLd data={faqPageJsonLd(faq)} /> : null}
       <p className="text-sm text-muted-foreground">
-        <Link
+        <GuideCtaLink
           href="/"
+          source="md_guide"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
           ← Tilbake til kalkulatoren
-        </Link>
+        </GuideCtaLink>
         {" · "}
         <Link
           href="/guider"

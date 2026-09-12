@@ -12,6 +12,7 @@ import {
 import { formatNOK, formatRange } from "@/lib/format";
 import { Field, selectClass } from "./Field";
 import { CurrencyInput } from "./CurrencyInput";
+import { track } from "@/lib/ga";
 
 type Props = {
   values: CalculatorInputs;
@@ -30,6 +31,19 @@ export function GoalSeekPanel({ values, result }: Props) {
   );
   /** Siste auto-utfylte mål — brukes for å oppdatere ved lønnsendring uten å overskrive brukerinput. */
   const autoDefaultRef = useRef(0);
+
+  function onTargetChange(v: number) {
+    setTargetMonthly(v);
+    // Skip auto-default noise; fire when the user edits the target.
+    if (v !== autoDefaultRef.current) {
+      track("spar_for_mal_use", { source: "target" });
+    }
+  }
+
+  function onAccountChange(id: string) {
+    setAccountId(id);
+    track("spar_for_mal_use", { source: "account" });
+  }
 
   // Smart default: ~75 % av årslønn / 12 når feltet er tomt eller fortsatt på forrige auto-verdi
   useEffect(() => {
@@ -109,7 +123,7 @@ export function GoalSeekPanel({ values, result }: Props) {
           <CurrencyInput
             id="goal-target"
             value={targetMonthly}
-            onChange={setTargetMonthly}
+            onChange={onTargetChange}
             allowEmpty
             emptyValue={0}
             placeholder="f.eks. 40 000"
@@ -130,7 +144,7 @@ export function GoalSeekPanel({ values, result }: Props) {
             id="goal-account"
             className={selectClass}
             value={accountId}
-            onChange={(e) => setAccountId(e.target.value)}
+            onChange={(e) => onAccountChange(e.target.value)}
           >
             {options.map((o) => (
               <option key={o.id} value={o.id}>

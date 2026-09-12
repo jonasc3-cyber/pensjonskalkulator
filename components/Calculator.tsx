@@ -19,6 +19,7 @@ import { GoalSeekPanel } from "./GoalSeekPanel";
 import { CohortWarning } from "./CohortWarning";
 import { StickyMiniResult } from "./StickyMiniResult";
 import { SectionDivider } from "./SectionDivider";
+import { track } from "@/lib/ga";
 
 const PERSIST_DEBOUNCE_MS = 250;
 
@@ -29,6 +30,7 @@ export function Calculator() {
   /** Vises til bruker endrer noe (eller har lagret/delt tilstand). */
   const [isExampleData, setIsExampleData] = useState(true);
   const skipNextPersist = useRef(false);
+  const startedRef = useRef(false);
   const valuesRef = useRef(values);
   const isExampleDataRef = useRef(isExampleData);
   valuesRef.current = values;
@@ -97,6 +99,10 @@ export function Calculator() {
     key: K,
     value: CalculatorInputs[K],
   ) {
+    if (!startedRef.current) {
+      startedRef.current = true;
+      track("calculator_start");
+    }
     setIsExampleData(false);
     setValues((prev) => ({ ...prev, [key]: value }));
   }

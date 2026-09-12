@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { GuideCtaLink } from "@/components/GuideCtaLink";
 import { GUIDE_GROUPS, GUIDES } from "@/lib/guides";
 
 const guiderTitle = "Guider | Sjekkpensjon";
@@ -27,12 +28,13 @@ export default function GuiderIndexPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <p className="text-sm text-muted-foreground">
-        <Link
+        <GuideCtaLink
           href="/"
+          source="guider_hub"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
           ← Tilbake til kalkulatoren
-        </Link>
+        </GuideCtaLink>
       </p>
       <h1 className="mt-4 text-2xl font-bold text-primary sm:text-3xl">
         Guider
