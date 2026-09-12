@@ -31,7 +31,7 @@ For **innskuddspensjon** er lovens minimum (forenklet):
 - Arbeidsgiver kan spare mer: inntil **7 %** av lønn opp til 12 G
 - I tillegg kan det gis **tilleggssats** for lønn mellom **7,1 G og 12 G** (inntil 18,1 % på den delen)
 
-**Grunnbeløpet (G)** fra 1. mai 2026 er **136 549 kr** (Nav). Da blir 12 G omtrent **1,64 mill. kr**. (Frem til 1. mai 2026 var G 130 160 kr.)
+**Grunnbeløpet (G)** fra 1. mai 2026 er **136 549 kr** (Nav). Da blir 12 G omtrent **1,64 mill. kr**. (Frem til 1. mai 2026 var G 130 160 kr.) Aktuelle satser vi bruker i kalkulatoren: [Satser og kilder](/satser).
 
 Ifølge Finans Norge lå gjennomsnittlig grunnsats for innskuddspensjon rundt **4,0 %** i 2025-tall — altså ofte over minimum. Omtrent tre av ti privatansatte lå likevel på minimumsordning uten tilleggssats. Tallene endrer seg; sjekk egen avtale.
 

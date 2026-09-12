@@ -84,3 +84,52 @@ export function articleJsonLd(opts: {
     },
   };
 }
+
+/** Home → Guider → [Article] for all /guider/* pages. */
+export function breadcrumbJsonLd(opts: {
+  name: string;
+  path: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Hjem",
+        item: "https://sjekkpensjon.no/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Guider",
+        item: "https://sjekkpensjon.no/guider",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: opts.name,
+        item: `https://sjekkpensjon.no${opts.path}`,
+      },
+    ],
+  };
+}
+
+export type FaqItem = { question: string; answer: string };
+
+/** FAQPage from real on-page Q&A — coexist with Article. */
+export function faqPageJsonLd(items: readonly FaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}

@@ -37,7 +37,7 @@ Ifølge [Nav — AFP i privat sektor](https://www.nav.no/afp-i-privat-sektor):
 - Fylt **62 år** (tidligst måneden etter 62-årsdagen)
 - Under 70 år: samtidig uttak av minst **20 % alderspensjon** fra folketrygden
 - Fortsatt i jobb i AFP-bedrift, med minst 20 % stilling de **siste 3 årene** før uttak
-- Inntekt over **1 G** (grunnbeløpet) når du tar ut — 1 G er **136 549 kr** fra 1. mai 2026 (Nav)
+- Inntekt over **1 G** (grunnbeløpet) når du tar ut — 1 G er **136 549 kr** fra 1. mai 2026 (Nav); se også [satser og kilder](/satser)
 - Kalenderåret før uttak: inntekt over gjennomsnittlig G for det året
 
 Det finnes egne regler for fravær (sykdom, permisjon), permittering og ytelser i alderen 59–62. Ytelser som pensjon/sluttvederlag over **1,5 G** per år i den perioden kan true retten. Fullstendig oversikt: [afp.no](https://www.afp.no) og Nav-siden over.

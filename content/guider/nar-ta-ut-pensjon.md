@@ -39,7 +39,7 @@ Stortingets pensjonsforlik innebærer at aldersgrensene skal følge levealderen 
 
 ## Delingstall og levealdersjustering — uten sjargong
 
-I det nye systemet bygges en **pensjonsbeholdning** (for mange: **18,1 %** av pensjonsgivende inntekt opp til **7,1 G** hvert år). Når du tar ut pensjon, omgjøres beholdningen til årlig ytelse ved hjelp av et **delingstall**.
+I det nye systemet bygges en **pensjonsbeholdning** (for mange: **18,1 %** av pensjonsgivende inntekt opp til **7,1 G** hvert år). Når du tar ut pensjon, omgjøres beholdningen til årlig ytelse ved hjelp av et **delingstall**. Aktuell G og øvrige satser: [Satser og kilder](/satser).
 
 Enkelt sagt:
 

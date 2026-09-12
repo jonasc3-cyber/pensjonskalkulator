@@ -99,7 +99,7 @@ Relaterte guider:
 2. **Sjekk om du får nytte av fradraget** — lavt skattegrunnlag svekker IPS-fordelen
 3. **Se på kostnader** — forvaltningsgebyrer spiser mer enn mange tror over tid
 4. **Ikke bland «maks sparing» med «må spare»** — taket er et tak, ikke et mål for alle
-5. **Verifiser satser årlig** — Stortinget kan endre IPS-grensen; skattesatser endres
+5. **Verifiser satser årlig** — Stortinget kan endre IPS-grensen; skattesatser endres. G, garantipensjon og OTP i kalkulatoren: [Satser og kilder](/satser)
 
 ## Kort oppsummert
 

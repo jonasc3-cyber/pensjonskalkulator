@@ -12,9 +12,10 @@ import {
 } from "@/lib/constants";
 import { formatNOK, formatPercent } from "@/lib/format";
 
-const satserTitle = "Satser og kilder | Pensjonskalkulator";
+const satserTitle =
+  "Grunnbeløp, garantipensjon og OTP-satser 2026 | SjekkPensjon";
 const satserDescription =
-  "Satser sist kontrollert for sjekkpensjon.no: G, garantipensjon, OTP og lenker til offisielle kilder.";
+  "Aktuelle satser sjekkpensjon.no bruker: grunnbeløpet (G), garantipensjon, OTP-minimum og lenker til Nav/Lovdata. Sist kontrollert september 2026.";
 
 export const metadata: Metadata = {
   title: satserTitle,
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
+    card: "summary_large_image",
     title: satserTitle,
     description: satserDescription,
   },
@@ -45,18 +47,34 @@ export default function SatserPage() {
         </Link>
       </p>
       <h1 className="mt-4 text-2xl font-bold text-primary sm:text-3xl">
-        Satser og kilder
+        Satser og kilder for pensjonskalkulatoren
       </h1>
-      <p className="mt-3 text-slate-600 leading-relaxed">
-        Nøkkelstørrelser brukt i den forenklede modellen. Utfyllende tabeller og
-        begrensninger står under{" "}
+
+      <p className="mt-2 text-sm font-medium text-slate-700">
+        Sist kontrollert:{" "}
+        <time dateTime={CONSTANTS_UPDATED}>{CONSTANTS_UPDATED_LABEL}</time>
+      </p>
+
+      <p className="mt-4 text-slate-600 leading-relaxed">
+        Hvilke satser bruker dere? Kalkulatoren bygger på offisielle nøkkelstørrelser —
+        blant annet grunnbeløpet (G), garantipensjon og OTP-minimum — slik at estimatet
+        følger aktuelle regler for 2026. Mer om modell og begrensninger står under{" "}
         <Link
           href="/om#satser"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
         >
           Om → Metode og kilder
         </Link>
-        .
+        ; verifiser alltid mot{" "}
+        <a
+          href="https://www.nav.no/grunnbelopet"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Nav
+        </a>{" "}
+        ved viktige beslutninger.
       </p>
 
       <section className="mt-8 space-y-5">

@@ -1,17 +1,25 @@
 import Link from "next/link";
 import { GuideMarkdown } from "@/components/GuideMarkdown";
 import { JsonLd } from "@/components/JsonLd";
-import { articleJsonLd } from "@/lib/jsonld";
+import {
+  articleJsonLd,
+  breadcrumbJsonLd,
+  faqPageJsonLd,
+  type FaqItem,
+} from "@/lib/jsonld";
 import { loadGuideMarkdown } from "@/lib/loadGuide";
 
 export function MdGuidePage({
   slug,
   path,
   h1,
+  faq,
 }: {
   slug: string;
   path: string;
   h1: string;
+  /** Optional FAQPage schema from real on-page Q&A. */
+  faq?: readonly FaqItem[];
 }) {
   const { title, description, content } = loadGuideMarkdown(slug);
   const url = `https://sjekkpensjon.no${path}`;
@@ -25,6 +33,13 @@ export function MdGuidePage({
           url,
         })}
       />
+      <JsonLd
+        data={breadcrumbJsonLd({
+          name: h1,
+          path,
+        })}
+      />
+      {faq && faq.length > 0 ? <JsonLd data={faqPageJsonLd(faq)} /> : null}
       <p className="text-sm text-muted-foreground">
         <Link
           href="/"
