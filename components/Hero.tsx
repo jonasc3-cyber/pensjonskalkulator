@@ -75,6 +75,7 @@ export function Hero() {
             alt="Par som sjekker pensjon sammen på laptop"
             fill
             priority
+            fetchPriority="high"
             sizes="(min-width: 768px) 55vw, 100vw"
             className="object-cover object-[55%_30%] sm:object-[60%_28%] md:object-[40%_28%]"
           />
