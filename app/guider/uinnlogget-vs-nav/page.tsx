@@ -3,9 +3,9 @@ import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { articleJsonLd } from "@/lib/jsonld";
 
-const guideTitle = "Uinnlogget pensjonskalkulator vs Nav | Når bruke hva";
+const guideTitle = "Uinnlogget pensjonskalkulator vs Nav og Norsk Pensjon";
 const guideDescription =
-  "Forskjellen på uinnlogget anslag og Navs innloggede pensjonskalkulator — og når du bør bruke hvilken.";
+  "Forskjellen på sjekkpensjon.no (uinnlogget anslag), Navs Din pensjon og Norsk Pensjon — og når du bør bruke hvilken.";
 
 export const metadata: Metadata = {
   title: guideTitle,
@@ -42,8 +42,8 @@ export default function GuideUinnloggetVsNavPage() {
     <article className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <JsonLd
         data={articleJsonLd({
-          headline: 'Uinnlogget pensjonskalkulator vs Nav',
-          description: 'Forskjellen på uinnlogget anslag og Navs innloggede pensjonskalkulator — og når du bør bruke hvilken.',
+          headline: 'Uinnlogget pensjonskalkulator vs Nav og Norsk Pensjon',
+          description: 'Forskjellen på sjekkpensjon.no (uinnlogget anslag), Navs Din pensjon og Norsk Pensjon — og når du bør bruke hvilken.',
           url: "https://sjekkpensjon.no/guider/uinnlogget-vs-nav",
         })}
       />
@@ -64,7 +64,7 @@ export default function GuideUinnloggetVsNavPage() {
       </p>
 
       <h1 className="mt-4 text-2xl font-bold text-primary sm:text-3xl">
-        Uinnlogget pensjonskalkulator vs Nav
+        Uinnlogget pensjonskalkulator vs Nav og Norsk Pensjon
       </h1>
       <p className="mt-3 text-slate-600 leading-relaxed">
         Vil du bare ha et raskt bilde — eller trenger du offisielle tall? Her er
@@ -319,7 +319,7 @@ export default function GuideUinnloggetVsNavPage() {
             href="/guider/hvor-mye-far-jeg-i-pensjon"
             className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
           >
-            Hvor mye får jeg i pensjon?
+            Hva får jeg i pensjon?
           </Link>
           .
         </p>

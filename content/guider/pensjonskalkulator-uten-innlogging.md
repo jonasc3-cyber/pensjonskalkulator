@@ -1,6 +1,6 @@
 ---
 title: "Pensjonskalkulator uten innlogging | Uten BankID"
-description: "Finn en pensjonskalkulator uten BankID eller innlogging. Se hvordan sjekkpensjon.no skiller seg fra Nav og bankene — privat, raskt og med intervallestimat."
+description: "Finn pensjonskalkulator uten BankID. Folketrygd, tjenestepensjon, AFP og sparing i samme anslag — privat, raskt, intervall. Skiller seg fra Nav (kun FT/AFP uinnlogget)."
 slug: "/guider/pensjonskalkulator-uten-innlogging"
 ---
 
@@ -49,7 +49,7 @@ Pensjon avhenger av mange usikre faktorer: avkastning, lønnsvekst, uttaksalder 
 
 ### 4. Samler flere deler av pensjonen
 
-Som i guiden [Hvor mye får jeg i pensjon?](/guider/hvor-mye-far-jeg-i-pensjon) er pensjon vanligvis:
+Som i guiden [Hva får jeg i pensjon?](/guider/hvor-mye-far-jeg-i-pensjon) er pensjon vanligvis:
 
 1. Folketrygd
 2. Tjenestepensjon (OTP / innskudd / ytelse / offentlig)
@@ -98,7 +98,7 @@ På sjekkpensjon.no er poenget at du skal kunne beregne uten å opprette bruker.
 4. **Legg inn egen sparing** hvis du har IPS, ASK eller fond
 5. **Sammenlign med Nav** før du tar store valg
 
-Vil du forstå helheten først? Start med [Hvor mye får jeg i pensjon?](/guider/hvor-mye-far-jeg-i-pensjon).
+Vil du forstå helheten først? Start med [Hva får jeg i pensjon?](/guider/hvor-mye-far-jeg-i-pensjon).
 
 ## Kort oppsummert
 

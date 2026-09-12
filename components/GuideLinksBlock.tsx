@@ -13,7 +13,7 @@ const GUIDES = [
   },
   {
     href: "/guider/hvor-mye-far-jeg-i-pensjon",
-    title: "Hvor mye får jeg i pensjon?",
+    title: "Hva får jeg i pensjon?",
     blurb: "Folketrygd, tjenestepensjon, AFP og sparing — kort oversikt.",
   },
   {

@@ -1,10 +1,10 @@
 ---
-title: "Hvor mye får jeg i pensjon? | Enkel oversikt + kalkulator"
-description: "Se hva som bestemmer pensjonen din — folketrygd, tjenestepensjon, AFP og egen sparing. Estimer uten innlogging på sjekkpensjon.no."
+title: "Hva får jeg i pensjon? Oversikt + kalkulator uten innlogging"
+description: "Hva får jeg i pensjon fra folketrygd, tjenestepensjon, AFP og sparing? Enkel oversikt — og estimat uten BankID på sjekkpensjon.no."
 slug: "/guider/hvor-mye-far-jeg-i-pensjon"
 ---
 
-# Hvor mye får jeg i pensjon?
+# Hva får jeg i pensjon?
 
 Det finnes ikke ett fasitsvar. Pensjonen din er summen av flere kilder, og beløpet endrer seg med lønn, hvor lenge du jobber, og når du tar den ut. Her er oversikten — og en måte å få et raskt anslag uten BankID.
 

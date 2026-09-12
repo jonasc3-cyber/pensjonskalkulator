@@ -5,9 +5,9 @@ import { articleJsonLd } from "@/lib/jsonld";
 import { G_NOK } from "@/lib/constants";
 import { formatNOK } from "@/lib/format";
 
-const guideTitle = "Hvor mye får jeg i pensjon? | Enkel oversikt + kalkulator";
+const guideTitle = "Hva får jeg i pensjon? Oversikt + kalkulator uten innlogging";
 const guideDescription =
-  "Se hva som bestemmer pensjonen din — folketrygd, tjenestepensjon, AFP og egen sparing. Estimer uten innlogging på sjekkpensjon.no.";
+  "Hva får jeg i pensjon fra folketrygd, tjenestepensjon, AFP og sparing? Enkel oversikt — og estimat uten BankID på sjekkpensjon.no.";
 
 export const metadata: Metadata = {
   title: guideTitle,
@@ -44,8 +44,8 @@ export default function GuideHvorMyePage() {
     <article className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <JsonLd
         data={articleJsonLd({
-          headline: 'Hvor mye får jeg i pensjon?',
-          description: 'Se hva som bestemmer pensjonen din — folketrygd, tjenestepensjon, AFP og egen sparing. Estimer uten innlogging på sjekkpensjon.no.',
+          headline: 'Hva får jeg i pensjon?',
+          description: 'Hva får jeg i pensjon fra folketrygd, tjenestepensjon, AFP og sparing? Enkel oversikt — og estimat uten BankID på sjekkpensjon.no.',
           url: "https://sjekkpensjon.no/guider/hvor-mye-far-jeg-i-pensjon",
         })}
       />
@@ -66,7 +66,7 @@ export default function GuideHvorMyePage() {
       </p>
 
       <h1 className="mt-4 text-2xl font-bold text-primary sm:text-3xl">
-        Hvor mye får jeg i pensjon?
+        Hva får jeg i pensjon?
       </h1>
       <p className="mt-3 text-slate-600 leading-relaxed">
         Det finnes ikke ett fasitsvar. Pensjonen din er summen av flere kilder,

@@ -4,7 +4,7 @@ import { MdGuidePage } from "@/components/MdGuidePage";
 const path = "/guider/pensjonskalkulator-uten-innlogging";
 const title = "Pensjonskalkulator uten innlogging | Uten BankID";
 const description =
-  "Finn en pensjonskalkulator uten BankID eller innlogging. Se hvordan sjekkpensjon.no skiller seg fra Nav og bankene — privat, raskt og med intervallestimat.";
+  "Finn pensjonskalkulator uten BankID. Folketrygd, tjenestepensjon, AFP og sparing i samme anslag — privat, raskt, intervall. Skiller seg fra Nav (kun FT/AFP uinnlogget).";
 
 export const metadata: Metadata = {
   title,

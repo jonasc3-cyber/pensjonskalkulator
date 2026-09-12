@@ -14,31 +14,31 @@ export const GUIDES: readonly GuideMeta[] = [
   {
     slug: "hvor-mye-far-jeg-i-pensjon",
     path: "/guider/hvor-mye-far-jeg-i-pensjon",
-    title: "Hvor mye får jeg i pensjon?",
+    title: "Hva får jeg i pensjon?",
     description:
-      "Se hva som bestemmer pensjonen din — folketrygd, tjenestepensjon, AFP og egen sparing. Estimer uten innlogging på sjekkpensjon.no.",
+      "Hva får jeg i pensjon fra folketrygd, tjenestepensjon, AFP og sparing? Enkel oversikt — og estimat uten BankID på sjekkpensjon.no.",
     blurb:
       "Tre pilarer + AFP, hvorfor tall spriker, og hvordan du får et raskt anslag uten BankID.",
     group: "start",
-    lastmod: "2026-09-10",
+    lastmod: "2026-09-12",
   },
   {
     slug: "pensjonskalkulator-uten-innlogging",
     path: "/guider/pensjonskalkulator-uten-innlogging",
     title: "Pensjonskalkulator uten innlogging",
     description:
-      "Finn en pensjonskalkulator uten BankID eller innlogging. Se hvordan sjekkpensjon.no skiller seg fra Nav og bankene — privat, raskt og med intervallestimat.",
+      "Finn pensjonskalkulator uten BankID. Folketrygd, tjenestepensjon, AFP og sparing i samme anslag — privat, raskt, intervall. Skiller seg fra Nav (kun FT/AFP uinnlogget).",
     blurb:
       "Uten BankID: når uinnlogget anslag er nok, og hvordan sjekkpensjon.no skiller seg fra Nav og bankene.",
     group: "start",
-    lastmod: "2026-09-10",
+    lastmod: "2026-09-12",
   },
   {
     slug: "uinnlogget-vs-nav",
     path: "/guider/uinnlogget-vs-nav",
-    title: "Uinnlogget pensjonskalkulator vs Nav",
+    title: "Uinnlogget pensjonskalkulator vs Nav og Norsk Pensjon",
     description:
-      "Forskjellen på uinnlogget anslag og Navs innloggede pensjonskalkulator — og når du bør bruke hvilken.",
+      "Forskjellen på sjekkpensjon.no (uinnlogget anslag), Navs Din pensjon og Norsk Pensjon — og når du bør bruke hvilken.",
     blurb:
       "Når uinnlogget anslag er nok — og når du bør bruke Navs innloggede kalkulator.",
     group: "start",

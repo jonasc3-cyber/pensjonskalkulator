@@ -1,10 +1,10 @@
 ---
-title: "Uinnlogget pensjonskalkulator vs Nav | Når bruke hva"
-description: "Forskjellen på uinnlogget anslag og Navs innloggede pensjonskalkulator — og når du bør bruke hvilken."
+title: "Uinnlogget pensjonskalkulator vs Nav og Norsk Pensjon"
+description: "Forskjellen på sjekkpensjon.no (uinnlogget anslag), Navs Din pensjon og Norsk Pensjon — og når du bør bruke hvilken."
 slug: "/guider/uinnlogget-vs-nav"
 ---
 
-# Uinnlogget pensjonskalkulator vs Nav
+# Uinnlogget pensjonskalkulator vs Nav og Norsk Pensjon
 
 Vil du bare ha et raskt bilde — eller trenger du offisielle tall? Her er forskjellen på et **uinnlogget anslag** og **Navs pensjonskalkulator**, og når det lønner seg å bruke hvilken.
 
@@ -55,7 +55,7 @@ Vi er et **uinnlogget estimat**: du skriver inn tallene selv (eller limer inn de
 2. **Nav innlogget** — bekreft med dine tall
 3. **Norsk Pensjon** — sjekk private avtaler og pensjonskapital der det er relevant: [norskpensjon.no](https://norskpensjon.no)
 
-Les mer om vår modell og begrensninger på [Om kalkulatoren](https://sjekkpensjon.no/om), og se den korte oversikten i [Hvor mye får jeg i pensjon?](https://sjekkpensjon.no/guider/hvor-mye-far-jeg-i-pensjon).
+Les mer om vår modell og begrensninger på [Om kalkulatoren](https://sjekkpensjon.no/om), og se den korte oversikten i [Hva får jeg i pensjon?](https://sjekkpensjon.no/guider/hvor-mye-far-jeg-i-pensjon).
 
 ## Kort oppsummert
 
