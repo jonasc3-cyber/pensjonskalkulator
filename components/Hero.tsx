@@ -27,7 +27,17 @@ const chips = [
   },
   {
     title: "Alt lokalt i nettleseren",
-    text: "Ingen data lagres eller sendes. Dine tall forblir dine.",
+    text: (
+      <>
+        Pensjonstallene dine regnes lokalt og sendes ikke til oss.{" "}
+        <Link
+          href="/personvern"
+          className="underline underline-offset-2 hover:text-primary"
+        >
+          Personvern
+        </Link>
+      </>
+    ),
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path
@@ -56,7 +66,7 @@ const chips = [
       </svg>
     ),
   },
-] as const;
+];
 
 /** Variant B: full-bleed navy + photo; copy stays in max-w-6xl. */
 export function Hero() {

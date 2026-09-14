@@ -8,8 +8,9 @@ const FAQ_ITEMS: FaqItem[] = [
     q: "Må jeg logge inn for å bruke kalkulatoren?",
     a: (
       <>
-        Nei. sjekkpensjon.no er uinnlogget. Du fyller inn tallene selv, og alt
-        regnes i nettleseren din. Ingenting sendes til server. Les mer i{" "}
+        Nei. sjekkpensjon.no er uinnlogget. Du fyller inn tallene selv, og
+        pensjonstallene regnes lokalt i nettleseren — de sendes ikke til oss for
+        beregning. Les mer i{" "}
         <Link
           href="/guider/pensjonskalkulator-uten-innlogging"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
@@ -123,7 +124,21 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: "Lagres tallene mine?",
-    a: "Nei på server. Tall kan bli liggende i nettleseren din (localStorage) eller i en lenke du selv deler — du styrer det.",
+    a: (
+      <>
+        Pensjonstallene dine lagres ikke på våre servere. De kan bli liggende i
+        nettleseren din (localStorage) eller i en lenke du selv deler — du
+        styrer det. Vi måler anonymisert sidebruk med Analytics (ikke
+        pensjonstallene). Se{" "}
+        <Link
+          href="/personvern"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          personvern
+        </Link>
+        .
+      </>
+    ),
   },
   {
     q: "Hvorfor viser dere intervall i stedet for ett tall?",
@@ -229,7 +244,9 @@ function faqJsonLd() {
 function stripForSchema(q: string): string {
   const plain: Record<string, string> = {
     "Må jeg logge inn for å bruke kalkulatoren?":
-      "Nei. sjekkpensjon.no er uinnlogget. Du fyller inn tallene selv, og alt regnes i nettleseren din. Ingenting sendes til server.",
+      "Nei. sjekkpensjon.no er uinnlogget. Du fyller inn tallene selv, og pensjonstallene regnes lokalt i nettleseren — de sendes ikke til oss for beregning.",
+    "Lagres tallene mine?":
+      "Pensjonstallene dine lagres ikke på våre servere. De kan bli liggende i nettleseren (localStorage) eller i en lenke du deler. Vi måler anonymisert sidebruk med Analytics — ikke pensjonstallene. Se /personvern.",
     "Hva dekker estimatet?":
       "Folketrygd (forenklet ny modell), tjenestepensjon, AFP (forenklet) og egen sparing (IPS, ASK, fond, bank). Du får et intervall (pessimistisk / basis / optimistisk), ikke ett fasitsvar.",
     "Er dette det samme som Navs pensjonskalkulator?":
@@ -259,8 +276,8 @@ export function FaqSection() {
         Ofte stilte spørsmål
       </h2>
       <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
-        Kort om hvordan sjekkpensjon.no fungerer — uten innlogging og uten
-        lagring på server. Guider:{" "}
+        Kort om hvordan sjekkpensjon.no fungerer — uten innlogging, med
+        lokal beregning av pensjonstall. Guider:{" "}
         <Link
           href="/guider/pensjonskalkulator-uten-innlogging"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"

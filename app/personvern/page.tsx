@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const personvernTitle = "Personvern | Pensjonskalkulator";
 const personvernDescription =
-  "Personvern for sjekkpensjon.no: alle tall beregnes lokalt i nettleseren. Ingen innlogging, ingen serverlagring av lønn eller alder.";
+  "Personvern for sjekkpensjon.no: pensjonstall beregnes lokalt i nettleseren og sendes ikke til våre servere. Kort om Analytics og anonymisert sidebruk.";
 
 export const metadata: Metadata = {
   title: personvernTitle,
@@ -53,18 +53,66 @@ export default function PersonvernPage() {
         </h2>
         <div className="mt-4 space-y-4 text-slate-600 leading-relaxed">
           <p>
-            Alle tall du skriver inn brukes kun til beregning i nettleseren din. Vi
-            har ingen innlogging, ingen database for dine data, og ingen
-            serverlagring av lønn eller alder. Data sendes aldri til en server.
+            Pensjonstall og øvrige inndata du skriver inn beregnes og lagres{" "}
+            <strong>lokalt i nettleseren</strong> (localStorage). Vi har ingen
+            innlogging og ingen database for dine pensjonsdata. Tallene sendes{" "}
+            <strong>ikke</strong> til våre servere for beregning.
           </p>
           <p>
-            For at du ikke skal miste alt når du lukker fanen, lagres inndata{" "}
-            <strong>lokalt</strong> i nettleserens localStorage. URL-en kan også
-            inneholde en komprimert kopi av inndataene (query-parameter), slik at
-            du kan bokmerke eller dele en lenke — da følger tallene med i lenken
-            du selv velger å sende. Bruk «Nullstill» i kalkulatoren for å tømme
-            lokal lagring og fjerne tilstanden fra URL-en. Behandle delte lenker
-            som personlige opplysninger.
+            For at du ikke skal miste alt når du lukker fanen, lagres inndata
+            lokalt. URL-en kan også inneholde en komprimert kopi av inndataene
+            (query-parameter), slik at du kan bokmerke eller dele en lenke — da
+            følger tallene med i lenken du selv velger å sende. Bruk «Nullstill»
+            i kalkulatoren for å tømme lokal lagring og fjerne tilstanden fra
+            URL-en. Behandle delte lenker som personlige opplysninger.
+          </p>
+        </div>
+      </section>
+
+      <section className="mt-5 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">
+        <h2 className="text-lg font-semibold text-primary">
+          Analyse / cookies
+        </h2>
+        <div className="mt-4 space-y-4 text-slate-600 leading-relaxed">
+          <p>
+            Vi bruker <strong>Google Analytics 4</strong> (måle-ID{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-sm text-slate-800">
+              G-1PLB6P9STY
+            </code>
+            ) via gtag for å forstå hvordan siden brukes. Formålet er
+            sidevisninger, trafikk og hvilke sider som besøkes —{" "}
+            <strong>ikke</strong> pensjonstallene eller inndataene dine.
+          </p>
+          <p>
+            IP-adressen anonymiseres (<code className="rounded bg-muted px-1 text-sm">anonymize_ip</code>
+            ). Kalkulator-input sendes fortsatt ikke til våre servere; beregning
+            skjer lokalt i nettleseren.
+          </p>
+          <p>
+            Vi bruker også <strong>Vercel Analytics</strong> for anonyme
+            sidevisninger (hostingplattformen). Det er sidebruk, ikke
+            pensjonsdata.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Mer om Googles behandling:{" "}
+            <a
+              href="https://policies.google.com/privacy"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Google personvern
+            </a>
+            . Du kan også bruke{" "}
+            <a
+              href="https://tools.google.com/dlpage/gaoptout"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Google Analytics opt-out-tillegget
+            </a>
+            .
           </p>
         </div>
         <p className="mt-5 text-sm text-muted-foreground">

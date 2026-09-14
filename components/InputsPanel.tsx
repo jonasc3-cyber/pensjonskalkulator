@@ -295,7 +295,7 @@ export function InputsPanel({
               høy) — ikke ett fasitsvar.
             </p>
             <p>
-              Alt skjer lokalt i nettleseren. Ingen data sendes til server.
+              Pensjonstallene regnes lokalt i nettleseren og sendes ikke til oss.
             </p>
           </div>
           <Link

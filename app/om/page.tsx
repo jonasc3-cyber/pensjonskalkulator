@@ -252,7 +252,8 @@ export default function OmPage() {
               Norsk Pensjon
             </a>{" "}
             for personlige tall. Uten BankID får du mindre presisjon — og mer
-            personvern, fordi ingenting sendes til en server.
+            personvern: pensjonstallene dine sendes ikke til våre servere for
+            beregning (se også Analytics under personvern).
           </p>
           <ul className="list-disc space-y-2 pl-5 text-slate-600 leading-relaxed">
             <li>Ikke full kohort × uttaksalder-matrise fra NAV for alle aldre.</li>
@@ -291,9 +292,10 @@ export default function OmPage() {
 
         <OmCard id="personvern" title="Personvern">
           <p className="text-slate-600 leading-relaxed">
-            Alle beregninger skjer i nettleseren din. Vi har ingen innlogging og
-            lagrer ikke lønn eller andre inndata på server. Inndata kan lagres
-            lokalt (localStorage) og i URL hvis du deler en lenke. Les mer på{" "}
+            Alle pensjonsberegninger skjer i nettleseren din. Vi har ingen
+            innlogging og lagrer ikke lønn eller andre inndata på våre servere.
+            Inndata kan lagres lokalt (localStorage) og i URL hvis du deler en
+            lenke. Vi måler anonymisert sidebruk med Analytics — detaljer på{" "}
             <Link
               href="/personvern"
               className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
