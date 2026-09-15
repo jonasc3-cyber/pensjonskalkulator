@@ -5,7 +5,6 @@ import {
   BarChart,
   CartesianGrid,
   Legend,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -16,6 +15,16 @@ import { ChartFrame } from "./ChartFrame";
 import { ChartLegendContent } from "./ChartLegend";
 import { ChartTableToggle } from "./ChartTableToggle";
 import { ChartTooltip } from "./ChartTooltip";
+
+function isEmptyBreakdown(data: Array<Record<string, number | string>>): boolean {
+  if (data.length === 0) return true;
+  return data.every((row) =>
+    chartSeries.every((s) => {
+      const v = row[s.key];
+      return typeof v !== "number" || v === 0;
+    }),
+  );
+}
 
 export function BreakdownChart({
   scenarios,
@@ -29,6 +38,8 @@ export function BreakdownChart({
     AFP: Math.round(s.afp.yearly),
     Sparing: Math.round(s.saving.yearly),
   }));
+
+  const empty = isEmptyBreakdown(data);
 
   const columns = chartSeries.map((s) => ({
     key: s.key,
@@ -46,41 +57,54 @@ export function BreakdownChart({
   }));
 
   const chart = (
-    <ChartFrame aria-label="Stolpediagram over pensjonskilder per scenario">
+    <ChartFrame
+      aria-label="Stolpediagram over pensjonskilder per scenario"
+      empty={empty}
+      emptyMessage="Ingen pensjonsbeløp å vise ennå. Oppgi lønn og øvrige tall for å se fordeling per scenario."
+    >
       {({ width, height }) => (
-        <ResponsiveContainer width={width} height={height} debounce={50}>
-          <BarChart data={data} margin={{ top: 8, right: 8, left: 8, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={palette.chart.grid} />
-            <XAxis
-              dataKey="name"
-              tick={{ fontSize: 13, fill: palette.slate }}
-            />
-            <YAxis
-              tick={{ fontSize: 12, fill: palette.slate }}
-              tickFormatter={(v) =>
-                new Intl.NumberFormat("nb-NO", {
-                  notation: "compact",
-                  compactDisplay: "short",
-                }).format(v)
+        /* Explicit pixel size — avoid ResponsiveContainer 0×0 race */
+        <BarChart
+          width={width}
+          height={height}
+          data={data}
+          margin={{ top: 8, right: 8, left: 4, bottom: 28 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke={palette.chart.grid} />
+          <XAxis
+            dataKey="name"
+            tick={{ fontSize: 13, fill: palette.slate }}
+          />
+          <YAxis
+            tick={{ fontSize: 12, fill: palette.slate }}
+            width={48}
+            tickFormatter={(v) =>
+              new Intl.NumberFormat("nb-NO", {
+                notation: "compact",
+                compactDisplay: "short",
+              }).format(v)
+            }
+          />
+          <Tooltip content={<ChartTooltip />} />
+          <Legend
+            verticalAlign="bottom"
+            content={<ChartLegendContent />}
+            wrapperStyle={{ paddingTop: 4 }}
+          />
+          {chartSeries.map((series, index) => (
+            <Bar
+              key={series.key}
+              dataKey={series.key}
+              stackId="a"
+              fill={series.color}
+              radius={
+                index === chartSeries.length - 1
+                  ? ([4, 4, 0, 0] as [number, number, number, number])
+                  : undefined
               }
             />
-            <Tooltip content={<ChartTooltip />} />
-            <Legend content={<ChartLegendContent />} />
-            {chartSeries.map((series, index) => (
-              <Bar
-                key={series.key}
-                dataKey={series.key}
-                stackId="a"
-                fill={series.color}
-                radius={
-                  index === chartSeries.length - 1
-                    ? ([4, 4, 0, 0] as [number, number, number, number])
-                    : undefined
-                }
-              />
-            ))}
-          </BarChart>
-        </ResponsiveContainer>
+          ))}
+        </BarChart>
       )}
     </ChartFrame>
   );

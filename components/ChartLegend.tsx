@@ -7,7 +7,7 @@ const colorByKey = Object.fromEntries(
   chartSeries.map((s) => [s.key, s.color]),
 ) as Record<ChartSeriesKey, string>;
 
-/** Shared square legend — order = stack bottom→top on both charts */
+/** Shared square legend — order = stack bottom→top; wraps below chart on mobile */
 export function ChartLegendContent({ payload }: DefaultLegendContentProps) {
   if (!payload?.length) return null;
 
@@ -20,7 +20,7 @@ export function ChartLegendContent({ payload }: DefaultLegendContentProps) {
     .filter((e): e is NonNullable<typeof e> => Boolean(e));
 
   return (
-    <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 pt-1 text-[13px] sm:gap-x-4 sm:text-xs">
+    <ul className="flex w-full flex-wrap items-center justify-center gap-x-3 gap-y-1.5 pt-2 text-[13px] sm:gap-x-4 sm:text-xs">
       {ordered.map((entry) => {
         const key = String(entry.value) as ChartSeriesKey;
         const fill = colorByKey[key] ?? String(entry.color ?? "#64748B");

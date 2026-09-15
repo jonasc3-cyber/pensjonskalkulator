@@ -6,7 +6,6 @@ import {
   CartesianGrid,
   Legend,
   ReferenceLine,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -31,7 +30,17 @@ function ageTicksEveryFive(ages: number[]): number[] {
   return ticks;
 }
 
+function isEmptyTimeline(data: TimelinePoint[]): boolean {
+  if (data.length === 0) return true;
+  return data.every(
+    (p) =>
+      p.folketrygd === 0 && p.tp === 0 && p.afp === 0 && p.saving === 0,
+  );
+}
+
 export function TimelineChart({ data }: { data: TimelinePoint[] }) {
+  const empty = isEmptyTimeline(data);
+
   const chartData = data.map((p) => ({
     age: p.age,
     Folketrygd: Math.round(p.folketrygd),
@@ -64,64 +73,74 @@ export function TimelineChart({ data }: { data: TimelinePoint[] }) {
   }));
 
   const chart = (
-    <ChartFrame aria-label="Områdediagram over årlig pensjon over tid (basis-scenario)">
+    <ChartFrame
+      aria-label="Områdediagram over årlig pensjon over tid (basis-scenario)"
+      empty={empty}
+      emptyMessage="Ingen tidslinje å vise ennå. Oppgi lønn og øvrige tall for å se årlig pensjon over tid."
+    >
       {({ width, height }) => (
-        <ResponsiveContainer width={width} height={height} debounce={50}>
-          <AreaChart
-            data={chartData}
-            margin={{ top: 8, right: 12, left: 8, bottom: 0 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke={palette.chart.grid} />
-            <XAxis
-              dataKey="age"
-              ticks={ticks}
-              tick={{ fontSize: 13, fill: palette.slate }}
+        /* Explicit pixel size — avoid ResponsiveContainer 0×0 race */
+        <AreaChart
+          width={width}
+          height={height}
+          data={chartData}
+          margin={{ top: 8, right: 12, left: 4, bottom: 28 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke={palette.chart.grid} />
+          <XAxis
+            dataKey="age"
+            ticks={ticks}
+            tick={{ fontSize: 13, fill: palette.slate }}
+            label={{
+              value: "Alder",
+              position: "insideBottom",
+              offset: -2,
+              fontSize: 12,
+              fill: palette.slate,
+            }}
+          />
+          <YAxis
+            tick={{ fontSize: 12, fill: palette.slate }}
+            width={48}
+            tickFormatter={(v) =>
+              new Intl.NumberFormat("nb-NO", {
+                notation: "compact",
+                compactDisplay: "short",
+              }).format(v)
+            }
+          />
+          <Tooltip content={<ChartTooltip labelPrefix="Alder" />} />
+          <Legend
+            verticalAlign="bottom"
+            content={<ChartLegendContent />}
+            wrapperStyle={{ paddingTop: 4 }}
+          />
+          {dropAge != null ? (
+            <ReferenceLine
+              x={dropAge}
+              stroke={palette.slate}
+              strokeDasharray="4 4"
+              strokeOpacity={0.7}
               label={{
-                value: "Alder",
-                position: "insideBottom",
-                offset: -2,
-                fontSize: 12,
+                value: "TP/sparing avtar",
+                position: "insideTopRight",
                 fill: palette.slate,
+                fontSize: 11,
               }}
             />
-            <YAxis
-              tick={{ fontSize: 12, fill: palette.slate }}
-              tickFormatter={(v) =>
-                new Intl.NumberFormat("nb-NO", {
-                  notation: "compact",
-                  compactDisplay: "short",
-                }).format(v)
-              }
+          ) : null}
+          {chartSeries.map((series) => (
+            <Area
+              key={series.key}
+              type="monotone"
+              dataKey={series.key}
+              stackId="1"
+              stroke={series.color}
+              fill={series.color}
+              fillOpacity={0.88}
             />
-            <Tooltip content={<ChartTooltip labelPrefix="Alder" />} />
-            <Legend content={<ChartLegendContent />} />
-            {dropAge != null ? (
-              <ReferenceLine
-                x={dropAge}
-                stroke={palette.slate}
-                strokeDasharray="4 4"
-                strokeOpacity={0.7}
-                label={{
-                  value: "TP/sparing avtar",
-                  position: "insideTopRight",
-                  fill: palette.slate,
-                  fontSize: 11,
-                }}
-              />
-            ) : null}
-            {chartSeries.map((series) => (
-              <Area
-                key={series.key}
-                type="monotone"
-                dataKey={series.key}
-                stackId="1"
-                stroke={series.color}
-                fill={series.color}
-                fillOpacity={0.88}
-              />
-            ))}
-          </AreaChart>
-        </ResponsiveContainer>
+          ))}
+        </AreaChart>
       )}
     </ChartFrame>
   );

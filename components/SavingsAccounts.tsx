@@ -202,7 +202,7 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                         id={`saving-label-${account.id}`}
                         type="text"
                         className={inputClass}
-                        placeholder="F.eks. Buffer, Nordnet ASK"
+                        placeholder="F.eks. Buffer, aksjesparekonto"
                         value={account.label ?? ""}
                         onChange={(e) =>
                           updateAccount(account.id, { label: e.target.value })

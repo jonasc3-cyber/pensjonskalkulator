@@ -17,9 +17,9 @@ export function Banner() {
           <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
             <span>
               <strong className="font-semibold text-primary">
-                Forenklet modell.
+                Uavhengig pensjonskalkulator.
               </strong>{" "}
-              Intervallanslag — ikke fasitsvar.
+              Forenklet estimat — ikke fasitsvar.
             </span>
             <button
               type="button"
@@ -62,8 +62,8 @@ export function Banner() {
 
         {/* Desktop: full copy */}
         <div className="hidden sm:block">
-          <strong className="font-semibold text-primary">Forenklet modell.</strong>{" "}
-          Vi bruker tilnærmede delingstall og forenklede AFP-/garantipensjonsregler.
+          <strong className="font-semibold text-primary">Uavhengig pensjonskalkulator.</strong>{" "}
+          Forenklet estimat med tilnærmede delingstall og forenklede AFP-/garantipensjonsregler.
           Resultatene er <em>intervaller</em> (pessimistisk / basis / optimistisk), ikke
           ett «fasitsvar». Sjekk alltid{" "}
           <a

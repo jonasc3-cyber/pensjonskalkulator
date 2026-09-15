@@ -85,22 +85,29 @@ export default function AnnonseringPage() {
           <ul className="list-disc space-y-2 pl-5">
             <li>
               Betalt eller provisjonsbasert innhold merkes tydelig med{" "}
-              <strong>«Annonse»</strong> (eller tilsvarende).
+              <strong>«Annonse»</strong> (eller tilsvarende) — også CTA-knapper
+              og partnerlenker.
             </li>
             <li>
               Vi gir <strong>ikke</strong> personlig råd om hvilken bank,
               fond eller pensjonsleverandør du bør velge.
             </li>
             <li>
-              Risiko og begrensninger forklares ærlig — pensjon og sparing er
-              YMYL-tema; ingenting her er et vedtak eller en anbefaling tilpasset
-              deg.
+              <strong>Risiko:</strong> pensjon og sparing er YMYL-tema.
+              Historisk avkastning er ingen garanti; estimater kan avvike fra
+              dine faktiske rettigheter. Ingenting her er et vedtak eller en
+              anbefaling tilpasset deg.
             </li>
             <li>
               Affiliate erstatter ikke Nav, Norsk Pensjon eller autorisert
-              rådgiver.
+              rådgiver. Les alltid vilkår hos leverandøren før du handler.
             </li>
           </ul>
+          <p>
+            Det finnes <strong>ingen live partnerlenke</strong> på siden nå.
+            Når en Annonse-CTA eventuelt aktiveres, vil den følge merkingen
+            over.
+          </p>
         </Card>
 
         <Card title="Forholdet til den gratis kalkulatoren">

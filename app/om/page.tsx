@@ -119,19 +119,34 @@ export default function OmPage() {
             </div>
             <div className="space-y-3">
               <p className="text-slate-600 leading-relaxed">
-                <strong>Jonas Sætre</strong> — eier og utvikler av sjekkpensjon.no.
-                Jeg bygde siden for å gi et{" "}
-                <strong>gratis, uinnlogget</strong> anslag på pensjon med åpne
-                antagelser — uten BankID og uten å sende lønnstall til en server.
+                <strong>Jonas Sætre</strong> — eier og utvikler av sjekkpensjon.no,
+                en <strong>uavhengig pensjonskalkulator</strong> som gir{" "}
+                <strong>forenklede estimater</strong> uten innlogging. Formålet er
+                å gjøre pensjonsregler og usikkerhet lettere å forstå — med åpne
+                antagelser, uten BankID, og uten at lønnstall sendes til en server
+                for beregning.
               </p>
               <p className="text-slate-600 leading-relaxed">
                 Siden er <strong>uavhengig</strong>: ikke tilknyttet Nav, bank eller
                 forsikringsselskap. Jeg vedlikeholder kalkulatoren og guidene selv.
-                Det finnes ikke en stor redaksjon bak — bare én person som prøver å
-                forklare reglene ærlig.
+                Redaksjonell policy og annonseringsprinsipper er dokumentert på{" "}
+                <Link
+                  href="/redaksjon"
+                  className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+                >
+                  /redaksjon
+                </Link>{" "}
+                og{" "}
+                <Link
+                  href="/annonsering"
+                  className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+                >
+                  /annonsering
+                </Link>
+                .
               </p>
               <p className="text-slate-600 leading-relaxed">
-                <strong>Begrensninger jeg er ærlig om:</strong> dette er{" "}
+                <strong>Begrensninger:</strong> dette er{" "}
                 <strong>ikke</strong> personlig pensjonsrådgivning, ikke et Nav-vedtak,
                 og ikke godkjent av Nav eller et forsikringsselskap. Estimatene er
                 forenklinger. For personlige tall: Din pensjon hos Nav og Norsk Pensjon.
@@ -316,7 +331,7 @@ export default function OmPage() {
             .
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            contact@sjekkpensjon.no kommer når e-post på domenet er klar.
+            Bruk gjerne adressen over for feil, spørsmål eller forslag.
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Åpen kildekode / teknisk feedback på{" "}

@@ -29,6 +29,8 @@ export function Header() {
   const onOm = pathname === "/om" || pathname.startsWith("/om/");
   const onPersonvern =
     pathname === "/personvern" || pathname.startsWith("/personvern/");
+  const onRedaksjon =
+    pathname === "/redaksjon" || pathname.startsWith("/redaksjon/");
   const [menuOpen, setMenuOpen] = useState(false);
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -105,6 +107,13 @@ export function Header() {
             aria-current={onOm ? "page" : undefined}
           >
             Om
+          </Link>
+          <Link
+            href="/redaksjon"
+            className={navClass(onRedaksjon)}
+            aria-current={onRedaksjon ? "page" : undefined}
+          >
+            Redaksjon
           </Link>
           <Link
             href="/personvern"
@@ -186,6 +195,15 @@ export function Header() {
                 onClick={() => setMenuOpen(false)}
               >
                 Om
+              </Link>
+              <Link
+                href="/redaksjon"
+                role="menuitem"
+                className={menuItemClass(onRedaksjon)}
+                aria-current={onRedaksjon ? "page" : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                Redaksjon
               </Link>
               <Link
                 href="/personvern"

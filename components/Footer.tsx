@@ -11,11 +11,19 @@ export function Footer() {
         <p className="text-sm font-semibold tracking-wide">Viktig informasjon</p>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-300">
           Dette er en{" "}
-          <strong className="text-white">forenklet</strong> pensjonskalkulator for
+          <strong className="text-white">uavhengig pensjonskalkulator</strong> som
+          gir et <strong className="text-white">forenklet estimat</strong> til
           illustrasjon. Den erstatter ikke NAV, Norsk Pensjon, pensjonsleverandør
-          eller rådgiver. Alle beregninger skjer i nettleseren din — vi lagrer ikke
-          dine tall på server. Tallene er intervaller basert på antagelser, ikke
-          eksakte rettigheter.
+          eller rådgiver. Pensjonstall beregnes lokalt i nettleseren — vi lagrer
+          ikke dine tall på server. Vi måler anonymisert sidebruk via Analytics (
+          <Link
+            href="/personvern"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            personvern
+          </Link>
+          ). Tallene er intervaller basert på antagelser, ikke eksakte
+          rettigheter.
         </p>
         <p className="mt-3 text-sm text-slate-300">
           Satser sist kontrollert:{" "}
@@ -125,8 +133,8 @@ export function Footer() {
           </a>
         </div>
         <p className="mt-4 max-w-3xl text-xs leading-relaxed text-slate-400">
-          Uavhengig side drevet av Jonas Sætre — ikke tilknyttet NAV, bank eller
-          forsikringsselskap.
+          Uavhengig pensjonskalkulator drevet av Jonas Sætre — ikke tilknyttet
+          NAV, bank eller forsikringsselskap.
         </p>
       </div>
     </footer>

@@ -244,6 +244,7 @@ export function InputsPanel({
                     aria-describedby={
                       salaryError ? "annualSalary-error" : undefined
                     }
+                    placeholder="f.eks. 650 000"
                     onChange={(v) => onChange("annualSalary", v)}
                   />
                   <span
