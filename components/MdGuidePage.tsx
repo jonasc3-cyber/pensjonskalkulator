@@ -2,6 +2,8 @@ import Link from "next/link";
 import { GuideCtaLink } from "@/components/GuideCtaLink";
 import { GuideMarkdown } from "@/components/GuideMarkdown";
 import { JsonLd } from "@/components/JsonLd";
+import { formatDateNb } from "@/lib/format";
+import { getGuide } from "@/lib/guides";
 import {
   articleJsonLd,
   breadcrumbJsonLd,
@@ -23,6 +25,8 @@ export function MdGuidePage({
   faq?: readonly FaqItem[];
 }) {
   const { title, description, content } = loadGuideMarkdown(slug);
+  const guide = getGuide(slug);
+  const lastmod = guide?.lastmod;
   const url = `https://sjekkpensjon.no${path}`;
 
   return (
@@ -32,6 +36,8 @@ export function MdGuidePage({
           headline: h1,
           description: description || title,
           url,
+          dateModified: lastmod,
+          authorName: "Jonas Sætre",
         })}
       />
       <JsonLd
@@ -58,6 +64,23 @@ export function MdGuidePage({
         </Link>
       </p>
       <h1 className="mt-4 text-2xl font-bold text-primary sm:text-3xl">{h1}</h1>
+      <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm text-muted-foreground">
+        <span>
+          Av{" "}
+          <Link
+            href="/om#hvem"
+            className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+          >
+            Jonas Sætre
+          </Link>
+        </span>
+        {lastmod ? (
+          <span>
+            Sist oppdatert:{" "}
+            <time dateTime={lastmod}>{formatDateNb(lastmod)}</time>
+          </span>
+        ) : null}
+      </p>
       <GuideMarkdown markdown={content} />
     </article>
   );

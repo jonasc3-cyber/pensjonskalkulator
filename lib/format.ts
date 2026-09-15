@@ -60,3 +60,29 @@ export function formatChartSeriesValue(seriesKey: string, value: number): string
   }
   return formatNOK(value);
 }
+
+const MONTHS_NB = [
+  "januar",
+  "februar",
+  "mars",
+  "april",
+  "mai",
+  "juni",
+  "juli",
+  "august",
+  "september",
+  "oktober",
+  "november",
+  "desember",
+] as const;
+
+/** Format YYYY-MM-DD as «12. september 2026» (bokmål). */
+export function formatDateNb(isoDate: string): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(isoDate.trim());
+  if (!m) return isoDate;
+  const year = Number(m[1]);
+  const month = Number(m[2]);
+  const day = Number(m[3]);
+  if (month < 1 || month > 12 || day < 1 || day > 31) return isoDate;
+  return `${day}. ${MONTHS_NB[month - 1]} ${year}`;
+}

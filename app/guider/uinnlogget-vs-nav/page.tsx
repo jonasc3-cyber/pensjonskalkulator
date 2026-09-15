@@ -45,6 +45,8 @@ export default function GuideUinnloggetVsNavPage() {
           headline: 'Uinnlogget pensjonskalkulator vs Nav og Norsk Pensjon',
           description: 'Forskjellen på sjekkpensjon.no (uinnlogget anslag), Navs Din pensjon og Norsk Pensjon — og når du bør bruke hvilken.',
           url: "https://sjekkpensjon.no/guider/uinnlogget-vs-nav",
+          dateModified: "2026-09-12",
+          authorName: "Jonas Sætre",
         })}
       />
       <p className="text-sm text-muted-foreground">
@@ -66,6 +68,22 @@ export default function GuideUinnloggetVsNavPage() {
       <h1 className="mt-4 text-2xl font-bold text-primary sm:text-3xl">
         Uinnlogget pensjonskalkulator vs Nav og Norsk Pensjon
       </h1>
+
+      <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm text-muted-foreground">
+        <span>
+          Av{" "}
+          <Link
+            href="/om#hvem"
+            className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+          >
+            Jonas Sætre
+          </Link>
+        </span>
+        <span>
+          Sist oppdatert:{" "}
+          <time dateTime="2026-09-12">12. september 2026</time>
+        </span>
+      </p>
       <p className="mt-3 text-slate-600 leading-relaxed">
         Vil du bare ha et raskt bilde — eller trenger du offisielle tall? Her er
         forskjellen på et{" "}

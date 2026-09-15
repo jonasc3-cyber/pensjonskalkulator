@@ -35,6 +35,27 @@ export function Footer() {
             </span>
           ))}
         </p>
+
+        <div className="mt-5 rounded-xl border border-white/10 bg-white/5 px-4 py-4 sm:px-5">
+          <p className="text-sm font-semibold text-white">Tillit og kontakt</p>
+          <p className="mt-2 text-sm text-slate-300">
+            Eier: <strong className="text-white">Jonas Sætre</strong>
+          </p>
+          <p className="mt-1 text-sm text-slate-300">
+            E-post:{" "}
+            <a
+              href="mailto:sjekkpensjon@outlook.com"
+              className="underline underline-offset-2 hover:text-white"
+            >
+              sjekkpensjon@outlook.com
+            </a>
+          </p>
+          <p className="mt-3 max-w-3xl text-xs leading-relaxed text-slate-400">
+            Generell informasjon og forenklede estimater — ikke personlig
+            pensjonsrådgivning, og ikke tilknyttet Nav.
+          </p>
+        </div>
+
         <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-300">
           <Link
             href="/om"
@@ -43,22 +64,28 @@ export function Footer() {
             Om
           </Link>
           <Link
-            href="/om#hvem"
+            href="/redaksjon"
             className="underline underline-offset-2 hover:text-white"
           >
-            Hvem står bak
+            Redaksjon
           </Link>
           <Link
-            href="/guider"
+            href="/annonsering"
             className="underline underline-offset-2 hover:text-white"
           >
-            Guider
+            Annonsering
           </Link>
           <Link
             href="/personvern"
             className="underline underline-offset-2 hover:text-white"
           >
             Personvern
+          </Link>
+          <Link
+            href="/guider"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            Guider
           </Link>
           <Link
             href="/satser"
@@ -71,14 +98,6 @@ export function Footer() {
             className="underline underline-offset-2 hover:text-white"
           >
             Kontakt
-          </a>
-          <a
-            href="https://github.com/jonasc3-cyber/pensjonskalkulator/issues"
-            className="underline underline-offset-2 hover:text-white"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Tilbakemelding (GitHub)
           </a>
           <a
             href="https://www.nav.no/pensjon"
@@ -96,24 +115,18 @@ export function Footer() {
           >
             Norsk Pensjon
           </a>
+          <a
+            href="https://github.com/jonasc3-cyber/pensjonskalkulator"
+            className="text-xs text-slate-400 underline underline-offset-2 hover:text-white"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Kildekode
+          </a>
         </div>
         <p className="mt-4 max-w-3xl text-xs leading-relaxed text-slate-400">
           Uavhengig side drevet av Jonas Sætre — ikke tilknyttet NAV, bank eller
-          forsikringsselskap.{" "}
-          <Link
-            href="/om"
-            className="underline underline-offset-2 hover:text-white"
-          >
-            Om sjekkpensjon.no
-          </Link>
-          {" · "}
-          <a
-            href="mailto:sjekkpensjon@outlook.com"
-            className="underline underline-offset-2 hover:text-white"
-          >
-            sjekkpensjon@outlook.com
-          </a>
-          .
+          forsikringsselskap.
         </p>
         <p className="mt-3 text-xs text-slate-400">
           Foto:{" "}

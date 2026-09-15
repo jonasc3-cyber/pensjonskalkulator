@@ -11,7 +11,19 @@ const CORE: {
   priority: number;
 }[] = [
   { path: "/", lastmod: "2026-09-10", changeFrequency: "weekly", priority: 1 },
-  { path: "/om", lastmod: "2026-09-10", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/om", lastmod: "2026-09-15", changeFrequency: "monthly", priority: 0.6 },
+  {
+    path: "/redaksjon",
+    lastmod: "2026-09-15",
+    changeFrequency: "monthly",
+    priority: 0.5,
+  },
+  {
+    path: "/annonsering",
+    lastmod: "2026-09-15",
+    changeFrequency: "monthly",
+    priority: 0.5,
+  },
   {
     path: "/personvern",
     lastmod: "2026-09-10",

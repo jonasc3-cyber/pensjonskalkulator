@@ -47,6 +47,8 @@ export default function GuideHvorMyePage() {
           headline: 'Hva får jeg i pensjon?',
           description: 'Hva får jeg i pensjon fra folketrygd, tjenestepensjon, AFP og sparing? Enkel oversikt — og estimat uten BankID på sjekkpensjon.no.',
           url: "https://sjekkpensjon.no/guider/hvor-mye-far-jeg-i-pensjon",
+          dateModified: "2026-09-12",
+          authorName: "Jonas Sætre",
         })}
       />
       <p className="text-sm text-muted-foreground">
@@ -68,6 +70,22 @@ export default function GuideHvorMyePage() {
       <h1 className="mt-4 text-2xl font-bold text-primary sm:text-3xl">
         Hva får jeg i pensjon?
       </h1>
+
+      <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm text-muted-foreground">
+        <span>
+          Av{" "}
+          <Link
+            href="/om#hvem"
+            className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+          >
+            Jonas Sætre
+          </Link>
+        </span>
+        <span>
+          Sist oppdatert:{" "}
+          <time dateTime="2026-09-12">12. september 2026</time>
+        </span>
+      </p>
       <p className="mt-3 text-slate-600 leading-relaxed">
         Det finnes ikke ett fasitsvar. Pensjonen din er summen av flere kilder,
         og beløpet endrer seg med lønn, hvor lenge du jobber, og når du tar den

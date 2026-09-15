@@ -89,30 +89,56 @@ export default function OmPage() {
         og hvordan du tar kontakt.
       </p>
       <p className="mt-3 rounded-lg border border-border bg-muted/40 px-3 py-2 text-sm text-slate-600">
-        Uavhengig side — ikke tilknyttet NAV, bank eller forsikringsselskap. Tilbakemelding
-        også via{" "}
-        <a
-          href="https://github.com/jonasc3-cyber/pensjonskalkulator/issues"
+        Uavhengig side — ikke tilknyttet NAV, bank eller forsikringsselskap. Les også{" "}
+        <Link
+          href="/redaksjon"
           className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
-          target="_blank"
-          rel="noopener noreferrer"
         >
-          GitHub issues
-        </a>
+          redaksjonell policy
+        </Link>{" "}
+        og{" "}
+        <Link
+          href="/annonsering"
+          className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+        >
+          annonsering
+        </Link>
         .
       </p>
 
       <div className="mt-8 space-y-5">
         <OmCard id="hvem" title="Hvem står bak">
-          <p className="text-slate-600 leading-relaxed">
-            <strong>Jonas Sætre</strong> — eier og utvikler av sjekkpensjon.no. Jeg
-            bygger og vedlikeholder kalkulatoren og forklaringene på siden.
-          </p>
-          <p className="text-slate-600 leading-relaxed">
-            Dette er <strong>ikke</strong> personlig pensjonsrådgivning. Jeg gir ikke
-            råd om din individuelle pensjon, og siden er ikke godkjent av NAV eller
-            et forsikringsselskap.
-          </p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+            <div
+              className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl border border-border bg-muted text-center"
+              aria-hidden
+            >
+              <span className="text-sm font-semibold tracking-wide text-muted-foreground">
+                JS
+              </span>
+            </div>
+            <div className="space-y-3">
+              <p className="text-slate-600 leading-relaxed">
+                <strong>Jonas Sætre</strong> — eier og utvikler av sjekkpensjon.no.
+                Jeg bygde siden for å gi et{" "}
+                <strong>gratis, uinnlogget</strong> anslag på pensjon med åpne
+                antagelser — uten BankID og uten å sende lønnstall til en server.
+              </p>
+              <p className="text-slate-600 leading-relaxed">
+                Siden er <strong>uavhengig</strong>: ikke tilknyttet Nav, bank eller
+                forsikringsselskap. Jeg vedlikeholder kalkulatoren og guidene selv.
+                Det finnes ikke en stor redaksjon bak — bare én person som prøver å
+                forklare reglene ærlig.
+              </p>
+              <p className="text-slate-600 leading-relaxed">
+                <strong>Begrensninger jeg er ærlig om:</strong> dette er{" "}
+                <strong>ikke</strong> personlig pensjonsrådgivning, ikke et Nav-vedtak,
+                og ikke godkjent av Nav eller et forsikringsselskap. Estimatene er
+                forenklinger. For personlige tall: Din pensjon hos Nav og Norsk Pensjon.
+              </p>
+              <p className="text-xs text-muted-foreground">Foto kommer.</p>
+            </div>
+          </div>
         </OmCard>
 
         <OmCard id="hva" title="Hva er sjekkpensjon.no">
@@ -279,7 +305,8 @@ export default function OmPage() {
 
         <OmCard id="kontakt" title="Kontakt">
           <p className="text-slate-600 leading-relaxed">
-            Spørsmål, feil eller forslag:{" "}
+            Spørsmål, feil eller forslag — send{" "}
+            <strong>e-post</strong> til{" "}
             <a
               href="mailto:sjekkpensjon@outlook.com"
               className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
@@ -287,6 +314,36 @@ export default function OmPage() {
               sjekkpensjon@outlook.com
             </a>
             .
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            contact@sjekkpensjon.no kommer når e-post på domenet er klar.
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Åpen kildekode / teknisk feedback på{" "}
+            <a
+              href="https://github.com/jonasc3-cyber/pensjonskalkulator"
+              className="underline underline-offset-2 hover:text-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+            .
+          </p>
+          <p className="text-sm text-slate-600 leading-relaxed">
+            <Link
+              href="/redaksjon"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              Redaksjonell policy
+            </Link>
+            {" · "}
+            <Link
+              href="/annonsering"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              Annonsering
+            </Link>
           </p>
         </OmCard>
 

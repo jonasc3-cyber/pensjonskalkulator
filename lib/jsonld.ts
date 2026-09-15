@@ -7,6 +7,11 @@ export function organizationJsonLd() {
     url: "https://sjekkpensjon.no",
     logo: "https://sjekkpensjon.no/icon.png",
     email: "sjekkpensjon@outlook.com",
+    founder: {
+      "@type": "Person",
+      name: "Jonas Sætre",
+      url: "https://sjekkpensjon.no/om",
+    },
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
@@ -28,6 +33,11 @@ export function webApplicationJsonLd() {
         url: "https://sjekkpensjon.no",
         logo: "https://sjekkpensjon.no/icon.png",
         email: "sjekkpensjon@outlook.com",
+        founder: {
+          "@type": "Person",
+          name: "Jonas Sætre",
+          url: "https://sjekkpensjon.no/om",
+        },
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "customer support",
@@ -62,6 +72,8 @@ export function articleJsonLd(opts: {
   headline: string;
   description: string;
   url: string;
+  dateModified?: string;
+  authorName?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -71,6 +83,14 @@ export function articleJsonLd(opts: {
     url: opts.url,
     mainEntityOfPage: opts.url,
     inLanguage: "nb-NO",
+    ...(opts.dateModified
+      ? { dateModified: opts.dateModified, datePublished: opts.dateModified }
+      : {}),
+    author: {
+      "@type": "Person",
+      name: opts.authorName ?? "Jonas Sætre",
+      url: "https://sjekkpensjon.no/om",
+    },
     isPartOf: {
       "@type": "WebSite",
       name: "Sjekkpensjon",
