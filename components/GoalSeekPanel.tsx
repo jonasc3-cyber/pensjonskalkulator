@@ -12,6 +12,7 @@ import {
 import { formatNOK, formatRange } from "@/lib/format";
 import { Field, selectClass } from "./Field";
 import { CurrencyInput } from "./CurrencyInput";
+import { NeedEstimatePanel } from "./NeedEstimatePanel";
 import { track } from "@/lib/ga";
 
 type Props = {
@@ -43,6 +44,15 @@ export function GoalSeekPanel({ values, result }: Props) {
   function onAccountChange(id: string) {
     setAccountId(id);
     track("spar_for_mal_use", { source: "account" });
+  }
+
+  /** Prefill from «Hva trenger du» — mark as user edit so salary auto-default does not overwrite. */
+  function applyTargetFromNeed(monthly: number) {
+    if (!(monthly > 0)) return;
+    setTargetMonthly(monthly);
+    // Keep autoDefaultRef on the salary-based value (do not set it to monthly),
+    // so current !== autoDefaultRef and salary changes leave the prefill alone.
+    track("spar_for_mal_use", { source: "need_estimate" });
   }
 
   // Smart default: ~75 % av årslønn / 12 når feltet er tomt eller fortsatt på forrige auto-verdi
@@ -83,6 +93,8 @@ export function GoalSeekPanel({ values, result }: Props) {
   const goalAccountIsIps = selectedGoalAccount?.kind === "ips";
 
   return (
+    <div className="space-y-6">
+    <NeedEstimatePanel onApplyTarget={applyTargetFromNeed} />
     <section
       id="spar-for-mal"
       className="scroll-mt-4 overflow-x-hidden rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
@@ -347,5 +359,6 @@ export function GoalSeekPanel({ values, result }: Props) {
         .
       </p>
     </section>
+    </div>
   );
 }
