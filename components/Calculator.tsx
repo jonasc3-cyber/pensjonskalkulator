@@ -18,7 +18,6 @@ import { ResultsPanel } from "./ResultsPanel";
 import { GoalSeekPanel } from "./GoalSeekPanel";
 import { CohortWarning } from "./CohortWarning";
 import { StickyMiniResult } from "./StickyMiniResult";
-import { SectionDivider } from "./SectionDivider";
 import { track } from "@/lib/ga";
 
 const PERSIST_DEBOUNCE_MS = 250;
@@ -166,7 +165,6 @@ export function Calculator() {
         onOpenChange={setAssumptionsOpen}
       />
       <CohortWarning birthYear={values.birthYear} alert={false} />
-      <SectionDivider src="/divider-home.webp" alt="Hjem og trygghet – illustrasjonsbilde" />
       {result ? (
         <>
           <ResultsPanel

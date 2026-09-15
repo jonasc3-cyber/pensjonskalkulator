@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Banner } from "@/components/Banner";
@@ -15,6 +15,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
 });
 
 const siteTitle =
@@ -55,7 +61,7 @@ export const metadata: Metadata = {
     images: ["/og.png"],
   },
   icons: {
-    icon: [{ url: "/pk-mark.svg", type: "image/svg+xml" }, { url: "/icon.png" }],
+    icon: [{ url: "/mark-shield.svg", type: "image/svg+xml" }, { url: "/icon.png" }],
     apple: [{ url: "/apple-touch-icon.png" }],
   },
   ...(googleVerification || bingVerification
@@ -85,7 +91,7 @@ export default function RootLayout({
   return (
     <html lang="nb">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} flex min-h-screen flex-col antialiased`}
       >
         <Banner />
         <Header />

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
@@ -8,9 +9,9 @@ function navClass(active: boolean): string {
   const base =
     "rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors sm:px-3";
   if (active) {
-    return `${base} bg-white/15 text-white`;
+    return `${base} bg-primary-soft text-primary`;
   }
-  return `${base} text-white/85 hover:bg-white/10 hover:text-white`;
+  return `${base} text-primary/80 hover:bg-primary-soft/70 hover:text-primary`;
 }
 
 function menuItemClass(active: boolean): string {
@@ -20,28 +21,6 @@ function menuItemClass(active: boolean): string {
     return `${base} bg-primary-soft text-primary`;
   }
   return `${base} text-slate-700 hover:bg-muted`;
-}
-
-function CheckMarkIcon() {
-  return (
-    <span
-      className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[#2563eb] sm:h-8 sm:w-8"
-      aria-hidden
-    >
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="white"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M5 13l4 4L19 7" />
-      </svg>
-    </span>
-  );
 }
 
 export function Header() {
@@ -88,17 +67,22 @@ export function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-primary shadow-sm">
+    <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-2 px-4 sm:h-16 sm:gap-4 sm:px-6">
         <Link
           href="/"
-          className="group flex min-w-0 items-center gap-2 sm:gap-2.5"
+          className="group flex min-w-0 items-center"
           aria-label="sjekkpensjon.no — forsiden"
         >
-          <CheckMarkIcon />
-          <span className="truncate text-sm font-semibold tracking-tight text-white sm:text-base">
-            sjekkpensjon.no
-          </span>
+          <Image
+            src="/wordmark-sjekkpensjon.svg"
+            alt="sjekkpensjon.no"
+            width={200}
+            height={27}
+            priority
+            unoptimized
+            className="h-7 w-auto sm:h-8"
+          />
         </Link>
 
         <nav
@@ -110,7 +94,10 @@ export function Header() {
             className={navClass(onGuider)}
             aria-current={onGuider ? "page" : undefined}
           >
-            Slik fungerer det
+            Guider
+          </Link>
+          <Link href="/#kalkulator" className={navClass(false)}>
+            Kalkulator
           </Link>
           <Link
             href="/om"
@@ -132,7 +119,7 @@ export function Header() {
           <button
             ref={buttonRef}
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/15"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-primary transition-colors hover:bg-primary-soft"
             aria-label={menuOpen ? "Lukk meny" : "Åpne meny"}
             aria-expanded={menuOpen}
             aria-controls={menuId}
@@ -181,7 +168,15 @@ export function Header() {
                 aria-current={onGuider ? "page" : undefined}
                 onClick={() => setMenuOpen(false)}
               >
-                Slik fungerer det
+                Guider
+              </Link>
+              <Link
+                href="/#kalkulator"
+                role="menuitem"
+                className={menuItemClass(false)}
+                onClick={() => setMenuOpen(false)}
+              >
+                Kalkulator
               </Link>
               <Link
                 href="/om"

@@ -128,17 +128,6 @@ export function Footer() {
           Uavhengig side drevet av Jonas Sætre — ikke tilknyttet NAV, bank eller
           forsikringsselskap.
         </p>
-        <p className="mt-3 text-xs text-slate-400">
-          Foto:{" "}
-          <a
-            href="https://unsplash.com/photos/ouXNRL9DW8E"
-            className="underline underline-offset-2 hover:text-white"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Unsplash
-          </a>
-        </p>
       </div>
     </footer>
   );

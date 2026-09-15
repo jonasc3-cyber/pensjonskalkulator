@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="Abstrakt brand-grafikk">
+  <title>sjekkpensjon.no brand graphic</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F7F9FB"/>
+      <stop offset="55%" stop-color="#EEF2F6"/>
+      <stop offset="100%" stop-color="#E6EEF0"/>
+    </linearGradient>
+    <linearGradient id="waveNavy" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0B2A4A" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="#1E4A73" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="waveSage" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4F7A68" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#6B9A86" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="waveSoft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8C4B8" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#4F7A68" stop-opacity="0.25"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <!-- soft left negative space for copy -->
+  <path fill="url(#waveSoft)" d="M420 540C500 420 560 360 640 300C760 210 860 180 960 140V540H420Z"/>
+  <path fill="url(#waveSage)" d="M380 540C470 460 540 400 620 360C740 300 860 280 960 250V540H380Z"/>
+  <path fill="url(#waveNavy)" d="M340 540C450 500 560 470 680 450C800 430 900 420 960 410V540H340Z"/>
+  <!-- rising interval line -->
+  <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+    points="480,390 560,360 620,310 700,280 780,230 860,170 930,120"/>
+  <g fill="#FFFFFF">
+    <circle cx="480" cy="390" r="5"/><circle cx="560" cy="360" r="5"/><circle cx="620" cy="310" r="5"/>
+    <circle cx="700" cy="280" r="5"/><circle cx="780" cy="230" r="5"/><circle cx="860" cy="170" r="5"/>
+    <circle cx="930" cy="120" r="5"/>
+  </g>
+  <g stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1">
+    <line x1="480" y1="390" x2="480" y2="500"/><line x1="560" y1="360" x2="560" y2="500"/>
+    <line x1="620" y1="310" x2="620" y2="500"/><line x1="700" y1="280" x2="700" y2="500"/>
+    <line x1="780" y1="230" x2="780" y2="500"/><line x1="860" y1="170" x2="860" y2="500"/>
+  </g>
+</svg>

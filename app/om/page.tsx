@@ -516,21 +516,6 @@ export default function OmPage() {
             </p>
           </div>
 
-          <div className="space-y-3">
-            <SubHeading>Bilder</SubHeading>
-            <p className="text-slate-600 leading-relaxed text-sm">
-              Foto:{" "}
-              <a
-                className="underline underline-offset-2 hover:text-primary"
-                href="https://unsplash.com/photos/ouXNRL9DW8E"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Unsplash
-              </a>{" "}
-              (ouXNRL9DW8E).
-            </p>
-          </div>
         </OmCard>
       </div>
     </div>

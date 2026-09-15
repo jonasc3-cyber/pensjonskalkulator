@@ -262,7 +262,7 @@ function stripForSchema(q: string): string {
 export function FaqSection() {
   return (
     <section
-      className="mt-10 border-t border-border pt-8 sm:mt-12 sm:pt-10"
+      className="border-t border-border pt-8 sm:pt-10"
       aria-labelledby="faq-heading"
     >
       <script

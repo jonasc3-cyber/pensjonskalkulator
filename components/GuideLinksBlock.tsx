@@ -47,14 +47,14 @@ const GUIDES = [
 export function GuideLinksBlock() {
   return (
     <section
-      className="mt-10 border-t border-border pt-8 sm:mt-12 sm:pt-10"
+      className="border-t border-border pt-8 sm:pt-10"
       aria-labelledby="guides-heading"
     >
       <h2
         id="guides-heading"
         className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl"
       >
-        Populære guider
+        Flere guider
       </h2>
       <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
         Korte forklaringer som peker tilbake til kalkulatoren — uten innlogging.

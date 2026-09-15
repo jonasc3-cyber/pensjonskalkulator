@@ -7,7 +7,7 @@ import Link from "next/link";
 export function NorskPensjonClarification() {
   return (
     <aside
-      className="mt-8 rounded-xl border border-border bg-card p-4 shadow-sm sm:p-5"
+      className="rounded-xl border border-border bg-card p-4 shadow-sm sm:p-5"
       aria-labelledby="vs-norsk-pensjon-heading"
     >
       <h2
