@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const title = "Annonsering og affiliate | sjekkpensjon.no";
 const description =
-  "Ærlig informasjon om annonsering og affiliate på sjekkpensjon.no: ingen aktive affiliate-lenker i dag. Hvordan reklame merkes hvis den kommer.";
+  "Ærlig informasjon om annonsering og affiliate på sjekkpensjon.no: live Saxo-affiliate via Adtraction, merket Annonse. Hvordan reklame merkes.";
 
 export const metadata: Metadata = {
   title,
@@ -62,35 +62,41 @@ export default function AnnonseringPage() {
         Annonsering og affiliate
       </h1>
       <p className="mt-3 text-slate-600 leading-relaxed">
-        Åpenhet om hvordan siden finansieres — og hva som gjelder hvis
-        annonsering eller affiliate kommer senere.
+        Åpenhet om hvordan siden finansieres — og hvordan betalt eller
+        provisjonsbasert innhold merkes.
       </p>
 
       <div className="mt-8 space-y-5">
         <Card title="Status i dag">
           <p>
-            sjekkpensjon.no har <strong>ingen aktive affiliate-lenker</strong>{" "}
-            og ingen betalte produktplasseringer i kalkulatoren eller guidene
-            akkurat nå. Kalkulatoren er gratis å bruke.
+            sjekkpensjon.no har en{" "}
+            <strong>live affiliate-CTA for Saxo Bank (Norge)</strong> via
+            Adtraction. Den er merket tydelig med <strong>«Annonse»</strong> og
+            vises som en native kortplassering etter beregningsresultater og etter
+            «Spar for mål» — ikke som skillebånd eller skjult banner.
           </p>
           <p>
-            Siden er et uavhengig prosjekt. Eventuell fremtidig finansiering
-            skal ikke endre at estimatene er forenklinger og at innholdet ikke
-            er personlig rådgivning.
+            Hvis du klikker og åpner konto, kan vi motta provisjon. Det påvirker
+            ikke pensjonsestimatene, som fortsatt beregnes lokalt i nettleseren.
+            Kalkulatoren er gratis å bruke.
+          </p>
+          <p>
+            Siden er et uavhengig prosjekt. Affiliate erstatter ikke at
+            estimatene er forenklinger, og at innholdet ikke er personlig
+            rådgivning.
           </p>
         </Card>
 
-        <Card title="Hvis affiliate eller annonser kommer">
-          <p>Da gjelder minst følgende:</p>
+        <Card title="Slik merkes Annonse og affiliate">
+          <p>Minst følgende gjelder:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>
               Betalt eller provisjonsbasert innhold merkes tydelig med{" "}
-              <strong>«Annonse»</strong> (eller tilsvarende) — også CTA-knapper
-              og partnerlenker.
+              <strong>«Annonse»</strong> — også CTA-knapper og partnerlenker.
             </li>
             <li>
-              Vi gir <strong>ikke</strong> personlig råd om hvilken bank,
-              fond eller pensjonsleverandør du bør velge.
+              Vi gir <strong>ikke</strong> personlig råd om hvilken bank, fond
+              eller pensjonsleverandør du bør velge.
             </li>
             <li>
               <strong>Risiko:</strong> pensjon og sparing er YMYL-tema.
@@ -104,9 +110,9 @@ export default function AnnonseringPage() {
             </li>
           </ul>
           <p>
-            Det finnes <strong>ingen live partnerlenke</strong> på siden nå.
-            Når en Annonse-CTA eventuelt aktiveres, vil den følge merkingen
-            over.
+            Saxo-lenken går via Adtraction-sporing. Vi overdriver ikke
+            avkastning, og vi markedsfører ikke crypto, CFD eller FX i denne
+            CTA-en.
           </p>
         </Card>
 
@@ -114,9 +120,8 @@ export default function AnnonseringPage() {
           <p>
             Kalkulatoren skal forbli et{" "}
             <strong>gratis, uinnlogget verktøy</strong> som kjører i
-            nettleseren din. Annonsering — hvis den kommer — skal ikke kreve
-            betaling for å bruke estimatet, og skal ikke skjule begrensningene i
-            modellen.
+            nettleseren din. Annonsering skal ikke kreve betaling for å bruke
+            estimatet, og skal ikke skjule begrensningene i modellen.
           </p>
           <p>
             Målet er fortsatt ærlig informasjon: intervallanslag, åpne
