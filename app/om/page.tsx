@@ -19,7 +19,7 @@ import { organizationJsonLd } from "@/lib/jsonld";
 
 const omTitle = "Om sjekkpensjon.no | Hvem, metode og begrensninger";
 const omDescription =
-  "Jonas Sætre eier og utvikler sjekkpensjon.no — en gratis uinnlogget pensjonskalkulator. Metode, kilder, begrensninger, kontakt og personvern.";
+  "Jonas Sætre (privatperson) eier og utvikler sjekkpensjon.no — en gratis uinnlogget pensjonskalkulator. Metode, kilder, begrensninger, kontakt og personvern.";
 
 export const metadata: Metadata = {
   title: omTitle,
@@ -119,15 +119,18 @@ export default function OmPage() {
             </div>
             <div className="space-y-3">
               <p className="text-slate-600 leading-relaxed">
-                <strong>Jonas Sætre</strong> — eier og utvikler av sjekkpensjon.no,
-                en <strong>uavhengig pensjonskalkulator</strong> som gir{" "}
+                <strong>Jonas Sætre</strong> — <strong>privatperson</strong> og{" "}
+                <strong>uavhengig eier</strong>/utvikler av sjekkpensjon.no, en{" "}
+                <strong>uavhengig pensjonskalkulator</strong> som gir{" "}
                 <strong>forenklede estimater</strong> uten innlogging. Formålet er
                 å gjøre pensjonsregler og usikkerhet lettere å forstå — med åpne
                 antagelser, uten BankID, og uten at lønnstall sendes til en server
                 for beregning.
               </p>
               <p className="text-slate-600 leading-relaxed">
-                Siden er <strong>uavhengig</strong>: ikke tilknyttet Nav, bank eller
+                Siden drives som et <strong>personlig prosjekt</strong> (ikke et
+                selskap med organisasjonsnummer). Den er{" "}
+                <strong>uavhengig</strong>: ikke tilknyttet Nav, bank eller
                 forsikringsselskap. Jeg vedlikeholder kalkulatoren og guidene selv.
                 Redaksjonell policy og annonseringsprinsipper er dokumentert på{" "}
                 <Link
@@ -358,6 +361,20 @@ export default function OmPage() {
               className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
             >
               Annonsering
+            </Link>
+            {" · "}
+            <Link
+              href="/personvern"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              Personvern
+            </Link>
+            {" · "}
+            <Link
+              href="/vilkar"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              Vilkår
             </Link>
           </p>
         </OmCard>

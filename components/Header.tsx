@@ -29,6 +29,7 @@ export function Header() {
   const onOm = pathname === "/om" || pathname.startsWith("/om/");
   const onPersonvern =
     pathname === "/personvern" || pathname.startsWith("/personvern/");
+  const onVilkar = pathname === "/vilkar" || pathname.startsWith("/vilkar/");
   const onRedaksjon =
     pathname === "/redaksjon" || pathname.startsWith("/redaksjon/");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -122,6 +123,13 @@ export function Header() {
           >
             Personvern
           </Link>
+          <Link
+            href="/vilkar"
+            className={navClass(onVilkar)}
+            aria-current={onVilkar ? "page" : undefined}
+          >
+            Vilkår
+          </Link>
         </nav>
 
         <div className="relative min-[480px]:hidden">
@@ -213,6 +221,15 @@ export function Header() {
                 onClick={() => setMenuOpen(false)}
               >
                 Personvern
+              </Link>
+              <Link
+                href="/vilkar"
+                role="menuitem"
+                className={menuItemClass(onVilkar)}
+                aria-current={onVilkar ? "page" : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                Vilkår
               </Link>
             </div>
           ) : null}

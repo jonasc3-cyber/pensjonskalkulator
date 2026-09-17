@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { LegalMdPage } from "@/components/LegalMdPage";
 import { loadContentMarkdown } from "@/lib/loadGuide";
 
-const path = "/personvern";
-const { title, description } = loadContentMarkdown("personvern");
+const path = "/vilkar";
+const { title, description } = loadContentMarkdown("vilkar");
 
 export const metadata: Metadata = {
   title,
@@ -22,15 +22,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PersonvernPage() {
+export default function VilkarPage() {
   return (
     <LegalMdPage
-      slug="personvern"
+      slug="vilkar"
       path={path}
-      h1="Personvern"
-      headingIds={{ "Cookies, cookie-banner og GA4": "cookies" }}
+      h1="Vilkår for bruk"
       related={[
-        { href: "/vilkar", label: "Vilkår" },
+        { href: "/personvern", label: "Personvern" },
         { href: "/om", label: "Om" },
       ]}
     />

@@ -48,10 +48,10 @@ export function Footer() {
         <div className="mt-5 rounded-xl border border-white/10 bg-white/5 px-4 py-4 sm:px-5">
           <p className="text-sm font-semibold text-white">Tillit og kontakt</p>
           <p className="mt-2 text-sm text-slate-300">
-            Eier: <strong className="text-white">Jonas Sætre</strong>
-          </p>
-          <p className="mt-1 text-sm text-slate-300">
-            E-post:{" "}
+            <strong className="text-white">sjekkpensjon.no</strong>
+            {" · "}
+            <strong className="text-white">Jonas Sætre</strong>
+            {" · "}
             <a
               href="mailto:sjekkpensjon@outlook.com"
               className="underline underline-offset-2 hover:text-white"
@@ -60,8 +60,8 @@ export function Footer() {
             </a>
           </p>
           <p className="mt-3 max-w-3xl text-xs leading-relaxed text-slate-400">
-            Generell informasjon og forenklede estimater — ikke personlig
-            pensjonsrådgivning, og ikke tilknyttet Nav.
+            Privatperson / uavhengig eier — generell informasjon og forenklede
+            estimater, ikke personlig pensjonsrådgivning, og ikke tilknyttet Nav.
           </p>
         </div>
 
@@ -89,6 +89,12 @@ export function Footer() {
             className="underline underline-offset-2 hover:text-white"
           >
             Personvern
+          </Link>
+          <Link
+            href="/vilkar"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            Vilkår
           </Link>
           <CookieSettingsLink className="underline underline-offset-2 hover:text-white" />
           <Link
