@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
-import { articleJsonLd } from "@/lib/jsonld";
+import { articleJsonLd, breadcrumbJsonLd } from "@/lib/jsonld";
 
 const guideTitle = "Uinnlogget pensjonskalkulator vs Nav og Norsk Pensjon";
 const guideDescription =
@@ -47,6 +47,12 @@ export default function GuideUinnloggetVsNavPage() {
           url: "https://sjekkpensjon.no/guider/uinnlogget-vs-nav",
           dateModified: "2026-09-12",
           authorName: "Jonas Sætre",
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd({
+          name: 'Uinnlogget pensjonskalkulator vs Nav og Norsk Pensjon',
+          path: '/guider/uinnlogget-vs-nav',
         })}
       />
       <p className="text-sm text-muted-foreground">

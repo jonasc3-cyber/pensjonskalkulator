@@ -255,6 +255,10 @@ function stripForSchema(q: string): string {
       "Nei. sjekkpensjon.no er ikke Norsk Pensjon. Norsk Pensjon samler private pensjonsavtaler (ofte med innlogging). Vi gir et uinnlogget estimat basert på tallene du oppgir.",
     "Kan jeg jobbe ved siden av pensjonen?":
       "For alderspensjon fra folketrygden kan du normalt jobbe så mye du vil uten at pensjonen avkortes. AFP privat og skatt har egne regler.",
+    "Hva er «Spar for mål»?":
+      "Du oppgir ønsket pensjon per måned, så regner vi ut hvor mye du må spare for å lukke gapet mot folketrygd, tjenestepensjon, AFP og øvrig sparing.",
+    "Kan jeg stole på satser og regler?":
+      "Vi bruker offisielle satser (blant annet G) og viser når de sist ble kontrollert. Modellen er forenklet — blant annet AFP og garantipensjon — så resultatet er veiledende.",
   };
   return plain[q] ?? "";
 }

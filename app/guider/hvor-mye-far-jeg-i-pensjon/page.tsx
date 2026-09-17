@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
-import { articleJsonLd } from "@/lib/jsonld";
+import { articleJsonLd, breadcrumbJsonLd } from "@/lib/jsonld";
 import { G_NOK } from "@/lib/constants";
 import { formatNOK } from "@/lib/format";
 
@@ -49,6 +49,12 @@ export default function GuideHvorMyePage() {
           url: "https://sjekkpensjon.no/guider/hvor-mye-far-jeg-i-pensjon",
           dateModified: "2026-09-12",
           authorName: "Jonas Sætre",
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd({
+          name: 'Hva får jeg i pensjon?',
+          path: '/guider/hvor-mye-far-jeg-i-pensjon',
         })}
       />
       <p className="text-sm text-muted-foreground">
