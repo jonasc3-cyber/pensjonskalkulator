@@ -69,7 +69,10 @@ export default function PersonvernPage() {
         </div>
       </section>
 
-      <section className="mt-5 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">
+      <section
+        id="cookies"
+        className="mt-5 scroll-mt-24 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
+      >
         <h2 className="text-lg font-semibold text-primary">
           Analyse / cookies
         </h2>
@@ -92,6 +95,12 @@ export default function PersonvernPage() {
             Vi bruker også <strong>Vercel Analytics</strong> for anonyme
             sidevisninger (hostingplattformen). Det er sidebruk, ikke
             pensjonsdata.
+          </p>
+          <p>
+            Analyse-cookies lastes først etter at du trykker{" "}
+            <strong>Godta analyse</strong> i cookie-banneret. Velger du{" "}
+            <strong>Kun nødvendige</strong>, lastes ikke Google Analytics eller
+            Vercel Analytics. Du kan endre valget via «Cookies» i bunnteksten.
           </p>
           <p className="text-sm text-muted-foreground">
             Mer om Googles behandling:{" "}

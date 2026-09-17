@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CookieSettingsLink } from "@/components/CookieSettingsLink";
 import {
   CONSTANTS_SOURCE_LINKS,
   CONSTANTS_UPDATED_LABEL,
@@ -89,6 +90,7 @@ export function Footer() {
           >
             Personvern
           </Link>
+          <CookieSettingsLink className="underline underline-offset-2 hover:text-white" />
           <Link
             href="/guider"
             className="underline underline-offset-2 hover:text-white"
