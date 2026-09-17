@@ -108,54 +108,43 @@ export default function OmPage() {
 
       <div className="mt-8 space-y-5">
         <OmCard id="hvem" title="Hvem står bak">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
-            <div
-              className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl border border-border bg-muted text-center"
-              aria-hidden
-            >
-              <span className="text-sm font-semibold tracking-wide text-muted-foreground">
-                JS
-              </span>
-            </div>
-            <div className="space-y-3">
-              <p className="text-slate-600 leading-relaxed">
-                <strong>Jonas Sætre</strong> — <strong>privatperson</strong> og{" "}
-                <strong>uavhengig eier</strong>/utvikler av sjekkpensjon.no, en{" "}
-                <strong>uavhengig pensjonskalkulator</strong> som gir{" "}
-                <strong>forenklede estimater</strong> uten innlogging. Formålet er
-                å gjøre pensjonsregler og usikkerhet lettere å forstå — med åpne
-                antagelser, uten BankID, og uten at lønnstall sendes til en server
-                for beregning.
-              </p>
-              <p className="text-slate-600 leading-relaxed">
-                Siden drives som et <strong>personlig prosjekt</strong> (ikke et
-                selskap med organisasjonsnummer). Den er{" "}
-                <strong>uavhengig</strong>: ikke tilknyttet Nav, bank eller
-                forsikringsselskap. Jeg vedlikeholder kalkulatoren og guidene selv.
-                Redaksjonell policy og annonseringsprinsipper er dokumentert på{" "}
-                <Link
-                  href="/redaksjon"
-                  className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
-                >
-                  /redaksjon
-                </Link>{" "}
-                og{" "}
-                <Link
-                  href="/annonsering"
-                  className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
-                >
-                  /annonsering
-                </Link>
-                .
-              </p>
-              <p className="text-slate-600 leading-relaxed">
-                <strong>Begrensninger:</strong> dette er{" "}
-                <strong>ikke</strong> personlig pensjonsrådgivning, ikke et Nav-vedtak,
-                og ikke godkjent av Nav eller et forsikringsselskap. Estimatene er
-                forenklinger. For personlige tall: Din pensjon hos Nav og Norsk Pensjon.
-              </p>
-              <p className="text-xs text-muted-foreground">Foto kommer.</p>
-            </div>
+          <div className="space-y-3">
+            <p className="text-slate-600 leading-relaxed">
+              <strong>Jonas Sætre</strong> — <strong>privatperson</strong> og{" "}
+              <strong>uavhengig eier</strong>/utvikler av sjekkpensjon.no, en{" "}
+              <strong>uavhengig pensjonskalkulator</strong> som gir{" "}
+              <strong>forenklede estimater</strong> uten innlogging. Formålet er
+              å gjøre pensjonsregler og usikkerhet lettere å forstå — med åpne
+              antagelser, uten BankID, og uten at lønnstall sendes til en server
+              for beregning.
+            </p>
+            <p className="text-slate-600 leading-relaxed">
+              Siden drives som et <strong>personlig prosjekt</strong> (ikke et
+              selskap med organisasjonsnummer). Den er{" "}
+              <strong>uavhengig</strong>: ikke tilknyttet Nav, bank eller
+              forsikringsselskap. Jeg vedlikeholder kalkulatoren og guidene selv.
+              Redaksjonell policy og annonseringsprinsipper er dokumentert på{" "}
+              <Link
+                href="/redaksjon"
+                className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+              >
+                /redaksjon
+              </Link>{" "}
+              og{" "}
+              <Link
+                href="/annonsering"
+                className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+              >
+                /annonsering
+              </Link>
+              .
+            </p>
+            <p className="text-slate-600 leading-relaxed">
+              <strong>Begrensninger:</strong> dette er{" "}
+              <strong>ikke</strong> personlig pensjonsrådgivning, ikke et Nav-vedtak,
+              og ikke godkjent av Nav eller et forsikringsselskap. Estimatene er
+              forenklinger. For personlige tall: Din pensjon hos Nav og Norsk Pensjon.
+            </p>
           </div>
         </OmCard>
 
