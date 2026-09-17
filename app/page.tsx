@@ -18,7 +18,7 @@ export default function HomePage() {
         className="scroll-mt-20 border-t border-border/50"
         aria-labelledby="kalkulator-heading"
       >
-        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-14 lg:py-16">
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
           <div className="mb-8 max-w-2xl sm:mb-10">
             <h2
               id="kalkulator-heading"
