@@ -25,16 +25,47 @@ import { track } from "@/lib/ga";
 
 const PERSIST_DEBOUNCE_MS = 250;
 
+function focusElementById(id: string, opts?: { scroll?: boolean }) {
+  const el = document.getElementById(id);
+  if (!el) return false;
+  if (opts?.scroll !== false) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  if (!(el instanceof HTMLElement)) return false;
+  if (!el.hasAttribute("tabindex") && el.tabIndex < 0) {
+    el.setAttribute("tabindex", "-1");
+  }
+  el.focus({ preventScroll: true });
+  return document.activeElement === el || el.contains(document.activeElement);
+}
+
+/** Focus results region after step 3 mounts (retry until heading exists). */
 function focusResultsPanel() {
-  window.setTimeout(() => {
-    const target = document.getElementById("results");
-    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  let attempts = 0;
+  const run = () => {
+    attempts += 1;
     const heading = document.getElementById("results-heading");
-    if (heading) {
-      heading.setAttribute("tabindex", "-1");
-      heading.focus({ preventScroll: true });
+    const region = document.getElementById("results");
+    if (heading || region) {
+      region?.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (heading instanceof HTMLElement) {
+        heading.setAttribute("tabindex", "-1");
+        heading.focus({ preventScroll: true });
+      }
+      return;
     }
-  }, 80);
+    if (attempts < 12) {
+      window.setTimeout(run, 40);
+    }
+  };
+  window.setTimeout(run, 40);
+}
+
+function focusStepHeading(step: CalculatorStep) {
+  const id = step === 2 ? "step-2-heading" : step === 1 ? "step-1-heading" : "results-heading";
+  window.setTimeout(() => {
+    focusElementById(id);
+  }, 40);
 }
 
 export function Calculator() {
@@ -46,6 +77,10 @@ export function Calculator() {
   const [isExampleData, setIsExampleData] = useState(true);
   const skipNextPersist = useRef(false);
   const startedRef = useRef(false);
+  /** After Se resultat / Hopp til resultat — focus #results-heading once step 3 paints. */
+  const pendingFocusResults = useRef(false);
+  /** After Neste / Endre — focus step heading once that step paints (not AFP). */
+  const pendingFocusStep = useRef<1 | 2 | null>(null);
   const valuesRef = useRef(values);
   const isExampleDataRef = useRef(isExampleData);
   valuesRef.current = values;
@@ -114,6 +149,19 @@ export function Calculator() {
 
   const showFullResults = step === 3;
 
+  useEffect(() => {
+    if (step !== 3 || !pendingFocusResults.current) return;
+    pendingFocusResults.current = false;
+    focusResultsPanel();
+  }, [step, showFullResults, result]);
+
+  useEffect(() => {
+    const pending = pendingFocusStep.current;
+    if (!pending || step !== pending) return;
+    pendingFocusStep.current = null;
+    focusStepHeading(pending);
+  }, [step]);
+
   function onChange<K extends keyof CalculatorInputs>(
     key: K,
     value: CalculatorInputs[K],
@@ -143,6 +191,25 @@ export function Calculator() {
     skipNextPersist.current = true;
   }
 
+  function handleStepChange(next: CalculatorStep) {
+    if (next === 3) {
+      goToResults();
+      return;
+    }
+    pendingFocusResults.current = false;
+    if (next === 1 || next === 2) {
+      pendingFocusStep.current = next;
+    } else {
+      pendingFocusStep.current = null;
+    }
+    if (step === next && (next === 1 || next === 2)) {
+      pendingFocusStep.current = null;
+      focusStepHeading(next);
+      return;
+    }
+    setStep(next);
+  }
+
   function goToResults() {
     if (!isValidAnnualSalary(values.annualSalary)) {
       setStep(1);
@@ -151,8 +218,14 @@ export function Calculator() {
       }, 50);
       return;
     }
+    pendingFocusResults.current = true;
+    if (step === 3) {
+      // Already on results — effect may not re-run; focus immediately.
+      pendingFocusResults.current = false;
+      focusResultsPanel();
+      return;
+    }
     setStep(3);
-    focusResultsPanel();
   }
 
   function openPayoutSettings() {
@@ -189,7 +262,7 @@ export function Calculator() {
         assumptionsOpen={assumptionsOpen}
         isExampleData={isExampleData}
         onChange={onChange}
-        onStepChange={setStep}
+        onStepChange={handleStepChange}
         onGoToResults={goToResults}
         onToggleAssumptions={toggleAssumptions}
         onReset={onReset}
@@ -251,7 +324,7 @@ function SalaryInvalidResults({ onFixSalary }: { onFixSalary: () => void }) {
         data-testid="salary-invalid-results"
       >
         <div className="rounded-2xl border border-red-200 bg-red-50/60 p-4 shadow-sm sm:p-6">
-          <h2 id="results-heading" className="text-lg font-semibold text-primary">
+          <h2 id="results-heading" tabIndex={-1} className="text-lg font-semibold text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2">
             Estimert pensjon
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-red-800" role="alert">

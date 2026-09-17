@@ -74,7 +74,7 @@ export function ResultsPanel({
       aria-live="polite"
     >
       <div className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">
-        <h2 id="results-heading" className="text-lg font-semibold text-primary">
+        <h2 id="results-heading" tabIndex={-1} className="text-lg font-semibold text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2">
           Estimert pensjon ({unit})
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">

@@ -194,12 +194,9 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                     Flere detaljer
                   </summary>
                   <fieldset className="grid grid-cols-1 gap-4 border-t border-border p-4 sm:grid-cols-2 sm:gap-6">
-                    <legend className="sr-only">
-                      Flere detaljer for sparing {index + 1}
+                    <legend className="sm:col-span-2 mb-1 text-sm font-semibold text-primary">
+                      Tilleggsopplysninger for sparing {index + 1}
                     </legend>
-                    <p className="sm:col-span-2 text-sm font-semibold text-primary" aria-hidden>
-                      Tilleggsopplysninger
-                    </p>
                     <Field
                       id={`saving-label-${account.id}`}
                       label="Navn / etikett (valgfritt)"

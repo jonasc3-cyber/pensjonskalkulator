@@ -171,7 +171,13 @@ export function InputsPanel({
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start lg:gap-8">
         {step === 1 ? (
           <div data-testid="calculator-step-1">
-            <h3 className="text-base font-semibold text-primary">1. Om deg</h3>
+            <h3
+              id="step-1-heading"
+              className="scroll-mt-24 text-base font-semibold text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
+              tabIndex={-1}
+            >
+              1. Om deg
+            </h3>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5">
               <Field
                 id="birthYear"
@@ -312,7 +318,11 @@ export function InputsPanel({
             className="scroll-mt-24 space-y-4"
             data-testid="calculator-step-2"
           >
-            <h3 className="text-base font-semibold text-primary">
+            <h3
+              id="step-2-heading"
+              className="scroll-mt-24 text-base font-semibold text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
+              tabIndex={-1}
+            >
               2. Pensjon og sparing
             </h3>
             <p className="text-sm text-muted-foreground">
@@ -411,7 +421,11 @@ export function InputsPanel({
 
         {step === 3 ? (
           <div className="space-y-4" data-testid="calculator-step-3-summary">
-            <h3 className="text-base font-semibold text-primary">
+            <h3
+              id="step-3-heading"
+              className="scroll-mt-24 text-base font-semibold text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
+              tabIndex={-1}
+            >
               3. Resultat
             </h3>
             <p className="text-sm text-muted-foreground">
