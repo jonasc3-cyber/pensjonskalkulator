@@ -100,6 +100,12 @@ Mer om metoden: [Pensjonskalkulator uten innlogging](/guider/pensjonskalkulator-
 - **Skatt** — pensjon og lønn skattlegges ulikt; bruk Skatteetatens verktøy for konkrete tall
 - **Sivilstand og botid** — kan påvirke garantipensjon/minstenivå
 
+## Relaterte guider
+
+- [AFP privat](/guider/afp-privat) — vilkår og hvordan AFP henger sammen med tidlig uttak
+- [Hvor mye får jeg i pensjon?](/guider/hvor-mye-far-jeg-i-pensjon) — folketrygd, tjenestepensjon, AFP og sparing
+- [Delingstall](/guider/delingstall) — slik påvirker levealdersjustering årlig beløp
+
 ## Kort oppsummert
 
 - Du *kan* ofte starte fra **62** (vilkår), har rett rundt **67**, og kan vente lenger for høyere årlig beløp

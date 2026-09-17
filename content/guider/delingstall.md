@@ -95,7 +95,7 @@ På [sjekkpensjon.no](https://sjekkpensjon.no) får du **intervallanslag** for u
 
 Offisielle tall, søknad og ditt eksakte delingstall: [Din pensjon](https://www.nav.no/dinpensjon) og [Nav — alderspensjon](https://www.nav.no/alderspensjon).
 
-Relaterte guider: [Når ta ut pensjon?](/guider/nar-ta-ut-pensjon) · [Jobbe ved siden av pensjon](/guider/jobbe-ved-siden-av-pensjon) · [Hvor mye får jeg i pensjon?](/guider/hvor-mye-far-jeg-i-pensjon) · [Uinnlogget vs. Nav](/guider/uinnlogget-vs-nav)
+Relaterte guider: [Når ta ut pensjon?](/guider/nar-ta-ut-pensjon) · [AFP privat](/guider/afp-privat) · [Hvor mye får jeg i pensjon?](/guider/hvor-mye-far-jeg-i-pensjon) · [Jobbe ved siden av pensjon](/guider/jobbe-ved-siden-av-pensjon) · [Uinnlogget vs. Nav](/guider/uinnlogget-vs-nav)
 
 ## Viktig forbehold (YMYL)
 

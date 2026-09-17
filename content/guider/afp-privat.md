@@ -92,7 +92,7 @@ Les mer om modell og begrensninger på [Om kalkulatoren](https://sjekkpensjon.no
 4. Planlegg søknad i tide (tidligst fire måneder før uttak; ikke tilbake i tid)
 5. Husk samtidig alderspensjon hvis du er under 70
 
-Relatert: [Når ta ut pensjon?](/guider/nar-ta-ut-pensjon) om 62/67/senere og delingstall.
+Relaterte guider: [Når ta ut pensjon?](/guider/nar-ta-ut-pensjon) (62/67/senere og delingstall) · [Hvor mye får jeg i pensjon?](/guider/hvor-mye-far-jeg-i-pensjon) (helhetsbildet) · [Jobbe ved siden av pensjon](/guider/jobbe-ved-siden-av-pensjon).
 
 ## Kort oppsummert
 

@@ -10,7 +10,7 @@ const CORE: {
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
   priority: number;
 }[] = [
-  { path: "/", lastmod: "2026-09-10", changeFrequency: "weekly", priority: 1 },
+  { path: "/", lastmod: "2026-09-17", changeFrequency: "weekly", priority: 1 },
   { path: "/om", lastmod: "2026-09-17", changeFrequency: "monthly", priority: 0.6 },
   {
     path: "/redaksjon",
@@ -44,7 +44,7 @@ const CORE: {
   },
   {
     path: "/guider",
-    lastmod: "2026-09-12",
+    lastmod: "2026-09-17",
     changeFrequency: "weekly",
     priority: 0.7,
   },

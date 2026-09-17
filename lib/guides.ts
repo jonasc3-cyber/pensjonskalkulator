@@ -20,7 +20,7 @@ export const GUIDES: readonly GuideMeta[] = [
     blurb:
       "Tre pilarer + AFP, hvorfor tall spriker, og hvordan du får et raskt anslag uten BankID.",
     group: "start",
-    lastmod: "2026-09-12",
+    lastmod: "2026-09-17",
   },
   {
     slug: "pensjonskalkulator-uten-innlogging",
@@ -67,6 +67,17 @@ export const GUIDES: readonly GuideMeta[] = [
     lastmod: "2026-09-10",
   },
   {
+    slug: "afp-privat",
+    path: "/guider/afp-privat",
+    title: "AFP privat",
+    description:
+      "Hva er AFP i privat sektor? Vilkår (7 av 9 år), uttak fra 62, kronetillegg og hvordan AFP påvirker estimater i en pensjonskalkulator uten BankID.",
+    blurb:
+      "Vilkår (7 av 9 år), uttak fra 62, kronetillegg — og hvordan AFP påvirker estimatet.",
+    group: "forsta",
+    lastmod: "2026-09-17",
+  },
+  {
     slug: "nar-ta-ut-pensjon",
     path: "/guider/nar-ta-ut-pensjon",
     title: "Når ta ut pensjon?",
@@ -75,7 +86,7 @@ export const GUIDES: readonly GuideMeta[] = [
     blurb:
       "62, 67 eller senere: delingstall, levealdersjustering og hvordan du tester scenarier uten BankID.",
     group: "forsta",
-    lastmod: "2026-09-10",
+    lastmod: "2026-09-17",
   },
   {
     slug: "delingstall",
@@ -86,7 +97,7 @@ export const GUIDES: readonly GuideMeta[] = [
     blurb:
       "Beholdning ÷ delingstall, tidligere vs senere uttak, og levealdersjustering forklart enkelt.",
     group: "forsta",
-    lastmod: "2026-09-12",
+    lastmod: "2026-09-17",
   },
   {
     slug: "garantipensjon",
@@ -98,17 +109,6 @@ export const GUIDES: readonly GuideMeta[] = [
       "Ordinær vs høy sats, trygdetid og avkortning — bunnsikringen i ny alderspensjon.",
     group: "forsta",
     lastmod: "2026-09-12",
-  },
-  {
-    slug: "afp-privat",
-    path: "/guider/afp-privat",
-    title: "AFP privat",
-    description:
-      "Hva er AFP i privat sektor? Vilkår (7 av 9 år), uttak fra 62, kronetillegg og hvordan AFP påvirker estimater i en pensjonskalkulator uten BankID.",
-    blurb:
-      "Vilkår (7 av 9 år), uttak fra 62, kronetillegg — og hvordan AFP påvirker estimatet.",
-    group: "forsta",
-    lastmod: "2026-09-10",
   },
   {
     slug: "fripolise",

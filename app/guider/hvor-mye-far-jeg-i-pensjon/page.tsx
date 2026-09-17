@@ -47,7 +47,7 @@ export default function GuideHvorMyePage() {
           headline: 'Hva får jeg i pensjon?',
           description: 'Hva får jeg i pensjon fra folketrygd, tjenestepensjon, AFP og sparing? Enkel oversikt — og estimat uten BankID på sjekkpensjon.no.',
           url: "https://sjekkpensjon.no/guider/hvor-mye-far-jeg-i-pensjon",
-          dateModified: "2026-09-12",
+          dateModified: "2026-09-17",
           authorName: "Jonas Sætre",
         })}
       />
@@ -89,7 +89,7 @@ export default function GuideHvorMyePage() {
         </span>
         <span>
           Sist oppdatert:{" "}
-          <time dateTime="2026-09-12">12. september 2026</time>
+          <time dateTime="2026-09-17">17. september 2026</time>
         </span>
       </p>
       <p className="mt-3 text-slate-600 leading-relaxed">
@@ -124,7 +124,15 @@ export default function GuideHvorMyePage() {
         <p className="text-slate-600 leading-relaxed">
           Mange har også <strong className="text-foreground">AFP</strong>{" "}
           (avtalefestet pensjon) hvis arbeidsplassen er med i ordningen. AFP er
-          ikke «ekstra lønn for alle», men kan utgjøre mye hvis du kvalifiserer.
+          ikke «ekstra lønn for alle», men kan utgjøre mye hvis du kvalifiserer —
+          se{" "}
+          <Link
+            href="/guider/afp-privat"
+            className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+          >
+            AFP privat
+          </Link>
+          .
         </p>
       </section>
 
@@ -137,8 +145,21 @@ export default function GuideHvorMyePage() {
           tjener du opp pensjon etter ny modell: hvert år går en andel av
           inntekten (opp til et tak målt i G) inn i en pensjonsbeholdning. Når
           du tar ut pensjon, deles beholdningen på et{" "}
-          <strong className="text-foreground">delingstall</strong> som blant
-          annet henger sammen med forventet levealder.
+          <Link
+            href="/guider/delingstall"
+            className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+          >
+            delingstall
+          </Link>{" "}
+          som blant annet henger sammen med forventet levealder. Mer om
+          uttakstidspunkt:{" "}
+          <Link
+            href="/guider/nar-ta-ut-pensjon"
+            className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+          >
+            Når ta ut pensjon?
+          </Link>
+          .
         </p>
         <p className="text-slate-600 leading-relaxed">
           <strong className="text-foreground">Grunnbeløpet (G)</strong> fra 1.
@@ -266,6 +287,40 @@ export default function GuideHvorMyePage() {
           </li>
         </ul>
         <Cta>Estimer pensjonen din uten innlogging →</Cta>
+      </section>
+
+
+      <section className="mt-8 space-y-3">
+        <h2 className="text-lg font-semibold text-primary">Relaterte guider</h2>
+        <ul className="list-disc space-y-2 pl-5 text-slate-600 leading-relaxed">
+          <li>
+            <Link
+              href="/guider/afp-privat"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              AFP privat
+            </Link>{" "}
+            — vilkår, uttak fra 62 og hvordan AFP påvirker estimatet
+          </li>
+          <li>
+            <Link
+              href="/guider/nar-ta-ut-pensjon"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              Når ta ut pensjon?
+            </Link>{" "}
+            — 62, 67 eller senere, og delingstall
+          </li>
+          <li>
+            <Link
+              href="/guider/uinnlogget-vs-nav"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary-mid"
+            >
+              Uinnlogget vs Nav
+            </Link>{" "}
+            — når raskt anslag er nok
+          </li>
+        </ul>
       </section>
 
       <p className="mt-8 text-xs leading-relaxed text-muted-foreground">

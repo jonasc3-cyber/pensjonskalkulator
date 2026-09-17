@@ -2,6 +2,21 @@ import Link from "next/link";
 
 const GUIDES = [
   {
+    href: "/guider/hvor-mye-far-jeg-i-pensjon",
+    title: "Hva får jeg i pensjon?",
+    blurb: "Folketrygd, tjenestepensjon, AFP og sparing — kort oversikt.",
+  },
+  {
+    href: "/guider/afp-privat",
+    title: "AFP privat",
+    blurb: "Vilkår (7 av 9 år), uttak fra 62 og hvordan AFP påvirker estimatet.",
+  },
+  {
+    href: "/guider/ips-eller-ask",
+    title: "IPS eller ASK?",
+    blurb: "IPS-tak 25 000 kr i 2026, binding vs fleksibilitet.",
+  },
+  {
     href: "/guider/pensjonskalkulator-uten-innlogging",
     title: "Pensjonskalkulator uten BankID",
     blurb: "Hvorfor uinnlogget anslag, og hvordan vi skiller oss fra Nav og bankene.",
@@ -10,11 +25,6 @@ const GUIDES = [
     href: "/guider/uinnlogget-vs-nav",
     title: "Uinnlogget vs Nav og Norsk Pensjon",
     blurb: "Når raskt estimat er nok — og når du bør logge inn et annet sted.",
-  },
-  {
-    href: "/guider/hvor-mye-far-jeg-i-pensjon",
-    title: "Hva får jeg i pensjon?",
-    blurb: "Folketrygd, tjenestepensjon, AFP og sparing — kort oversikt.",
   },
   {
     href: "/guider/nar-ta-ut-pensjon",
@@ -35,11 +45,6 @@ const GUIDES = [
     href: "/guider/pensjonskapitalbevis",
     title: "Pensjonskapitalbevis",
     blurb: "PKB vs fripolise, Norsk Pensjon, og hvordan du tar saldoen med i estimatet.",
-  },
-  {
-    href: "/guider/jobbe-ved-siden-av-pensjon",
-    title: "Jobbe ved siden av pensjon",
-    blurb: "Alderspensjon avkortes normalt ikke av jobb — pluss AFP og skatt.",
   },
 ] as const;
 

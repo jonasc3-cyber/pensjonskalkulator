@@ -10,22 +10,43 @@ type GuideCard = {
 
 const GUIDES: GuideCard[] = [
   {
-    href: "/guider/nar-ta-ut-pensjon",
-    title: "Når ta ut pensjon",
-    blurb: "Når lønner det seg å ta ut pensjon? Se scenarier og virkninger.",
+    href: "/guider/afp-privat",
+    title: "AFP privat",
+    blurb:
+      "Vilkår (7 av 9 år), uttak fra 62 og hvordan AFP påvirker pensjonsestimatet.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect
-          x="3"
-          y="5"
-          width="18"
-          height="16"
-          rx="2"
+        <path
+          d="M12 3l8 3v6c0 5-3.4 8.4-8 9.5C7.4 20.4 4 17 4 12V6l8-3z"
           stroke="currentColor"
           strokeWidth="2"
+          strokeLinejoin="round"
         />
         <path
-          d="M3 10h18M8 3v4M16 3v4"
+          d="M9 12l2 2 4-4"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    href: "/guider/hvor-mye-far-jeg-i-pensjon",
+    title: "Hva får jeg i pensjon?",
+    blurb:
+      "Folketrygd, tjenestepensjon, AFP og sparing — slik får du et raskt anslag.",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path
+          d="M4 19V5M4 19h16"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+        <path
+          d="M8 15v-3M12 15V8M16 15v-5"
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
@@ -49,28 +70,6 @@ const GUIDES: GuideCard[] = [
           d="M14 3.2A9 9 0 0 1 20.8 10H14V3.2z"
           stroke="currentColor"
           strokeWidth="2"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    href: "/guider/pensjonskalkulator-uten-innlogging",
-    title: "Uten BankID",
-    blurb: "Slik beregner du pensjon uten innlogging eller BankID.",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path
-          d="M12 3l8 3v6c0 5-3.4 8.4-8 9.5C7.4 20.4 4 17 4 12V6l8-3z"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M9 12l2 2 4-4"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
           strokeLinejoin="round"
         />
       </svg>
