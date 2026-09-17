@@ -138,7 +138,7 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
-                  <Field id={`saving-kind-${account.id}`} label="Type">
+                  <Field id={`saving-kind-${account.id}`} label="Type sparing">
                     <select
                       id={`saving-kind-${account.id}`}
                       className={selectClass}
@@ -193,7 +193,13 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                   <summary className="cursor-pointer select-none px-3 py-2.5 text-sm font-medium text-primary marker:text-muted-foreground hover:bg-primary-soft/40">
                     Flere detaljer
                   </summary>
-                  <div className="grid grid-cols-1 gap-4 border-t border-border p-4 sm:grid-cols-2 sm:gap-6">
+                  <fieldset className="grid grid-cols-1 gap-4 border-t border-border p-4 sm:grid-cols-2 sm:gap-6">
+                    <legend className="sr-only">
+                      Flere detaljer for sparing {index + 1}
+                    </legend>
+                    <p className="sm:col-span-2 text-sm font-semibold text-primary" aria-hidden>
+                      Tilleggsopplysninger
+                    </p>
                     <Field
                       id={`saving-label-${account.id}`}
                       label="Navn / etikett (valgfritt)"
@@ -306,7 +312,7 @@ export function SavingsAccounts({ accounts, onChange }: Props) {
                         IPS er <em>ikke</em> inkludert i estimatet.
                       </p>
                     ) : null}
-                  </div>
+                  </fieldset>
                 </details>
               </li>
             );

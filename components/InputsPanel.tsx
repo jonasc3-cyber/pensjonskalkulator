@@ -13,10 +13,16 @@ import {
   validateAnnualSalary,
 } from "@/lib/salaryValidation";
 import { CohortWarning } from "./CohortWarning";
+import {
+  CalculatorStepper,
+  type CalculatorStep,
+} from "./CalculatorStepper";
 import { track } from "@/lib/ga";
+import { formatNOK } from "@/lib/format";
 
 type Props = {
   values: CalculatorInputs;
+  step: CalculatorStep;
   /** True when the consolidated Avansert/Antagelser panel is open. */
   assumptionsOpen: boolean;
   /** True while defaults are shown and brukeren ikke har endret noe. */
@@ -25,6 +31,8 @@ type Props = {
     key: K,
     value: CalculatorInputs[K],
   ) => void;
+  onStepChange: (step: CalculatorStep) => void;
+  onGoToResults: () => void;
   onToggleAssumptions: () => void;
   onReset?: () => void;
   /** Sett årslønn via profil-starter uten å fjerne «Eksempeldata». */
@@ -38,11 +46,20 @@ const BIRTH_YEARS = Array.from(
 
 const RETIREMENT_AGES = Array.from({ length: 75 - 62 + 1 }, (_, i) => 62 + i);
 
+const AFP_LABELS: Record<CalculatorInputs["afpType"], string> = {
+  ingen: "Ingen AFP",
+  privat: "Privat AFP",
+  offentlig: "Offentlig AFP",
+};
+
 export function InputsPanel({
   values,
+  step,
   assumptionsOpen,
   isExampleData = false,
   onChange,
+  onStepChange,
+  onGoToResults,
   onToggleAssumptions,
   onReset,
   onApplyProfileStarter,
@@ -50,15 +67,7 @@ export function InputsPanel({
   const age = CURRENT_YEAR - values.birthYear;
   const salaryCheck = validateAnnualSalary(values.annualSalary);
   const salaryError = salaryCheck.ok ? undefined : salaryCheck.message;
-
-  function goNext() {
-    const target = document.getElementById("flere-opplysninger");
-    target?.scrollIntoView({ behavior: "smooth", block: "start" });
-    const first = target?.querySelector<HTMLElement>(
-      "input, select, button, textarea",
-    );
-    first?.focus({ preventScroll: true });
-  }
+  const canReachResults = salaryCheck.ok;
 
   return (
     <section
@@ -90,7 +99,7 @@ export function InputsPanel({
               ? "Tallene under er eksempeldata — bytt dem til dine egne for et personlig estimat."
               : "Fyll inn informasjonen under så beregner vi et estimat på din fremtidige pensjon."}
           </p>
-          {isExampleData && onApplyProfileStarter ? (
+          {isExampleData && onApplyProfileStarter && step === 1 ? (
             <div
               className="mt-3 flex flex-wrap items-center gap-2"
               data-testid="profile-starters"
@@ -147,8 +156,21 @@ export function InputsPanel({
         </div>
       </div>
 
+      <CalculatorStepper
+        step={step}
+        canReachResults={canReachResults}
+        onStepChange={(next) => {
+          if (next === 3) {
+            onGoToResults();
+            return;
+          }
+          onStepChange(next);
+        }}
+      />
+
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start lg:gap-8">
-          <div>
+        {step === 1 ? (
+          <div data-testid="calculator-step-1">
             <h3 className="text-base font-semibold text-primary">1. Om deg</h3>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5">
               <Field
@@ -261,62 +283,42 @@ export function InputsPanel({
               </div>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
               <button
                 type="button"
-                onClick={goNext}
+                onClick={() => onStepChange(2)}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
               >
-                Neste
+                Neste: Pensjon og sparing
                 <span aria-hidden>→</span>
               </button>
+              {canReachResults ? (
+                <button
+                  type="button"
+                  onClick={onGoToResults}
+                  className="inline-flex w-full items-center justify-center rounded-xl border border-border bg-card px-5 py-3 text-sm font-semibold text-primary shadow-sm transition-colors hover:bg-primary-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
+                  data-testid="hopp-til-resultat"
+                >
+                  Hopp til resultat
+                </button>
+              ) : null}
             </div>
           </div>
+        ) : null}
 
-        <aside className="rounded-xl border border-primary/15 bg-primary-soft/80 p-5 lg:sticky lg:top-20 lg:row-span-2">
-          <div className="flex items-start gap-2">
-            <span
-              className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white"
-              aria-hidden
-            >
-              i
-            </span>
-            <h3 className="text-sm font-semibold text-primary">
-              Om beregningen
-            </h3>
-          </div>
-          <div className="mt-3 space-y-2.5 text-sm leading-relaxed text-slate-600">
-            <p>
-              Estimatet følger dagens regler for folketrygd, med forenklede
-              forutsetninger for tjenestepensjon, AFP og sparing.
-            </p>
-            <p>
-              Vi tar høyde for lønnsvekst og viser et intervall (lav / basis /
-              høy) — ikke ett fasitsvar.
-            </p>
-            <p>
-              Pensjonstallene regnes lokalt i nettleseren og sendes ikke til oss.
-            </p>
-          </div>
-          <Link
-            href="/om"
-            className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-mid"
-          >
-            Les mer om forutsetningene
-            <span aria-hidden>→</span>
-          </Link>
-        </aside>
-
+        {step === 2 ? (
           <div
             id="flere-opplysninger"
-            className="scroll-mt-24 space-y-4 border-t border-border pt-6"
+            className="scroll-mt-24 space-y-4"
+            data-testid="calculator-step-2"
           >
             <h3 className="text-base font-semibold text-primary">
               2. Pensjon og sparing
             </h3>
             <p className="text-sm text-muted-foreground">
               AFP, tjenestepensjon og egen sparing — valgfritt, men gir et mer
-              treffsikkert estimat.
+              treffsikkert estimat. Tomme felt bruker dagens standarder (bl.a.
+              ingen AFP).
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
@@ -375,8 +377,141 @@ export function InputsPanel({
                 onChange={(savings) => onChange("savings", savings)}
               />
             </div>
-          </div>
 
+            <div className="flex flex-wrap items-center gap-3 border-t border-border pt-5">
+              <button
+                type="button"
+                onClick={onGoToResults}
+                disabled={!canReachResults}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                data-testid="se-resultat"
+              >
+                Se resultat
+                <span aria-hidden>→</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => onStepChange(1)}
+                className="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-primary hover:underline"
+              >
+                Tilbake
+              </button>
+              {canReachResults ? (
+                <button
+                  type="button"
+                  onClick={onGoToResults}
+                  className="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-muted-foreground hover:text-primary hover:underline"
+                >
+                  Hopp over
+                </button>
+              ) : null}
+            </div>
+          </div>
+        ) : null}
+
+        {step === 3 ? (
+          <div className="space-y-4" data-testid="calculator-step-3-summary">
+            <h3 className="text-base font-semibold text-primary">
+              3. Resultat
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Estimatet under oppdateres når du endrer tallene. Gå tilbake for å
+              justere, eller åpne avanserte antagelser.
+            </p>
+            <dl className="grid gap-2 rounded-xl border border-border bg-muted/40 p-4 text-sm sm:grid-cols-2">
+              <div>
+                <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  Fødselsår / uttak
+                </dt>
+                <dd className="mt-0.5 font-medium text-slate-800">
+                  {values.birthYear} · {values.retirementAge} år
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  Årslønn
+                </dt>
+                <dd className="mt-0.5 font-medium tabular-nums text-slate-800">
+                  {formatNOK(values.annualSalary)}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  AFP
+                </dt>
+                <dd className="mt-0.5 font-medium text-slate-800">
+                  {AFP_LABELS[values.afpType]}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  TP / sparing
+                </dt>
+                <dd className="mt-0.5 font-medium text-slate-800">
+                  {values.tpAccounts.length} TP · {values.savings.length} sparing
+                </dd>
+              </div>
+            </dl>
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => onStepChange(1)}
+                className="inline-flex items-center justify-center rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold text-primary shadow-sm hover:bg-primary-soft"
+              >
+                Endre om deg
+              </button>
+              <button
+                type="button"
+                onClick={() => onStepChange(2)}
+                className="inline-flex items-center justify-center rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold text-primary shadow-sm hover:bg-primary-soft"
+              >
+                Endre pensjon og sparing
+              </button>
+              <button
+                type="button"
+                onClick={onToggleAssumptions}
+                className="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-primary hover:underline"
+                aria-controls="antagelser"
+              >
+                Tilpass antagelser
+              </button>
+            </div>
+          </div>
+        ) : null}
+
+        <aside className="rounded-xl border border-primary/15 bg-primary-soft/80 p-5 lg:sticky lg:top-20 lg:row-span-2">
+          <div className="flex items-start gap-2">
+            <span
+              className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white"
+              aria-hidden
+            >
+              i
+            </span>
+            <h3 className="text-sm font-semibold text-primary">
+              Om beregningen
+            </h3>
+          </div>
+          <div className="mt-3 space-y-2.5 text-sm leading-relaxed text-slate-600">
+            <p>
+              Estimatet følger dagens regler for folketrygd, med forenklede
+              forutsetninger for tjenestepensjon, AFP og sparing.
+            </p>
+            <p>
+              Vi tar høyde for lønnsvekst og viser et intervall (lav / basis /
+              høy) — ikke ett fasitsvar.
+            </p>
+            <p>
+              Pensjonstallene regnes lokalt i nettleseren og sendes ikke til oss.
+            </p>
+          </div>
+          <Link
+            href="/om"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-mid"
+          >
+            Les mer om forutsetningene
+            <span aria-hidden>→</span>
+          </Link>
+        </aside>
       </div>
     </section>
   );

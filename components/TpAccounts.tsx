@@ -145,7 +145,7 @@ export function TpAccounts({ accounts, onChange }: Props) {
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
-                  <Field id={`tp-kind-${account.id}`} label="Type">
+                  <Field id={`tp-kind-${account.id}`} label="Type tjenestepensjon">
                     <select
                       id={`tp-kind-${account.id}`}
                       className={selectClass}
@@ -231,7 +231,13 @@ export function TpAccounts({ accounts, onChange }: Props) {
                   <summary className="cursor-pointer select-none px-3 py-2.5 text-sm font-medium text-primary marker:text-muted-foreground hover:bg-primary-soft/40">
                     Flere detaljer
                   </summary>
-                  <div className="grid grid-cols-1 gap-4 border-t border-border p-4 sm:grid-cols-2 sm:gap-6">
+                  <fieldset className="grid grid-cols-1 gap-4 border-t border-border p-4 sm:grid-cols-2 sm:gap-6">
+                    <legend className="sr-only">
+                      Flere detaljer for tjenestepensjon {index + 1}
+                    </legend>
+                    <p className="sm:col-span-2 text-sm font-semibold text-primary" aria-hidden>
+                      Tilleggsopplysninger
+                    </p>
                     <Field
                       id={`tp-label-${account.id}`}
                       label="Navn / etikett (valgfritt)"
@@ -345,7 +351,7 @@ export function TpAccounts({ accounts, onChange }: Props) {
                         </span>
                       </label>
                     </div>
-                  </div>
+                  </fieldset>
                 </details>
               </li>
             );

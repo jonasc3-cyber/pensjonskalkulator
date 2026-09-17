@@ -4,17 +4,32 @@ import { useEffect, useState } from "react";
 import { formatNOK } from "@/lib/format";
 
 type Props =
-  | { baseMonthly: number; invalid?: false }
-  | { invalid: true; baseMonthly?: never };
+  | {
+      baseMonthly: number;
+      invalid?: false;
+      resultsMounted?: boolean;
+      onSeeResults?: () => void;
+    }
+  | {
+      invalid: true;
+      baseMonthly?: never;
+      resultsMounted?: boolean;
+      onSeeResults?: () => void;
+    };
 
 /**
  * Mobil-only sticky mini-resultat nederst mens man scroller skjemaet.
  * Skjules når #results er synlig (IntersectionObserver).
  */
 export function StickyMiniResult(props: Props) {
+  const { resultsMounted = true, onSeeResults } = props;
   const [resultsInView, setResultsInView] = useState(false);
 
   useEffect(() => {
+    if (!resultsMounted) {
+      setResultsInView(false);
+      return;
+    }
     const el = document.getElementById("results");
     if (!el || typeof IntersectionObserver === "undefined") return;
 
@@ -30,7 +45,7 @@ export function StickyMiniResult(props: Props) {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [resultsMounted]);
 
   if (resultsInView) return null;
 
@@ -45,20 +60,38 @@ export function StickyMiniResult(props: Props) {
         aria-live="polite"
         data-testid="sticky-mini-result"
       >
-        <a
-          href="#annualSalary"
-          className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-800 transition-colors hover:bg-red-100 hover:text-red-900"
-        >
-          <span className="min-w-0 truncate font-medium">
-            Oppgi årslønn for å se estimat
-          </span>
-          <span
-            className="shrink-0 rounded-lg bg-red-800 px-3 py-1.5 text-xs font-semibold text-white"
-            aria-hidden
+        {onSeeResults ? (
+          <button
+            type="button"
+            onClick={onSeeResults}
+            className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-left text-sm text-red-800 transition-colors hover:bg-red-100 hover:text-red-900"
           >
-            Rett opp
-          </span>
-        </a>
+            <span className="min-w-0 truncate font-medium">
+              Oppgi årslønn for å se estimat
+            </span>
+            <span
+              className="shrink-0 rounded-lg bg-red-800 px-3 py-1.5 text-xs font-semibold text-white"
+              aria-hidden
+            >
+              Rett opp
+            </span>
+          </button>
+        ) : (
+          <a
+            href="#annualSalary"
+            className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-800 transition-colors hover:bg-red-100 hover:text-red-900"
+          >
+            <span className="min-w-0 truncate font-medium">
+              Oppgi årslønn for å se estimat
+            </span>
+            <span
+              className="shrink-0 rounded-lg bg-red-800 px-3 py-1.5 text-xs font-semibold text-white"
+              aria-hidden
+            >
+              Rett opp
+            </span>
+          </a>
+        )}
       </div>
     );
   }
@@ -75,22 +108,42 @@ export function StickyMiniResult(props: Props) {
       aria-live="polite"
       data-testid="sticky-mini-result"
     >
-      <a
-        href="#results"
-        className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-xl border border-border bg-primary-soft/60 px-3 py-2.5 text-sm text-slate-700 transition-colors hover:border-primary/25 hover:bg-primary-soft"
-      >
-        <span className="min-w-0 truncate">
-          Basis ca.{" "}
-          <strong className="tabular-nums text-primary">
-            {formatNOK(baseMonthly)}
-          </strong>
-          /mnd
-        </span>
-        <span className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-accent-foreground shadow-sm">
-          Se estimat
-          <span aria-hidden>↓</span>
-        </span>
-      </a>
+      {onSeeResults ? (
+        <button
+          type="button"
+          onClick={onSeeResults}
+          className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 rounded-xl border border-border bg-primary-soft/60 px-3 py-2.5 text-left text-sm text-slate-700 transition-colors hover:border-primary/25 hover:bg-primary-soft"
+        >
+          <span className="min-w-0 truncate">
+            Basis ca.{" "}
+            <strong className="tabular-nums text-primary">
+              {formatNOK(baseMonthly)}
+            </strong>
+            /mnd
+          </span>
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-accent-foreground shadow-sm">
+            Se estimat
+            <span aria-hidden>↓</span>
+          </span>
+        </button>
+      ) : (
+        <a
+          href="#results"
+          className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-xl border border-border bg-primary-soft/60 px-3 py-2.5 text-sm text-slate-700 transition-colors hover:border-primary/25 hover:bg-primary-soft"
+        >
+          <span className="min-w-0 truncate">
+            Basis ca.{" "}
+            <strong className="tabular-nums text-primary">
+              {formatNOK(baseMonthly)}
+            </strong>
+            /mnd
+          </span>
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-accent-foreground shadow-sm">
+            Se estimat
+            <span aria-hidden>↓</span>
+          </span>
+        </a>
+      )}
     </div>
   );
 }

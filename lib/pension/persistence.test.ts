@@ -4,6 +4,7 @@ import { createSavingAccount } from "./saving";
 import {
   NEW_FOLKETRYGD_FROM_YEAR,
   buildAbsoluteShareUrl,
+  buildAbsoluteSafeShareUrl,
   buildShareSearch,
   deserializeInputs,
   hasIpsAccount,
@@ -152,5 +153,15 @@ describe("buildAbsoluteShareUrl", () => {
     const restored = deserializeInputs(url.searchParams.get(URL_STATE_PARAM)!);
     expect(restored?.birthYear).toBe(1988);
     expect(restored?.annualSalary).toBe(650_000);
+  });
+});
+
+describe("buildAbsoluteSafeShareUrl", () => {
+  it("strips query state and points at #kalkulator", () => {
+    const url = buildAbsoluteSafeShareUrl(
+      "https://sjekkpensjon.no/?s=abc123#other",
+    );
+    expect(url).toBe("https://sjekkpensjon.no/#kalkulator");
+    expect(url).not.toContain("s=");
   });
 });

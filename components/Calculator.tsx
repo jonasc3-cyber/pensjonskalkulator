@@ -20,14 +20,28 @@ import { CohortWarning } from "./CohortWarning";
 import { StickyMiniResult } from "./StickyMiniResult";
 import { SaxoAnnonseCta } from "./SaxoAnnonseCta";
 import { TrustNextSteps } from "./TrustNextSteps";
+import type { CalculatorStep } from "./CalculatorStepper";
 import { track } from "@/lib/ga";
 
 const PERSIST_DEBOUNCE_MS = 250;
+
+function focusResultsPanel() {
+  window.setTimeout(() => {
+    const target = document.getElementById("results");
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const heading = document.getElementById("results-heading");
+    if (heading) {
+      heading.setAttribute("tabindex", "-1");
+      heading.focus({ preventScroll: true });
+    }
+  }, 80);
+}
 
 export function Calculator() {
   const [values, setValues] = useState<CalculatorInputs>(() => defaultInputs());
   const [assumptionsOpen, setAssumptionsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [step, setStep] = useState<CalculatorStep>(1);
   /** Vises til bruker endrer noe (eller har lagret/delt tilstand). */
   const [isExampleData, setIsExampleData] = useState(true);
   const skipNextPersist = useRef(false);
@@ -46,6 +60,8 @@ export function Calculator() {
     // Eksempeldata: skjul bare når URL eller localStorage ga tilstand
     const example = !fromUrl && !fromLs;
     setIsExampleData(example);
+    // Returning / shared state → hopp til resultat; first-run → steg 1
+    setStep(fromUrl || fromLs ? 3 : 1);
     // Speil URL → localStorage; ikke lagre rene eksempeldefaults
     if (!example) {
       saveInputsToLocalStorage(initial);
@@ -96,6 +112,8 @@ export function Calculator() {
     [values, salaryOk],
   );
 
+  const showFullResults = step === 3;
+
   function onChange<K extends keyof CalculatorInputs>(
     key: K,
     value: CalculatorInputs[K],
@@ -114,6 +132,7 @@ export function Calculator() {
     clearInputsLocalStorage();
     clearInputsFromUrl();
     setIsExampleData(true);
+    setStep(1);
     skipNextPersist.current = true;
   }
 
@@ -122,6 +141,18 @@ export function Calculator() {
     setValues((prev) => ({ ...prev, annualSalary }));
     setIsExampleData(true);
     skipNextPersist.current = true;
+  }
+
+  function goToResults() {
+    if (!isValidAnnualSalary(values.annualSalary)) {
+      setStep(1);
+      window.setTimeout(() => {
+        document.getElementById("annualSalary")?.focus();
+      }, 50);
+      return;
+    }
+    setStep(3);
+    focusResultsPanel();
   }
 
   function openPayoutSettings() {
@@ -150,12 +181,16 @@ export function Calculator() {
     <div
       className="space-y-6 pb-[calc(7.5rem+env(safe-area-inset-bottom,0px))] sm:pb-0"
       data-testid="calculator-root"
+      data-calculator-step={step}
     >
       <InputsPanel
         values={values}
+        step={step}
         assumptionsOpen={assumptionsOpen}
         isExampleData={isExampleData}
         onChange={onChange}
+        onStepChange={setStep}
+        onGoToResults={goToResults}
         onToggleAssumptions={toggleAssumptions}
         onReset={onReset}
         onApplyProfileStarter={onApplyProfileStarter}
@@ -167,28 +202,46 @@ export function Calculator() {
         onOpenChange={setAssumptionsOpen}
       />
       <CohortWarning birthYear={values.birthYear} alert={false} />
-      {result ? (
-        <>
-          <ResultsPanel
-            result={result}
-            showNet={values.showNet}
-            inputs={values}
-            onOpenPayoutSettings={openPayoutSettings}
-          />
-          <TrustNextSteps />
-          <SaxoAnnonseCta placement="after_results" />
-          <GoalSeekPanel values={values} result={result} />
-          <SaxoAnnonseCta placement="after_spar_for_mal" />
-          <StickyMiniResult baseMonthly={result.scenarios.base.totalMonthly} />
-        </>
+      {showFullResults ? (
+        result ? (
+          <>
+            <ResultsPanel
+              result={result}
+              showNet={values.showNet}
+              inputs={values}
+              onOpenPayoutSettings={openPayoutSettings}
+            />
+            <TrustNextSteps />
+            <SaxoAnnonseCta placement="after_results" />
+            <GoalSeekPanel values={values} result={result} />
+            <SaxoAnnonseCta placement="after_spar_for_mal" />
+            <StickyMiniResult
+              baseMonthly={result.scenarios.base.totalMonthly}
+              resultsMounted
+              onSeeResults={goToResults}
+            />
+          </>
+        ) : (
+          <SalaryInvalidResults onFixSalary={() => setStep(1)} />
+        )
+      ) : result ? (
+        <StickyMiniResult
+          baseMonthly={result.scenarios.base.totalMonthly}
+          resultsMounted={false}
+          onSeeResults={goToResults}
+        />
       ) : (
-        <SalaryInvalidResults />
+        <StickyMiniResult
+          invalid
+          resultsMounted={false}
+          onSeeResults={() => setStep(1)}
+        />
       )}
     </div>
   );
 }
 
-function SalaryInvalidResults() {
+function SalaryInvalidResults({ onFixSalary }: { onFixSalary: () => void }) {
   return (
     <>
       <section
@@ -205,9 +258,16 @@ function SalaryInvalidResults() {
             Oppgi en gyldig årslønn (større enn 0 kr) for å se estimatet. Uten
             lønn viser modellens garantipensjonsgulv et misvisende bilde.
           </p>
+          <button
+            type="button"
+            onClick={onFixSalary}
+            className="mt-4 inline-flex rounded-xl border border-red-300 bg-card px-4 py-2.5 text-sm font-semibold text-red-800 shadow-sm hover:bg-red-50"
+          >
+            Rett opp årslønn
+          </button>
         </div>
       </section>
-      <StickyMiniResult invalid />
+      <StickyMiniResult invalid resultsMounted onSeeResults={onFixSalary} />
     </>
   );
 }

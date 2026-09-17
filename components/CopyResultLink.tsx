@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CalculatorInputs } from "@/lib/pension/types";
 import {
+  buildAbsoluteSafeShareUrl,
   buildAbsoluteShareUrl,
   writeInputsToUrl,
 } from "@/lib/pension/persistence";
@@ -35,10 +36,11 @@ async function copyText(text: string): Promise<boolean> {
   }
 }
 
-type Feedback = "copied" | "failed" | null;
+type Feedback = "copied-safe" | "copied-with-data" | "failed" | null;
 
 export function CopyResultLink({ inputs }: { inputs: CalculatorInputs }) {
   const [feedback, setFeedback] = useState<Feedback>(null);
+  const [includeNumbers, setIncludeNumbers] = useState(false);
   const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -55,8 +57,20 @@ export function CopyResultLink({ inputs }: { inputs: CalculatorInputs }) {
     }
   }
 
-  async function handleCopy() {
-    // Sync address bar first so ?s= is visible even if clipboard fails.
+  async function handleCopySafe() {
+    let shareUrl: string;
+    try {
+      // Kun trygg URL til utklippstavle — ikke endre adressefeltet
+      shareUrl = buildAbsoluteSafeShareUrl();
+    } catch {
+      showFeedback("failed");
+      return;
+    }
+    const ok = await copyText(shareUrl);
+    showFeedback(ok ? "copied-safe" : "failed");
+  }
+
+  async function handleCopyWithNumbers() {
     let shareUrl: string;
     try {
       writeInputsToUrl(inputs);
@@ -65,42 +79,74 @@ export function CopyResultLink({ inputs }: { inputs: CalculatorInputs }) {
       showFeedback("failed");
       return;
     }
-
     const ok = await copyText(shareUrl);
-    showFeedback(ok ? "copied" : "failed");
+    showFeedback(ok ? "copied-with-data" : "failed");
   }
 
   return (
-    <div className="mt-5 flex flex-wrap items-center gap-3">
-      <button
-        type="button"
-        onClick={handleCopy}
-        className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
-        data-testid="copy-result-link"
-        aria-describedby="copy-result-link-status"
+    <div className="mt-5 space-y-3" data-testid="copy-result-link-panel">
+      <div
+        className="rounded-xl border border-info-border bg-info-bg px-3 py-2.5 text-sm leading-relaxed text-info-text"
+        role="note"
       >
-        <CopyIcon />
-        Kopier lenke til mitt anslag
-      </button>
-      <span
-        id="copy-result-link-status"
-        role="status"
-        aria-live="polite"
-        className={
-          feedback === "copied"
-            ? "rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent"
-            : feedback === "failed"
-              ? "rounded-full bg-red-50 px-3 py-1 text-sm font-medium text-red-800"
-              : "sr-only"
-        }
-        data-testid="copy-result-link-status"
-      >
-        {feedback === "copied"
-          ? "Kopiert"
-          : feedback === "failed"
-            ? "Kunne ikke kopiere — lenken er i adressefeltet"
-            : ""}
-      </span>
+        Lenken kan inneholde tallene du har skrevet inn. Standard er en trygg
+        lenke uten pensjonstall.
+      </div>
+
+      <label className="flex items-start gap-2 text-sm text-slate-700">
+        <input
+          type="checkbox"
+          className="mt-0.5 h-4 w-4 rounded border-border accent-primary"
+          checked={includeNumbers}
+          onChange={(e) => setIncludeNumbers(e.target.checked)}
+          data-testid="copy-include-numbers"
+        />
+        <span>Inkluder mine tall i lenken</span>
+      </label>
+
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          onClick={handleCopySafe}
+          className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
+          data-testid="copy-result-link"
+          aria-describedby="copy-result-link-status"
+        >
+          <CopyIcon />
+          Kopier trygg lenke
+        </button>
+        <button
+          type="button"
+          onClick={handleCopyWithNumbers}
+          disabled={!includeNumbers}
+          className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+          data-testid="copy-result-link-with-numbers"
+          aria-describedby="copy-result-link-status"
+        >
+          Kopier med tall
+        </button>
+        <span
+          id="copy-result-link-status"
+          role="status"
+          aria-live="polite"
+          className={
+            feedback === "copied-safe" || feedback === "copied-with-data"
+              ? "rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent"
+              : feedback === "failed"
+                ? "rounded-full bg-red-50 px-3 py-1 text-sm font-medium text-red-800"
+                : "sr-only"
+          }
+          data-testid="copy-result-link-status"
+        >
+          {feedback === "copied-safe"
+            ? "Trygg lenke kopiert"
+            : feedback === "copied-with-data"
+              ? "Lenke med tall kopiert"
+              : feedback === "failed"
+                ? "Kunne ikke kopiere — prøv igjen"
+                : ""}
+        </span>
+      </div>
     </div>
   );
 }

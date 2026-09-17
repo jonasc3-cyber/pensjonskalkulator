@@ -403,3 +403,16 @@ export function buildAbsoluteShareUrl(
   url.hash = "";
   return url.toString();
 }
+
+/**
+ * Trygg delbar URL uten pensjonstall i query/hash.
+ * Peker mot forsiden/kalkulatoren; mottaker starter med eksempeldata.
+ */
+export function buildAbsoluteSafeShareUrl(
+  href: string = typeof window !== "undefined" ? window.location.href : "",
+): string {
+  const url = new URL(href);
+  url.search = "";
+  url.hash = "kalkulator";
+  return url.toString();
+}
