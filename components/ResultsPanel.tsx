@@ -90,6 +90,12 @@ export function ResultsPanel({
           </strong>{" "}
           per måned
         </p>
+        <p
+          className="mt-1.5 text-xs text-muted-foreground"
+          data-testid="result-illustrative-disclaimer"
+        >
+          illustrativt estimat — ikke Nav
+        </p>
 
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           {scenarios.map(({ label, s, order, card, amount, hero }) => (

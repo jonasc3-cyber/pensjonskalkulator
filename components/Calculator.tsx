@@ -19,6 +19,7 @@ import { GoalSeekPanel } from "./GoalSeekPanel";
 import { CohortWarning } from "./CohortWarning";
 import { StickyMiniResult } from "./StickyMiniResult";
 import { SaxoAnnonseCta } from "./SaxoAnnonseCta";
+import { TrustNextSteps } from "./TrustNextSteps";
 import { track } from "@/lib/ga";
 
 const PERSIST_DEBOUNCE_MS = 250;
@@ -174,6 +175,7 @@ export function Calculator() {
             inputs={values}
             onOpenPayoutSettings={openPayoutSettings}
           />
+          <TrustNextSteps />
           <SaxoAnnonseCta placement="after_results" />
           <GoalSeekPanel values={values} result={result} />
           <SaxoAnnonseCta placement="after_spar_for_mal" />

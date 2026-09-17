@@ -20,12 +20,12 @@ export function SaxoAnnonseCta({ placement }: Props) {
 
   return (
     <aside
-      className="rounded-2xl border border-accent/25 bg-accent-soft/50 p-4 shadow-sm sm:p-6"
+      className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 opacity-95 shadow-sm sm:p-6"
       aria-label="Annonse — Saxo"
       data-testid={`saxo-annonse-cta-${placement}`}
       data-partner="saxo"
     >
-      <p className="text-xs font-semibold uppercase tracking-wide text-accent">
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         Annonse
       </p>
       <h2 className="mt-1.5 text-lg font-semibold text-primary">
@@ -40,7 +40,7 @@ export function SaxoAnnonseCta({ placement }: Props) {
         target="_blank"
         rel="noopener noreferrer sponsored"
         onClick={onClick}
-        className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
+        className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-slate-300 bg-card px-5 py-2.5 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-primary/40 hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
         data-testid={`saxo-annonse-cta-link-${placement}`}
       >
         Åpne konto hos Saxo
