@@ -22,6 +22,17 @@ function payoutLabel(
   return mode === "livsvarig" ? "livsvarig" : `${years} år`;
 }
 
+/** Relative % vs basis for pess/opt cards (illustrative). */
+function vsBasisLabel(monthly: number, basisMonthly: number): string | null {
+  if (!Number.isFinite(monthly) || !Number.isFinite(basisMonthly) || basisMonthly === 0) {
+    return null;
+  }
+  const pct = Math.round(((monthly - basisMonthly) / basisMonthly) * 100);
+  if (pct === 0) return "ca. samme som basis";
+  if (pct < 0) return `ca. ${Math.abs(pct)} % lavere enn basis`;
+  return `ca. ${pct} % høyere enn basis`;
+}
+
 export function ResultsPanel({
   result,
   showNet,
@@ -41,30 +52,33 @@ export function ResultsPanel({
   const scenarios = [
     {
       label: "Pessimistisk",
+      hint: "Lavere avkastning og lengre levealder",
       s: low,
       order: "order-2 sm:order-1",
-      card: "border-slate-200 bg-slate-50/80",
-      amount: "text-xl font-semibold text-slate-600 sm:text-2xl",
-      hero: false,
+      card: "border border-border bg-card shadow-none",
+      amount: "text-lg font-semibold text-accent sm:text-xl",
+      hero: false as const,
     },
     {
       label: "Basis",
+      hint: "Forventet månedlig pensjon",
       s: base,
-      order: "order-1 sm:order-2",
+      order: "order-1 sm:order-2 sm:scale-[1.03] sm:z-10",
       card:
-        "border-2 border-primary bg-primary-soft shadow-sm ring-1 ring-primary/10 [border-left-color:var(--accent)] [border-left-width:5px]",
-      amount: "text-3xl font-bold text-primary sm:text-4xl",
-      hero: true,
+        "border-2 border-primary bg-card shadow-md ring-1 ring-primary/15",
+      amount: "text-[2rem] font-bold leading-tight text-primary sm:text-4xl",
+      hero: true as const,
     },
     {
       label: "Optimistisk",
+      hint: "Høyere avkastning og kortere levealder",
       s: high,
       order: "order-3 sm:order-3",
-      card: "border-accent/25 bg-accent-soft/70",
-      amount: "text-xl font-semibold text-accent sm:text-2xl",
-      hero: false,
+      card: "border border-border bg-card shadow-none",
+      amount: "text-lg font-semibold text-accent sm:text-xl",
+      hero: false as const,
     },
-  ] as const;
+  ];
 
   return (
     <section
@@ -97,45 +111,62 @@ export function ResultsPanel({
           illustrativt estimat — ikke Nav
         </p>
 
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          {scenarios.map(({ label, s, order, card, amount, hero }) => (
-            <div
-              key={label}
-              className={`rounded-xl border p-4 ${card} ${order}`}
-            >
-              <div className="flex items-center gap-2">
-                <p
-                  className={`text-xs font-medium uppercase tracking-wide ${
-                    hero ? "text-primary" : "text-muted-foreground"
-                  }`}
-                >
-                  {label}
-                </p>
-                {hero ? (
-                  <span className="rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-accent-foreground">
-                    Hovedanslag
-                  </span>
-                ) : null}
-              </div>
-              <p className={`mt-2 tabular-nums ${amount}`}>
-                {formatNOK(s.totalMonthly)}
-              </p>
-              <p className="text-xs text-muted-foreground">per måned</p>
-              <p
-                className={`mt-2 tabular-nums text-slate-700 ${
-                  hero ? "text-sm" : "text-xs"
+        <div className="mt-5 grid items-stretch gap-3 sm:grid-cols-3 sm:gap-4 sm:items-center">
+          {scenarios.map(({ label, hint, s, order, card, amount, hero }) => {
+            const vsBasis = hero
+              ? null
+              : vsBasisLabel(s.totalMonthly, base.totalMonthly);
+            return (
+              <div
+                key={label}
+                className={`flex flex-col rounded-xl p-4 ${card} ${order} ${
+                  hero ? "py-5 sm:py-6" : "py-3.5 opacity-[0.92]"
                 }`}
               >
-                {formatNOK(s.totalYearly)} / år
-              </p>
-              {hero ? (
-                <p className="mt-2 text-xs text-muted-foreground">
-                  Erstatningsgrad av forventet sluttlønn{" "}
-                  {formatPercent(s.replacementRate)}
+                <div className="flex items-center gap-2">
+                  {hero ? (
+                    <span className="inline-flex items-center gap-1.5 rounded-md bg-primary px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-primary-foreground">
+                      <span aria-hidden>✓</span>
+                      {label}
+                    </span>
+                  ) : (
+                    <p className="text-xs font-semibold uppercase tracking-wide text-accent">
+                      {label}
+                    </p>
+                  )}
+                  {hero ? (
+                    <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-accent">
+                      Hovedanslag
+                    </span>
+                  ) : null}
+                </div>
+                <p className="mt-2 text-xs text-muted-foreground">{hint}</p>
+                <p className={`mt-2 tabular-nums ${amount}`}>
+                  {formatNOK(s.totalMonthly)}
                 </p>
-              ) : null}
-            </div>
-          ))}
+                <p className="text-xs text-muted-foreground">per måned</p>
+                <p
+                  className={`mt-2 tabular-nums text-slate-700 ${
+                    hero ? "text-sm" : "text-xs"
+                  }`}
+                >
+                  {formatNOK(s.totalYearly)} / år
+                </p>
+                {hero ? (
+                  <p className="mt-3 border-t border-border pt-3 text-xs text-muted-foreground">
+                    Erstatningsgrad av forventet sluttlønn{" "}
+                    <span className="font-medium text-slate-700">
+                      {formatPercent(s.replacementRate)}
+                    </span>
+                  </p>
+                ) : vsBasis ? (
+                  <p className="mt-3 inline-flex w-fit items-center rounded-full border border-accent/20 bg-accent-soft px-2.5 py-1 text-[11px] font-medium text-accent">
+                    {vsBasis}
+                  </p>
+                ) : null}
+              </div>
+            );
+          })}
         </div>
 
         {base.garantipensjonApplied ? (
